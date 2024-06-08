@@ -7,7 +7,7 @@
     "dev": "nodemon app.js",
     "start": "node app.js"
   },
-  "type" : "module",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aryan04-t/Twitter-Clone.git"
@@ -35,5 +35,8 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.3"
   }
 }
