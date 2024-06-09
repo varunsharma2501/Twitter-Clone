@@ -21,9 +21,7 @@ const router = createBrowserRouter([
         path : '/', 
         element : (
             <GlobalToasterLayout>
-                <AuthLayout>
-                    <LandingPage />
-                </AuthLayout>
+                <LandingPage />
             </GlobalToasterLayout>
         ),
         errorElement : <ErrorPage /> 
