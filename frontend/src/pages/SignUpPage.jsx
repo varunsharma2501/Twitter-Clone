@@ -4,6 +4,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 
 import validateInputFields from '../helpers/validateInputFields' 
+import LoadingSpinner from '../small components/LoadingSpinner';
 
 
 const SignUpPage = () => {
@@ -50,26 +51,34 @@ const SignUpPage = () => {
     }, [isEmailErrorTextInvisible, isNameErrorTextInvisible]); 
 
 
-    const verifyEmail = (e) => {
+    const [otpSendingLoading, setOtpSendingLoading] = useState(false); 
+
+    const sendOtp = (e) => {
 
         e.preventDefault(); 
         e.stopPropagation(); 
+
+        setOtpSendingLoading(true); 
 
         axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/send-otp`, {
             email,
             name 
         })
         .then( (res) => {
-            toast.success(res?.data?.message);
+            toast.success(res?.data?.message);        
+            setOtpSendingLoading(false); 
             navigate('/verify-email', {
                 state : {
-                    otp : res.data.otp 
+                    otp : res.data.otp,
+                    name,
+                    email
                 }
             }); 
         })
         .catch( (err) => {
-            toast.error(err?.response?.data?.message);
             console.log(err); 
+            toast.error(err?.response?.data?.message);
+            setOtpSendingLoading(false); 
             navigate('/'); 
         })
     }
@@ -82,7 +91,7 @@ const SignUpPage = () => {
                     Create your account 
                 </h1>
             </div>
-            <form onSubmit={verifyEmail} className='flex flex-col items-center w-full'>
+            <form onSubmit={sendOtp} className='flex flex-col items-center w-full'>
                 <div className='w-full flex justify-center items-center'>
                     <label htmlFor='name' className='mt-10 pl-4 w-[500px] text-white h-10 text-2xl pr-6 flex items-center'>
                         Name
@@ -90,6 +99,7 @@ const SignUpPage = () => {
                 </div>
                 <div className='w-full flex justify-center items-center'>
                     <input 
+                        disabled={otpSendingLoading}
                         name='name' 
                         type='text' 
                         id='name' 
@@ -112,6 +122,7 @@ const SignUpPage = () => {
                 </div>
                 <div className='w-full flex justify-center items-center'>
                     <input 
+                        disabled={otpSendingLoading}
                         name='email' 
                         type='text' 
                         id='email' 
@@ -128,8 +139,13 @@ const SignUpPage = () => {
                     </div>
                 </div> 
                 <div className='w-full flex justify-center items-center'>
-                    <button disabled={isVerifyButtonDisabled} className={`mt-10 w-[280px] h-[50px] text-xl font-semibold rounded-full ${isVerifyButtonDisabled ? 'bg-gray-600' : 'bg-white hover:bg-[#1d9bf0] hover:text-white'}`}>
-                        Verify Email 
+                    <button disabled={isVerifyButtonDisabled || otpSendingLoading} className={`mt-10 w-[280px] h-[50px] text-xl font-semibold rounded-full flex items-center justify-center ${isVerifyButtonDisabled || otpSendingLoading ? 'bg-gray-600' : 'bg-white hover:bg-[#1d9bf0] hover:text-white'}`}>
+                        {
+                            otpSendingLoading ? 
+                                <LoadingSpinner /> 
+                            :
+                                'Send OTP'  
+                        }
                     </button>
                 </div>
             </form>

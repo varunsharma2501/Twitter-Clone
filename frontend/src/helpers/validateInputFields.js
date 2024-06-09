@@ -10,7 +10,9 @@ const validateInputFields = (name, value, setters) => {
         setIsEmailErrorTextInvisible,
         setEmailErrorText,
         setIsPasswordErrorTextInvisible,
-        setPasswordErrorText
+        setPasswordErrorText,
+        setIsOtpErrorTextInvisible,
+        setOtpErrorText
     } = setters; 
 
     const trimmedValue = value.trim();
@@ -210,6 +212,33 @@ const validateInputFields = (name, value, setters) => {
             setIsPasswordErrorTextInvisible(true); 
             setPasswordErrorText('Display password error text'); 
         }
+    }
+    else if(name === 'otp'){
+        if(value === ''){
+            setIsOtpErrorTextInvisible(true); 
+            setOtpErrorText('Display OTP Error Text'); 
+            return; 
+        }
+        if(trimmedValue === ''){
+            setIsOtpErrorTextInvisible(false); 
+            setOtpErrorText('OTP cannot be just filled with whitespaces'); 
+            return; 
+        }
+        for(let i=0; i < value.length; i++){
+            if(value[i] === ' '){
+                setIsOtpErrorTextInvisible(false); 
+                setOtpErrorText('You cannot type space in OTP input field'); 
+                return; 
+            }
+            else if(!isNumber(value[i])){
+                setIsOtpErrorTextInvisible(false); 
+                setOtpErrorText('You can only type numbers in OTP input field'); 
+                return; 
+            }
+        }
+        setIsOtpErrorTextInvisible(true); 
+        setOtpErrorText('Display OTP Error Text'); 
+        return; 
     }
 } 
 

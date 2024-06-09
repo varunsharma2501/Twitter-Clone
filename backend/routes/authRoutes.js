@@ -10,5 +10,4 @@ router.post('/sign-up', signUpController);
 router.post('/send-otp', sendOTPController); 
 
 
-
 export default router; 
