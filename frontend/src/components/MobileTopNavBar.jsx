@@ -11,7 +11,7 @@ const MobileTopNavBar = () => {
         <div className='min-[500px]:hidden flex absolute top-0 justify-between items-center h-[55px] w-full bg-black border-b-[1px] border-gray-500'>
 
             <div>
-                <IoLogOutOutline className='w-[30px] h-[30px] text-white bg-black rounded-xl rotate-180 ml-5' /> 
+                <IoLogOutOutline className='w-[40px] h-[40px] text-white bg-black rounded-full rotate-180 ml-5 hover:bg-red-600 p-2' /> 
             </div>
             
             <div className='rounded-full bg-black h-[40px] w-[40px] overflow-hidden cursor-pointer hover:bg-[#323333]/60'>

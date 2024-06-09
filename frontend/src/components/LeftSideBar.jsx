@@ -14,7 +14,7 @@ const LeftSideBar = () => {
 
     const iconCSS = 'w-[28px] h-[28px] text-white '; 
     const iconLabelCSS = 'hidden xl:flex items-center text-white px-3'; 
-    const containerOfIconAndLogo = 'flex h-full w-fit mx-auto xl:ml-5 my-2 hover:bg-[#323333]/60 p-2 rounded-full select-none'; 
+    const containerOfIconAndLogo = 'flex h-full w-fit mx-auto xl:ml-5 my-2 hover:bg-[#323333]/60 p-2 rounded-full select-none '; 
     const row = 'w-full rounded-full cursor-pointer'; 
 
     return (
@@ -84,7 +84,7 @@ const LeftSideBar = () => {
                         </div>
                     </div>
                     <div className={row}>
-                        <div className={containerOfIconAndLogo}>
+                        <div className={containerOfIconAndLogo + 'hover:bg-red-600'}>
                             <div>
                                 <IoLogOutOutline className={iconCSS  + 'rotate-180'} /> 
                             </div>
