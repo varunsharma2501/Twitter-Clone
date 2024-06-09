@@ -27,7 +27,7 @@ const router = createBrowserRouter([
         errorElement : <ErrorPage /> 
     },
     {
-        path : '/signup-enter-email', 
+        path : '/signup-page', 
         element : (
             <GlobalToasterLayout>
                 <AuthLayout>

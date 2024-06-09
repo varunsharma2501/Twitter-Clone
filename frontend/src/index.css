@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.glow-white {
+.glow-white, #name:focus, #email:focus {
     box-shadow: 0 0 10px #fff 
 }
 
