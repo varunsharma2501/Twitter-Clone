@@ -2,15 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 
-@media screen and (max-width: 1000px) {
-    #right-side-bar-container #right-side-bar{
-        display: none
-    }
-} */
-/* 
-@media screen and (min-width: 1001px) {
-    #wrapper #right-side-bar-container #right-side-bar{
-        display: block
-    }
-} */
+
+.scrollbar::-webkit-scrollbar{
+    width : 0px;
+    height: 0px; 
+}
