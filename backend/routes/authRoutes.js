@@ -1,12 +1,13 @@
 import express from 'express' 
 
-import { signUp } from '../controllers/authControllers.js' 
+import { signUpController, sendOTPController } from '../controllers/authControllers.js' 
 
 
 const router = express.Router(); 
 
 
-router.get('/sign-up', signUp);
+router.post('/sign-up', signUpController); 
+router.post('/send-otp', sendOTPController); 
 
 
 

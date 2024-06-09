@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react' 
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 import validateInputFields from '../helpers/validateInputFields' 
 
 
 const SignUpPage = () => {
+
+    const navigate = useNavigate(); 
 
     const [email, setEmail] = useState(''); 
     const [name, setName] = useState(''); 
@@ -45,6 +50,31 @@ const SignUpPage = () => {
     }, [isEmailErrorTextInvisible, isNameErrorTextInvisible]); 
 
 
+    const verifyEmail = (e) => {
+
+        e.preventDefault(); 
+        e.stopPropagation(); 
+
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/send-otp`, {
+            email,
+            name 
+        })
+        .then( (res) => {
+            toast.success(res?.data?.message);
+            navigate('/verify-email', {
+                state : {
+                    otp : res.data.otp 
+                }
+            }); 
+        })
+        .catch( (err) => {
+            toast.error(err?.response?.data?.message);
+            console.log(err); 
+            navigate('/'); 
+        })
+    }
+
+
     return (
         <div className='h-full w-full flex flex-col items-center'>
             <div className='w-full flex justify-center items-center'>
@@ -52,7 +82,7 @@ const SignUpPage = () => {
                     Create your account 
                 </h1>
             </div>
-            <form className='flex flex-col items-center w-full'>
+            <form onSubmit={verifyEmail} className='flex flex-col items-center w-full'>
                 <div className='w-full flex justify-center items-center'>
                     <label htmlFor='name' className='mt-10 pl-4 w-[500px] text-white h-10 text-2xl pr-6 flex items-center'>
                         Name
