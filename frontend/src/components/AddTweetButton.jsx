@@ -3,7 +3,7 @@ import React from 'react'
 import AddTweet from '../assets/addTweet.png'
 
 
-const AddPostButton = ({CSS}) => {
+const AddTweetButton = ({CSS}) => {
     return (
         <button className={CSS}>
             <img 
@@ -14,4 +14,4 @@ const AddPostButton = ({CSS}) => {
     )
 }
 
-export default AddPostButton
+export default AddTweetButton

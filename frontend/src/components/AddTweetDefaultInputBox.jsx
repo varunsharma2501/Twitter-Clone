@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Avatar from './Avatar'
 
 
-const CreatePost = () => {
+const AddTweetDefaultInputBox = () => {
   
     const [tweetContent, setTweetContent] = useState(''); 
     const [charCount, setCharCount] = useState(0); 
@@ -48,11 +48,11 @@ const CreatePost = () => {
  
         return () => {
             textarea.removeEventListener('input', autoResize, false);
-        };
+        }; 
     }, [tweetContent]); 
 
     return (
-        <div className='flex p-4 bg-purple-400 h-auto w-full'>
+        <div className='hidden min-[500px]:flex p-4 bg-purple-400 h-auto w-full border-b-[1px] border-gray-500'>
             
             <div className='hidden min-[500px]:block'>
                 <Avatar heightVal={45} widthVal={45} />
@@ -88,7 +88,7 @@ const CreatePost = () => {
                             </span>
                             / 280
                         </h1>
-                        <button disabled={isPostTweetButtonDisabled} type='submit' className={'h-[32px] min-w-[60px] m-[6px] rounded-full ' + `${isPostTweetButtonDisabled ? 'bg-[#323333]/60' : 'bg-[#1d9bf0] hover:bg-blue-500' }`}> 
+                        <button disabled={isPostTweetButtonDisabled} type='submit' className={'h-[32px] min-w-[60px] m-[6px] rounded-full ' + `${isPostTweetButtonDisabled ? 'bg-[#323333]/60' : 'bg-[#1d9bf0] cursor-pointer hover:bg-blue-500' }`}> 
                             <p className='text-white px-2'>
                                 Post 
                             </p>
@@ -100,4 +100,4 @@ const CreatePost = () => {
     )
 }
 
-export default CreatePost
+export default AddTweetDefaultInputBox

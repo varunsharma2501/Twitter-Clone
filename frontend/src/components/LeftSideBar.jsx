@@ -7,7 +7,7 @@ import { IoSearchOutline, IoBookmarkOutline, IoLogOutOutline } from "react-icons
 import Avatar from './Avatar'
 
 import TwitterLogo from '../assets/logo.png'
-import AddPostButton from './AddPostButton'
+import AddTweetButton from './AddTweetButton'
 
 
 const LeftSideBar = () => {
@@ -19,7 +19,7 @@ const LeftSideBar = () => {
 
     return (
         
-        <div className='hidden min-[500px]:flex w-[70px] max-w-[70px] h-full flex-col justify-between xl:min-w-[270px]'>
+        <div className='hidden min-[500px]:flex w-[70px] max-w-[70px] h-full flex-col justify-between xl:min-w-[270px] bg-teal-500'>
             
             <div>
 
@@ -56,30 +56,10 @@ const LeftSideBar = () => {
                     <div className={row}>
                         <div className={containerOfIconAndLogo}>
                             <div>
-                                <GoBell className={iconCSS} /> 
-                            </div>
-                            <div className={iconLabelCSS}>
-                                Notification 
-                            </div>
-                        </div>
-                    </div>
-                    <div className={row}>
-                        <div className={containerOfIconAndLogo}>
-                            <div>
                                 <HiOutlineUser className={iconCSS} /> 
                             </div>
                             <div className={iconLabelCSS}>
                                 Proile 
-                            </div>
-                        </div>
-                    </div>
-                    <div className={row}>
-                        <div className={containerOfIconAndLogo}>
-                            <div>
-                                <IoBookmarkOutline className={iconCSS} /> 
-                            </div>
-                            <div className={iconLabelCSS}>
-                                Bookmarks 
                             </div>
                         </div>
                     </div>
@@ -99,7 +79,7 @@ const LeftSideBar = () => {
                     <p className='text-white font-bold text-lg'> Post </p> 
                 </button>
 
-                <AddPostButton CSS={'xl:hidden h-[40px] w-[40px] bg-blue-500 rounded-full shadow-[0px_0px_5px_1px_rgba(247,247,247,1)] overflow-hidden my-4 mx-auto xl:ml-6 flex items-center justify-center'} />
+                <AddTweetButton CSS={'xl:hidden h-[40px] w-[40px] bg-blue-500 rounded-full shadow-[0px_0px_5px_1px_rgba(247,247,247,1)] overflow-hidden my-4 mx-auto xl:ml-6 flex items-center justify-center'} />
         
             </div>
             
