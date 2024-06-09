@@ -1,7 +1,7 @@
 import React from 'react'
 
 import TwitterLogo from '../assets/logo.png'
-import Avatar from './Avatar'
+import Avatar from '../small components/Avatar'
 
 
 const MobileTopNavBar = () => {

@@ -1,13 +1,13 @@
 import React from 'react'
 
 import { HiOutlineUser } from "react-icons/hi2" 
-import { GoHomeFill, GoBell } from "react-icons/go"  
-import { IoSearchOutline, IoBookmarkOutline, IoLogOutOutline } from "react-icons/io5" 
+import { GoHomeFill } from "react-icons/go"  
+import { IoSearchOutline, IoLogOutOutline } from "react-icons/io5" 
 
-import Avatar from './Avatar'
+import Avatar from '../small components/Avatar'
 
 import TwitterLogo from '../assets/logo.png'
-import AddTweetButton from './AddTweetButton'
+import AddTweetButton from '../small components/AddTweetButton'
 
 
 const LeftSideBar = () => {
@@ -19,7 +19,7 @@ const LeftSideBar = () => {
 
     return (
         
-        <div className='hidden min-[500px]:flex w-[70px] max-w-[70px] h-full flex-col justify-between xl:min-w-[270px] bg-teal-500'>
+        <div className='hidden min-[500px]:flex w-[70px] max-w-[70px] h-full flex-col justify-between xl:min-w-[270px]'>
             
             <div>
 
@@ -59,7 +59,7 @@ const LeftSideBar = () => {
                                 <HiOutlineUser className={iconCSS} /> 
                             </div>
                             <div className={iconLabelCSS}>
-                                Proile 
+                                Profile 
                             </div>
                         </div>
                     </div>

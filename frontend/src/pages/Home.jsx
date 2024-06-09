@@ -1,11 +1,11 @@
 import React from 'react'
 
-import LeftSideBar from '../components/LeftSideBar'
-import Feed from '../components/Feed'
-import RightSideBar from '../components/RightSideBar'
-import MobileBottomNavBar from '../components/MobileBottomNavBar'
-import MobileTopNavBar from '../components/MobileTopNavBar'
-import AddTweetButton from '../components/AddTweetButton'
+import LeftSideBar from '../bigger components/LeftSideBar'
+import Feed from '../bigger components/Feed'
+import RightSideBar from '../bigger components/RightSideBar'
+import MobileBottomNavBar from '../bigger components/MobileBottomNavBar'
+import MobileTopNavBar from '../bigger components/MobileTopNavBar'
+import AddTweetButton from '../small components/AddTweetButton'
 
 
 const Home = () => {
