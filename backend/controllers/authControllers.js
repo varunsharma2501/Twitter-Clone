@@ -98,10 +98,29 @@ export const sendOTP = async (req, res) => {
 export const validateNonExistenceOfUsernameInDB = async (req, res) => {
     try{
         const {username} = req.body; 
-        // check validity 
+        const checkUsername = await userModel.findOne({username}); 
+
+        if(checkUsername){
+            
+            console.log('This username is already taken, please pick a new username for proceeding ahead'); 
+
+            return res.status(400).json({
+                message : "This username is already taken, please pick a new username for proceeding ahead",
+                error : true 
+            }); 
+        }
+        
+        return res.status(200).json({
+            message : 'Succesfully validated non-existence of username in database', 
+            success : true 
+        }); 
     }
     catch(err){
-
+        console.log(`Error occured in authController while validating non-existence of user's username preference in database: ${err.message}`); 
+        return res.status(500).json({
+            message : 'Internal server error', 
+            error : true
+        }); 
     }
 }
 
@@ -110,7 +129,7 @@ export const signUp = async (req, res) => {
     try{
         const {name, email, username, password, profile_pic, cloudinary_img_public_id} = req.body; 
 
-        if(!name || !email || !username || !password || !profile_pic || !cloudinary_img_public_id){
+        if(!name || !email || !username || !password){
             return res.status(400).json({
                 message : 'Invalid backend call, at least one of the input fields is missing' 
             })
