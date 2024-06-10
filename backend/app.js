@@ -2,10 +2,19 @@ import express from 'express'
 import dotenv from 'dotenv' 
 import cors from 'cors'
 
+import cloudinary from 'cloudinary'; 
+
 import authRoutes from './routes/authRoutes.js'; 
+import cloudinaryRoutes from './routes/cloudinaryRoutes.js'; 
 
 
 dotenv.config(); 
+cloudinary.config({ 
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+    api_key: process.env.CLOUDINARY_API_KEY, 
+    api_secret: process.env.CLOUDINARY_API_SECRET 
+});
+
 
 const PORT = process.env.PORT || 8000; 
 const app = express(); 
@@ -19,6 +28,7 @@ app.use(cors({
 
 
 app.use('/api/auth', authRoutes); 
+app.use('/api/delete-cloudinary-asset', cloudinaryRoutes); 
 
 
 app.listen( PORT, (err) => {

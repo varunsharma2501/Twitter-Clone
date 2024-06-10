@@ -1,6 +1,48 @@
 import nodemailer from 'nodemailer' 
 
 
+export const signup = async (req, res) => {
+    try{
+        const {name, email, password, profile_pic, cloudinary_img_public_id} = req.body; 
+        const checkEmail = await userModel.findOne({email}); 
+
+        if(checkEmail){
+            return res.status(400).json({
+                message : "User already exists",
+                error : true 
+            }); 
+        }
+
+        const salt = await bcryptjs.genSalt(10); 
+        const hashPassword = await bcryptjs.hash(password, salt); 
+
+        const payload = {
+            name, 
+            email,
+            profile_pic, 
+            password : hashPassword,
+            cloudinary_img_public_id
+        }
+
+        const user = new userModel(payload); 
+        const userSave = await user.save(); 
+
+        return res.status(201).json({ 
+            message : 'User created successfully', 
+            data : userSave,
+            success : true
+        }); 
+    }
+    catch(err){
+        console.log(`Error occured in authController while signing up the user: ${err.message}`); 
+        return res.status(500).json({
+            message : 'Internal server error', 
+            error : true
+        }); 
+    }
+};
+
+
 export const signUpController = async (req, res) => {
     try{
         res.send({
@@ -73,5 +115,16 @@ export const sendOTPController = async (req, res) => {
             message : 'Internal server error',
             error : true 
         })
+    }
+}
+
+
+export const checkUserNameValidityController = async (req, res) => {
+    try{
+        const {username} = req.body; 
+        // check validity 
+    }
+    catch(err){
+
     }
 }

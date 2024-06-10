@@ -1,5 +1,5 @@
 import isALetterOfAlphabetOrSpace from './stringCheckingUtilFunctions' 
-import { isUpperCase, isLowerCase, isNumber } from './stringCheckingUtilFunctions' 
+import { isUpperCase, isLowerCase, isNumber, isUnderScore } from './stringCheckingUtilFunctions' 
 
 
 const validateInputFields = (name, value, setters) => {
@@ -12,7 +12,9 @@ const validateInputFields = (name, value, setters) => {
         setIsPasswordErrorTextInvisible,
         setPasswordErrorText,
         setIsOtpErrorTextInvisible,
-        setOtpErrorText
+        setOtpErrorText,
+        setIsUsernameErrorTextInvisible,
+        setUsernameErrorText
     } = setters; 
 
     const trimmedValue = value.trim();
@@ -67,9 +69,9 @@ const validateInputFields = (name, value, setters) => {
             setNameErrorText('Only alphabet letters and spaces are allowed');
             return;
         }
-        if(value.length > 100){
+        if(value.length > 50){
             setIsNameErrorTextInvisible(false); 
-            setNameErrorText('Name length cannot be more than 100 chars'); 
+            setNameErrorText('Name length cannot be more than 50 chars'); 
             return; 
         }
         setIsNameErrorTextInvisible(true); 
@@ -236,9 +238,61 @@ const validateInputFields = (name, value, setters) => {
                 return; 
             }
         }
+        if(value.length < 6){
+            setIsOtpErrorTextInvisible(false); 
+            setOtpErrorText('OTP is of 6 digits'); 
+            return; 
+        }
         setIsOtpErrorTextInvisible(true); 
         setOtpErrorText('Display OTP Error Text'); 
         return; 
+    }
+    else if(name === 'username'){
+        if(value === ''){
+            setIsUsernameErrorTextInvisible(true); 
+            setUsernameErrorText('Display Username Error Text'); 
+            return; 
+        }
+        if(trimmedValue === ''){
+            setIsUsernameErrorTextInvisible(false); 
+            setUsernameErrorText('Username cannot be just filled with whitespaces'); 
+            return; 
+        }
+        if(value[0] === ' '){
+            setIsUsernameErrorTextInvisible(false); 
+            setUsernameErrorText('Leading whitespaces are not allowed in username'); 
+            return; 
+        } 
+        if(value[value.length-1] === ' '){
+            setIsUsernameErrorTextInvisible(false); 
+            setUsernameErrorText('Trailing whitespaces are not allowed in username'); 
+            return; 
+        }
+        for(let i=0; i < value.length; i++){
+            if(value[i] === ' '){
+                setIsUsernameErrorTextInvisible(false); 
+                setUsernameErrorText('You cannot have whitespaces in between your username'); 
+                return; 
+            }
+            if(!isUpperCase(value[i]) && !isLowerCase(value[i]) && !isNumber(value[i]) && !isUnderScore(value[i])){
+                setIsUsernameErrorTextInvisible(false); 
+                setUsernameErrorText('You can only have alphanumeric values and underscore character in your username'); 
+                return; 
+            }
+        }
+        if(value.length < 4){
+            setIsUsernameErrorTextInvisible(false); 
+            setUsernameErrorText('Username should atleast have 4 characters'); 
+            return;
+        }
+        if(value.length > 15){
+            setIsUsernameErrorTextInvisible(false); 
+            setUsernameErrorText('Username cannot have more than 15 characters in it'); 
+            return;
+        }   
+        setIsUsernameErrorTextInvisible(true); 
+        setUsernameErrorText('Display Username Error Text'); 
+        return;    
     }
 } 
 

@@ -26,5 +26,9 @@ export const isLowerCase = (s) => {
     return (s === s.toLowerCase()) && (s !== s.toUpperCase()); 
 }
 
+export const isUnderScore = (s) => {
+    return (s === '_') ? true : false; 
+} 
+
 
 export default isALetterOfAlphabetOrSpace; 

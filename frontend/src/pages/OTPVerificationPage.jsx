@@ -52,7 +52,7 @@ const OTPVerificationPage = () => {
         if(otp === inputOtp){
             toast.success('Email verified successfully'); 
             setVerifyingOtpLoading(false); 
-            navigate('/enter-details', {
+            navigate('/enter-username-and-password', {
                 state : {
                     name,
                     email 
@@ -66,7 +66,7 @@ const OTPVerificationPage = () => {
         }
     }
 
-    const [minutes, setMinutes] = useState(9); 
+    const [minutes, setMinutes] = useState(1); 
     const [seconds, setSeconds] = useState(59); 
 
     useEffect( () => {
@@ -76,6 +76,7 @@ const OTPVerificationPage = () => {
             }
             else if(seconds === 0){
                 if(minutes === 0){
+                    toast.error("You were unable to enter OTP under 2 mins. That's why session expired, please try again"); 
                     navigate('/'); 
                     clearInterval(intervalId); 
                 }
@@ -90,8 +91,6 @@ const OTPVerificationPage = () => {
             clearInterval(intervalId); 
         }
     }, [seconds])
-
-    // If you don't enter OTP in 2 mins, then will be redirected to homepage again 
 
     return (
         <div className='h-full w-full flex flex-col items-center'>

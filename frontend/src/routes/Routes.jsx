@@ -6,7 +6,7 @@ import GlobalToasterLayout from '../layouts/GlobalToasterLayout';
 import LandingPage from '../pages/LandingPage'; 
 import SignUpPage from '../pages/SignUpPage'; 
 import OTPVerificationPage from '../pages/OTPVerificationPage'; 
-import EnterSignUpDetails from '../pages/EnterSignUpDetails'; 
+import EnterUsernameAndPassword from '../pages/EnterUsernameAndPassword'; 
 import UploadProfilePic from '../pages/UploadProfilePic'; 
 import CheckEmailLoginPage from '../pages/CheckEmailLoginPage'; 
 import CheckPasswordLoginPage from '../pages/CheckPasswordLoginPage'; 
@@ -49,11 +49,11 @@ const router = createBrowserRouter([
         errorElement : <ErrorPage /> 
     },
     {
-        path : '/enter-details', 
+        path : '/enter-username-and-password', 
         element : (
             <GlobalToasterLayout>
                 <AuthLayout>
-                    <EnterSignUpDetails />
+                    <EnterUsernameAndPassword />
                 </AuthLayout>
             </GlobalToasterLayout>
         ),
@@ -63,9 +63,7 @@ const router = createBrowserRouter([
         path : '/upload-profile-pic-and-create-account', 
         element : (
             <GlobalToasterLayout>
-                <AuthLayout>
-                    <UploadProfilePic /> 
-                </AuthLayout>
+                <UploadProfilePic />
             </GlobalToasterLayout>
         ),
         errorElement : <ErrorPage /> 
