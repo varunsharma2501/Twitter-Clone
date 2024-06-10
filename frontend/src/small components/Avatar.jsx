@@ -39,7 +39,7 @@ const Avatar = ({name, secureImageURL, height, width}) => {
                         width={width}
                     />
                 ) : name ? (
-                        <div className={`mt-4 p-5 overflow-hidden h-[240px] w-[240px] rounded-full text-8xl flex items-center justify-center font-serif ${randomBgColour[randomNumber]}`}>
+                        <div className={`mt-4 p-5 overflow-hidden h-[240px] w-[240px] rounded-full text-[140px] flex items-center justify-center font-serif ${randomBgColour[randomNumber]}`}>
                             {avatarName}
                         </div>
                     ) : (

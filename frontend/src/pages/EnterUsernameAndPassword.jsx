@@ -64,12 +64,11 @@ const EnterUsernameAndPassword = () => {
 
         setFormSubmissionLoading(true); 
 
-        // axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/send-otp`, {
-        //     email,
-        //     name 
-        // })
-        // .then( (res) => {
-            // toast.success(res?.data?.message);        
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/validate-non-existence-of-username-in-db`, {
+            username
+        })
+        .then( (res) => {
+            toast.success(res?.data?.message); 
             setFormSubmissionLoading(false); 
             navigate('/upload-profile-pic-and-create-account', {
                 state : {
@@ -79,33 +78,21 @@ const EnterUsernameAndPassword = () => {
                     password
                 }
             }); 
-        // })
-        // .catch( (err) => {
-        //     console.log(err); 
-        //     toast.error(err?.response?.data?.message);
-        //     setFormSubmissionLoading(false); 
-        //     navigate('/'); 
-        // })
-    }
-
-    useEffect( () => {
-
-        if(isUsernameErrorTextInvisible){
-            if(username !== ''){
-                const checkUserNameAvailabilityEvery500msUserStopsTyping = setTimeout( () => {
-                    // Check validity of username and 
-                    // Set errors 
-                    // on success navigate to /upload-profile-pic-and-create-account 
-                    // pass state also of details 
-                }, 500);
-
-                return () => {
-                    clearTimeout(checkUserNameAvailabilityEvery500msUserStopsTyping); 
-                }
+        })
+        .catch( (err) => {
+            if(err?.response?.status === 400){
+                console.log(err); 
+                setFormSubmissionLoading(false); 
+                toast.error(err?.response?.data?.message);
+            } 
+            else if(err?.response?.status === 500){
+                console.log(err); 
+                setFormSubmissionLoading(false); 
+                toast.error(err?.response?.data?.message);
+                navigate('/'); 
             }
-        }
-
-    }, [isUsernameErrorTextInvisible, username])  
+        })
+    }
     
     const [passwordVisible, setPasswordVisible] = useState(false); 
     const eyeIcon = passwordVisible ? <FiEye /> : <FiEyeOff />; 

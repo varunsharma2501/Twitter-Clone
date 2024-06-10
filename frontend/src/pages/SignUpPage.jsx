@@ -53,6 +53,30 @@ const SignUpPage = () => {
 
     const [otpSendingLoading, setOtpSendingLoading] = useState(false); 
 
+    const validateNonExistenceOfEmail = (e) => {
+        
+        e.preventDefault(); 
+        e.stopPropagation();
+
+        setOtpSendingLoading(true); 
+
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/validate-non-existence-of-email-in-db`, {
+            email 
+        }) 
+        .then( (res) => {
+            if(res.data.success){
+                toast.success('Sending OTP to given email');
+                toast.success(res?.data?.message); 
+                sendOtp(e); 
+            }
+        }) 
+        .catch( (err) => {
+            console.log(err); 
+            setOtpSendingLoading(false); 
+            toast.error(err?.response?.data?.message); 
+        }) 
+    }
+
     const sendOtp = (e) => {
 
         e.preventDefault(); 
@@ -91,7 +115,7 @@ const SignUpPage = () => {
                     Create your account 
                 </h1>
             </div>
-            <form onSubmit={sendOtp} className='flex flex-col items-center w-full'>
+            <form onSubmit={validateNonExistenceOfEmail} className='flex flex-col items-center w-full'>
                 <div className='w-full flex justify-center items-center'>
                     <label htmlFor='name' className='mt-10 pl-4 w-[500px] text-white h-10 text-2xl pr-6 flex items-center'>
                         Name

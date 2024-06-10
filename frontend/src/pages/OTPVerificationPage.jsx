@@ -62,7 +62,6 @@ const OTPVerificationPage = () => {
         else{
             setVerifyingOtpLoading(false); 
             toast.error("Please try again, you've entered wrong OTP"); 
-            setInputOtp(''); 
         }
     }
 

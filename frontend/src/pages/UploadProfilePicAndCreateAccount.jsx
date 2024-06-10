@@ -13,7 +13,7 @@ import LoadingSpinner from '../small components/LoadingSpinner';
 import uploadProfilePicToCloudinary from '../helpers/uploadProfilePicToCloudinary';  
 
 
-const UploadProfilePic = () => {
+const UploadProfilePicAndCreateAccount = () => {
 
     const navigate = useNavigate(); 
 
@@ -124,7 +124,7 @@ const UploadProfilePic = () => {
         
         setAccountCreationLoading(true); 
         
-        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`, data)
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/sign-up`, data)
         .then( (response) => {
             
             toast.success(response?.data?.message); 
@@ -178,6 +178,9 @@ const UploadProfilePic = () => {
                     public_id : cloudinaryImgPublicID
                 })
                 setCloudinaryImgPublicID(''); 
+            }
+            else{
+                navigate('/'); 
             }
         }
         catch(err){
@@ -284,4 +287,4 @@ const UploadProfilePic = () => {
     )
 }
 
-export default UploadProfilePic
+export default UploadProfilePicAndCreateAccount
