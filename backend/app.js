@@ -4,6 +4,8 @@ import cors from 'cors'
 
 import cloudinary from 'cloudinary'; 
 
+import connectToMongoDB from './db/connectToMongoDB.js';
+
 import authRoutes from './routes/authRoutes.js'; 
 import cloudinaryRoutes from './routes/cloudinaryRoutes.js'; 
 
@@ -31,12 +33,14 @@ app.use('/api/auth', authRoutes);
 app.use('/api/delete-cloudinary-asset', cloudinaryRoutes); 
 
 
-app.listen( PORT, (err) => {
-    if(err){
-        console.log(`Error occured while starting the server ${err.message}`); 
-    }
-    else{
-        console.log(`Server started successfully on port no.: ${PORT}`); 
-        console.log(`Press ctrl and click me: http://localhost:${PORT}`); 
-    } 
-}); 
+connectToMongoDB().then( () => {
+    app.listen( PORT, (err) => {
+        if(err){
+            console.log(`Error occured while starting the server ${err.message}`); 
+        }
+        else{
+            console.log(`Server started successfully on port no.: ${PORT}`); 
+            console.log(`Press ctrl and click me: http://localhost:${PORT}`); 
+        } 
+    }); 
+})
