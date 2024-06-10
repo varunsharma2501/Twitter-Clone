@@ -1,56 +1,32 @@
 import nodemailer from 'nodemailer' 
+import bcryptjs from 'bcryptjs'; 
+
+import userModel from '../models/userModel.js'; 
 
 
-export const signup = async (req, res) => {
+export const validateNonExistenceOfEmailInDB = async (req, res) => {
     try{
-        const {name, email, password, profile_pic, cloudinary_img_public_id} = req.body; 
+        const {email} = req.body; 
+        
         const checkEmail = await userModel.findOne({email}); 
 
         if(checkEmail){
+            
+            console.log('This email already has an account linked to it, this email cannot be used for creating a new account'); 
+
             return res.status(400).json({
-                message : "User already exists",
+                message : "This email already has an account linked to it, this email cannot be used for creating a new account",
                 error : true 
             }); 
         }
-
-        const salt = await bcryptjs.genSalt(10); 
-        const hashPassword = await bcryptjs.hash(password, salt); 
-
-        const payload = {
-            name, 
-            email,
-            profile_pic, 
-            password : hashPassword,
-            cloudinary_img_public_id
-        }
-
-        const user = new userModel(payload); 
-        const userSave = await user.save(); 
-
-        return res.status(201).json({ 
-            message : 'User created successfully', 
-            data : userSave,
-            success : true
+        
+        return res.status(200).json({
+            message : 'Succesfully validated non-existence of email in database', 
+            success : true 
         }); 
     }
     catch(err){
-        console.log(`Error occured in authController while signing up the user: ${err.message}`); 
-        return res.status(500).json({
-            message : 'Internal server error', 
-            error : true
-        }); 
-    }
-};
-
-
-export const signUpController = async (req, res) => {
-    try{
-        res.send({
-            "Testing" : "Successfull" 
-        })
-    }
-    catch(err){
-        console.log(`An error occured in authController while signing up the user: ${err.message}`); 
+        console.log(`Error occured in authController while validating non-existence of user's email in database: ${err.message}`); 
         return res.status(500).json({
             message : 'Internal server error', 
             error : true
@@ -59,7 +35,7 @@ export const signUpController = async (req, res) => {
 }
 
 
-export const sendOTPController = async (req, res) => {
+export const sendOTP = async (req, res) => {
     try{
         const {email, name} = req.body; 
         const otp = `${Math.floor(100000 + Math.random() * 900000)}` 
@@ -119,7 +95,7 @@ export const sendOTPController = async (req, res) => {
 }
 
 
-export const checkUserNameValidityController = async (req, res) => {
+export const validateNonExistenceOfUsernameInDB = async (req, res) => {
     try{
         const {username} = req.body; 
         // check validity 
@@ -128,3 +104,44 @@ export const checkUserNameValidityController = async (req, res) => {
 
     }
 }
+
+
+export const signUp = async (req, res) => {
+    try{
+        const {name, email, username, password, profile_pic, cloudinary_img_public_id} = req.body; 
+
+        if(!name || !email || !username || !password || !profile_pic || !cloudinary_img_public_id){
+            return res.status(400).json({
+                message : 'Invalid backend call, at least one of the input fields is missing' 
+            })
+        } 
+
+        const salt = await bcryptjs.genSalt(10); 
+        const hashPassword = await bcryptjs.hash(password, salt); 
+
+        const payload = {
+            name, 
+            email, 
+            username, 
+            password : hashPassword, 
+            profile_pic, 
+            cloudinary_img_public_id 
+        }
+
+        const user = new userModel(payload); 
+        const userSave = await user.save(); 
+
+        return res.status(201).json({ 
+            message : 'User created successfully', 
+            data : userSave, 
+            success : true 
+        }); 
+    }
+    catch(err){
+        console.log(`Error occured in authController while signing up the user: ${err.message}`); 
+        return res.status(500).json({
+            message : 'Internal server error', 
+            error : true
+        }); 
+    }
+};

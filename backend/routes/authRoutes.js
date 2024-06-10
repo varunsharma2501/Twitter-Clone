@@ -1,14 +1,16 @@
 import express from 'express' 
 
-import { signUpController, sendOTPController, checkUserNameValidityController } from '../controllers/authControllers.js' 
+import { validateNonExistenceOfEmailInDB, sendOTP, validateNonExistenceOfUsernameInDB, signUp } from '../controllers/authControllers.js' 
 
 
 const router = express.Router(); 
 
 
-router.post('/sign-up', signUpController); 
-router.post('/send-otp', sendOTPController); 
-router.post('/check-username-validity', checkUserNameValidityController); 
+router.post('/validate-non-existence-of-email-in-db', validateNonExistenceOfEmailInDB); 
+router.post('/send-otp', sendOTP); 
+router.post('/check-username-validity', validateNonExistenceOfUsernameInDB); 
+
+router.post('/sign-up', signUp); 
 
 
 export default router; 
