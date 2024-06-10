@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { HiOutlineUser } from "react-icons/hi2" 
 import { GoHomeFill } from "react-icons/go"  
 import { IoSearchOutline, IoLogOutOutline } from "react-icons/io5" 
+
+import toast from 'react-hot-toast'
+
+import { useDispatch } from 'react-redux' 
+import { logout } from '../redux/userSlice'
+import { useNavigate } from 'react-router-dom'
 
 import TwitterLogo from '../assets/logo.png'
 import AddTweetButton from '../small components/AddTweetButton'
@@ -10,6 +16,37 @@ import MiniAvatar from '../small components/MiniAvatar'
 
 
 const LeftSideBar = () => {
+
+    const navigate = useNavigate(); 
+    const dispatch = useDispatch(); 
+
+    const fetchUserDetails = () => {
+
+    }
+
+    useEffect( () => {
+        if(!localStorage.getItem('jwt')){ 
+			toast.error("Security Logout"); 
+            localStorage.removeItem('jwt'); 
+            dispatch(logout());  
+			navigate('/'); 
+        }
+        else{
+            fetchUserDetails(); 
+        }
+    })
+
+    const logoutUser = (e) => {
+        e.preventDefault(); 
+        e.stopPropagation(); 
+
+        localStorage.removeItem('jwt'); 
+        dispatch(logout()); 
+
+        toast.success('User logged out successfully'); 
+        
+        navigate('/'); 
+    }
 
     const iconCSS = 'w-[28px] h-[28px] text-white '; 
     const iconLabelCSS = 'hidden xl:flex items-center text-white px-3'; 
@@ -63,7 +100,7 @@ const LeftSideBar = () => {
                         </div>
                     </div>
                     <div className={row}>
-                        <div className={containerOfIconAndLogo + 'hover:bg-red-600'}>
+                        <div onClick={logoutUser} className={containerOfIconAndLogo + 'hover:bg-red-600'}>
                             <div>
                                 <IoLogOutOutline className={iconCSS  + 'rotate-180'} /> 
                             </div>

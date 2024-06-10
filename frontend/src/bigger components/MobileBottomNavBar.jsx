@@ -4,9 +4,29 @@ import { HiOutlineUser } from "react-icons/hi2"
 import { GoHomeFill } from "react-icons/go"  
 import { IoSearchOutline, IoLogOutOutline } from "react-icons/io5" 
 
+import toast from 'react-hot-toast'
+
+import { useDispatch } from 'react-redux' 
+import { logout } from '../redux/userSlice'
+import { useNavigate } from 'react-router-dom'
+
 
 const MobileBottomNavBar = () => {
 
+    const navigate = useNavigate(); 
+    const dispatch = useDispatch(); 
+
+    const logoutUser = (e) => {
+        e.preventDefault(); 
+        e.stopPropagation(); 
+
+        localStorage.removeItem('jwt'); 
+        dispatch(logout()); 
+
+        toast.success('User logged out successfully'); 
+        
+        navigate('/'); 
+    }
     
     const iconCSS = 'w-[42px] h-[42px] text-white hover:bg-[#323333]/60 p-2 bg-black rounded-full cursor-pointer'; 
     const containerOfIcon = 'h-[50px] w-[50px] select-none flex items-center justify-center'; 
@@ -26,7 +46,7 @@ const MobileBottomNavBar = () => {
             </div>
 
             <div>
-                <IoLogOutOutline className='w-[40px] h-[40px] text-white bg-black rounded-full cursor-pointer ml-5 hover:bg-red-600 p-2' /> 
+                <IoLogOutOutline onClick={logoutUser} className='w-[40px] h-[40px] text-white bg-black rounded-full cursor-pointer ml-5 hover:bg-red-600 p-2' /> 
             </div>
         </div>
     )

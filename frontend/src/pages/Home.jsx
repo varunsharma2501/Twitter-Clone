@@ -6,9 +6,14 @@ import RightSideBar from '../bigger components/RightSideBar'
 import MobileBottomNavBar from '../bigger components/MobileBottomNavBar'
 import MobileTopNavBar from '../bigger components/MobileTopNavBar'
 import AddTweetButton from '../small components/AddTweetButton'
+import { useSelector } from 'react-redux'
 
 
 const Home = () => {
+
+  const user = useSelector(state => state.user); 
+  console.log(user);
+
   return (
     <div className='w-full h-screen flex justify-center bg-black'> 
         <div className='relative flex justify-center w-[100%]'> 
