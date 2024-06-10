@@ -6,7 +6,7 @@ import { getUserDetails, updateUserNameAndProfilePic, getAllMatchingUsers } from
 const router = express.Router(); 
 
 
-router.get('/details', protectRoute, getUserDetails); 
+router.post('/details', protectRoute, getUserDetails); 
 router.put('/update', protectRoute, updateUserNameAndProfilePic); 
 router.put('/get-user-search-result', protectRoute, getAllMatchingUsers); 
 

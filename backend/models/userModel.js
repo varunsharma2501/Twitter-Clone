@@ -28,6 +28,10 @@ const userSchema = new mongoose.Schema({
         type : String,
         default : ""
     },
+    banner_img : {
+        type : String, 
+        default : "https://res.cloudinary.com/djdcjkgvc/image/upload/v1718051183/Twitter%20Banner%20Image/pyct9iecnvbvpenzodoa.jpg"
+    },
     followers : {
         type : Array,
         default : []

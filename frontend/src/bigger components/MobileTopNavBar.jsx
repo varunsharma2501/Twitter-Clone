@@ -3,13 +3,24 @@ import React from 'react'
 import TwitterLogo from '../assets/logo.png'
 import MiniAvatar from '../small components/MiniAvatar'
 
+import { useSelector } from 'react-redux'
+
 
 const MobileTopNavBar = () => {
+
+    const user = useSelector(state => state.user); 
+
     return (
-        <div className='min-[500px]:hidden flex absolute top-0 items-center h-[55px] w-full bg-black border-b-[1px] border-gray-500'>
+        <div className='min-[500px]:hidden flex absolute top-0 items-center h-[60px] w-full bg-black border-b-[1px] border-gray-500'>
 
             <div className='absolute left-3'>
-                <MiniAvatar />
+                <MiniAvatar 
+                    userId={user?._id}
+                    name={user?.name}
+                    secureImageURL={user?.profile_pic}
+                    height={48}
+                    width={48}
+                /> 
             </div>
         
             <div className='rounded-full bg-black h-[40px] overflow-hidden cursor-pointer mr flex justify-center items-center w-full'>

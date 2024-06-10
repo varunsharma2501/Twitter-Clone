@@ -3,10 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { FaRegImage } from "react-icons/fa6";
 
 import MiniAvatar from '../small components/MiniAvatar';
+import { useSelector } from 'react-redux';
 
 
 const AddTweetDefaultInputBox = () => {
   
+    const user = useSelector(state => state.user); 
+
     const [tweetContent, setTweetContent] = useState(''); 
     const [charCount, setCharCount] = useState(0); 
 
@@ -57,7 +60,13 @@ const AddTweetDefaultInputBox = () => {
         <div className='hidden min-[500px]:flex p-4 h-auto w-full border-b-[1px] border-gray-500'>
             
             <div className='hidden min-[500px]:block'>
-                <MiniAvatar />
+                <MiniAvatar 
+                    userId={user?._id}
+                    name={user?.name}
+                    secureImageURL={user?.profile_pic}
+                    height={48}
+                    width={48}
+                /> 
             </div>
 
             <div className='ml-2 w-full h-auto rounded-lg'>

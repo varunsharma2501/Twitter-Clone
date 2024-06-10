@@ -6,9 +6,9 @@ import { IoSearchOutline, IoLogOutOutline } from "react-icons/io5"
 
 import toast from 'react-hot-toast'
 
-import { useDispatch } from 'react-redux' 
+import { useDispatch, useSelector } from 'react-redux' 
 import { logout } from '../redux/userSlice'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import TwitterLogo from '../assets/logo.png'
 import AddTweetButton from '../small components/AddTweetButton'
@@ -17,25 +17,11 @@ import MiniAvatar from '../small components/MiniAvatar'
 
 const LeftSideBar = () => {
 
+    const user = useSelector(state => state.user); 
+
     const navigate = useNavigate(); 
     const dispatch = useDispatch(); 
-
-    const fetchUserDetails = () => {
-
-    }
-
-    useEffect( () => {
-        if(!localStorage.getItem('jwt')){ 
-			toast.error("Security Logout"); 
-            localStorage.removeItem('jwt'); 
-            dispatch(logout());  
-			navigate('/'); 
-        }
-        else{
-            fetchUserDetails(); 
-        }
-    })
-
+    
     const logoutUser = (e) => {
         e.preventDefault(); 
         e.stopPropagation(); 
@@ -70,14 +56,14 @@ const LeftSideBar = () => {
 
                 <div>
                     <div className={row}>
-                        <div className={containerOfIconAndLogo}>
+                        <Link to={'/home'} className={containerOfIconAndLogo}>
                             <div>
                                 <GoHomeFill className={iconCSS} />
                             </div>
                             <div className={iconLabelCSS}>
                                 Home
                             </div>
-                        </div>
+                        </Link>
                     </div>
                     <div className={row}>
                         <div className={containerOfIconAndLogo}>
@@ -90,17 +76,17 @@ const LeftSideBar = () => {
                         </div>
                     </div>
                     <div className={row}>
-                        <div className={containerOfIconAndLogo}>
+                        <Link to={'/home/profile'} className={containerOfIconAndLogo}>
                             <div>
                                 <HiOutlineUser className={iconCSS} /> 
                             </div>
                             <div className={iconLabelCSS}>
                                 Profile 
                             </div>
-                        </div>
+                        </Link>
                     </div>
                     <div className={row}>
-                        <div onClick={logoutUser} className={containerOfIconAndLogo + 'hover:bg-red-600'}>
+                        <div onClick={logoutUser} className={containerOfIconAndLogo}>
                             <div>
                                 <IoLogOutOutline className={iconCSS  + 'rotate-180'} /> 
                             </div>
@@ -120,7 +106,13 @@ const LeftSideBar = () => {
             </div>
             
             <div className='flex xl:px-4 xl:py-2 xl:h-[65px] xl:w-[240px] rounded-full cursor-pointer select-none hover:bg-[#323333]/60 mx-auto xl:ml-4 mb-3'> 
-                <MiniAvatar /> 
+                <MiniAvatar 
+                    userId={user?._id}
+                    name={user?.name}
+                    secureImageURL={user?.profile_pic}
+                    height={48}
+                    width={48}
+                /> 
                 <div className='hidden ml-1 xl:ml-3 xl:flex xl:flex-col'> 
                     <h3 className='text-white font-semibold p-0 m-0'> Aryan Tomar </h3>
                     <p className='text-gray-500 text-md'> @aryan04-t </p>

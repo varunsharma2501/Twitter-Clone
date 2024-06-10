@@ -13,6 +13,9 @@ import CheckPasswordLoginPage from '../pages/CheckPasswordLoginPage';
 import ForgotPasswordPage from '../pages/ForgotPasswordPage'; 
 import Home from '../pages/Home'; 
 
+import Feed from '../bigger components/Feed'
+import Profile from '../bigger components/Profile';
+
 import ErrorPage from '../pages/ErrorPage'; 
 
 
@@ -106,6 +109,16 @@ const router = createBrowserRouter([
                 <Home />
             </GlobalToasterLayout>
         ),
+        children : [
+            {
+                path : '/home',
+                element : <Feed />
+            },
+            {
+                path : 'profile',
+                element : <Profile />
+            }
+        ],
         errorElement : <ErrorPage /> 
     }
 ])
