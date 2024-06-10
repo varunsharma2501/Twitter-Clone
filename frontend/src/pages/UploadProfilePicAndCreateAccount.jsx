@@ -99,7 +99,7 @@ const UploadProfilePicAndCreateAccount = () => {
 
         try{
             if(cloudinaryImgPublicID !== ''){
-                const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/delete-cloudinary-asset`, {
+                const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/cloudinary/delete-cloudinary-asset`, {
                     public_id : cloudinaryImgPublicID
                 })
                 setCloudinaryImgPublicID(''); 
@@ -174,7 +174,7 @@ const UploadProfilePicAndCreateAccount = () => {
         try{
             if(cloudinaryImgPublicID !== ''){
                 navigate('/'); 
-                await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/delete-cloudinary-asset`, {
+                await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/cloudinary/delete-cloudinary-asset`, {
                     public_id : cloudinaryImgPublicID
                 })
                 setCloudinaryImgPublicID(''); 

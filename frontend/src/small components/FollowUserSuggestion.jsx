@@ -1,13 +1,13 @@
 import React from 'react'
 
-import Avatar from './Avatar'
+import MiniAvatar from './MiniAvatar'
 
 
 const FollowUserSuggestion = () => {
     return (
         <div className='relative flex py-2  hover:bg-[#323333]/60 cursor-pointer'>
             <div className='ml-3'>
-                <Avatar heightVal={45} widthVal={45} /> 
+                <MiniAvatar /> 
             </div>
             <div className='flex flex-col ml-2'>
                 <span className='text-white font-semibold'> Marvel Studios </span> 

@@ -4,10 +4,9 @@ import { HiOutlineUser } from "react-icons/hi2"
 import { GoHomeFill } from "react-icons/go"  
 import { IoSearchOutline, IoLogOutOutline } from "react-icons/io5" 
 
-import Avatar from '../small components/Avatar'
-
 import TwitterLogo from '../assets/logo.png'
 import AddTweetButton from '../small components/AddTweetButton'
+import MiniAvatar from '../small components/MiniAvatar'
 
 
 const LeftSideBar = () => {
@@ -84,7 +83,7 @@ const LeftSideBar = () => {
             </div>
             
             <div className='flex xl:px-4 xl:py-2 xl:h-[65px] xl:w-[240px] rounded-full cursor-pointer select-none hover:bg-[#323333]/60 mx-auto xl:ml-4 mb-3'> 
-                <Avatar heightVal={45} widthVal={45} /> 
+                <MiniAvatar /> 
                 <div className='hidden ml-1 xl:ml-3 xl:flex xl:flex-col'> 
                     <h3 className='text-white font-semibold p-0 m-0'> Aryan Tomar </h3>
                     <p className='text-gray-500 text-md'> @aryan04-t </p>

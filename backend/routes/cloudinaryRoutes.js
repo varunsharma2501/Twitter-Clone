@@ -3,6 +3,6 @@ import { deleteCloudinaryAssetController } from '../controllers/cloudinaryContro
 
 const router = express.Router(); 
 
-router.post('/', deleteCloudinaryAssetController); 
+router.post('/delete-cloudinary-asset', deleteCloudinaryAssetController); 
 
 export default router;

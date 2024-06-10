@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { FaRegImage } from "react-icons/fa6";
 
-import Avatar from '../small components/Avatar'
+import MiniAvatar from '../small components/MiniAvatar';
 
 
 const AddTweetDefaultInputBox = () => {
@@ -57,7 +57,7 @@ const AddTweetDefaultInputBox = () => {
         <div className='hidden min-[500px]:flex p-4 h-auto w-full border-b-[1px] border-gray-500'>
             
             <div className='hidden min-[500px]:block'>
-                <Avatar heightVal={45} widthVal={45} />
+                <MiniAvatar />
             </div>
 
             <div className='ml-2 w-full h-auto rounded-lg'>

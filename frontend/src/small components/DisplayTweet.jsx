@@ -4,9 +4,8 @@ import { CiHeart } from "react-icons/ci";
 import { FcLike } from "react-icons/fc";
 {/* <FcLike /> */}
 
-import Avatar from './Avatar'
-
 import Dummy1 from '../assets/logo.png'
+import MiniAvatar from './MiniAvatar';
 
 
 const DisplayTweet = () => {
@@ -16,7 +15,7 @@ const DisplayTweet = () => {
     return (
         <div className='flex px-4 py-3 h-auto w-full border-b-[1px] border-gray-500'>
             <div>
-                <Avatar heightVal={45} widthVal={45}/> 
+                <MiniAvatar />
             </div>
             <div className='ml-2 flex flex-col w-full h-auto rounded-lg overflow-hidden'>
                 <div> 
