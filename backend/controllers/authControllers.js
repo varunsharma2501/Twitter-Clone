@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer' 
 import bcryptjs from 'bcryptjs'; 
+import jwt from 'jsonwebtoken'
 
 import userModel from '../models/userModel.js'; 
 
@@ -161,6 +162,83 @@ export const signUp = async (req, res) => {
         return res.status(500).json({
             message : 'Internal server error', 
             error : true
+        }); 
+    }
+};
+
+
+export const checkEmailForLogin = async (req, res) => {
+    try{
+        const {email} = req.body; 
+        const user = await userModel.findOne({email}).select("-password"); 
+        if(user){
+            return res.status(200).json({
+                message : "User Verified", 
+                success : true, 
+                data : user
+            }); 
+        }
+        else{
+            return res.status(400).json({
+                message : "User doesn't exist" 
+            })
+        }
+    }
+    catch(err){
+        console.log(`Error occured in authController while checking the email: ${err.message}`); 
+        return res.status(500).json({
+            message : 'Internal server error' 
+        })
+    }
+}
+
+
+
+export const checkPasswordAndLogin = async (req, res) => {
+    try{
+        const {password, _id} = req.body; 
+        const user = await userModel.findById(_id); 
+        
+        if(user){
+            
+            const hashedPassword = user.password; 
+            const isPasswordCorrect = await bcryptjs.compare(password, hashedPassword); 
+            
+            if(isPasswordCorrect){
+                
+                const tokenPayload = {
+                    id : user._id
+                };
+                
+                const token = jwt.sign(tokenPayload, process.env.JWT_SECRET_KEY, {
+                    expiresIn : '15d' 
+                });
+
+                return res.status(200).json({
+                    message : 'Logged In successfully', 
+                    token, 
+                    success : true
+                })
+            }
+            else{
+                return res.status(400).json({
+                    message : 'User entered wrong password', 
+                    success : false
+                })
+            }
+        }
+        else{
+            return res.status(400).json({
+                message : "User doesn't exits", 
+                error : true 
+            })
+        }
+    }
+    catch(err){
+        console.log(`Error occured in authControler while verifying user password: ${err.message}`); 
+        return res.status(500).json({
+            message : 'Internal server error', 
+            error :true 
         }); 
     }
 };
