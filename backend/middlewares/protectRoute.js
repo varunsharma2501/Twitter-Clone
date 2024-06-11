@@ -3,10 +3,8 @@ import userModel from '../models/userModel.js';
 
 const protectRoute = async (req, res, next) => {
     try{
-        const token = req.body.token || ''; 
 
-        console.log('This is the token');
-        console.log(token); 
+        const token = req.headers.authorization;  
 
         if(!token){
             return res.status(401).json({
@@ -19,7 +17,7 @@ const protectRoute = async (req, res, next) => {
         if(decoded){
             const user = await userModel.findById(decoded.id).select('-password'); 
             if(user){
-                req.user = user; 
+                req.body.user = user; 
             }
             else{
                 return res.status(404).json({

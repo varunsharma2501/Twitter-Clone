@@ -102,9 +102,6 @@ export const validateNonExistenceOfUsernameInDB = async (req, res) => {
         const checkUsername = await userModel.findOne({username}); 
 
         if(checkUsername){
-            
-            console.log('This username is already taken, please pick a new username for proceeding ahead'); 
-
             return res.status(400).json({
                 message : "This username is already taken, please pick a new username for proceeding ahead",
                 error : true 

@@ -1,9 +1,9 @@
 import cloudinary from 'cloudinary'; 
 
-export const deleteCloudinaryAssetController = async (req, res) => {
+export const deleteCloudinaryAsset = async (req, res) => {
     try{
-        const {public_id} = req.body;
-        cloudinary.uploader.destroy(public_id).then( ({result}) => {
+        const {upload_preset, asset_name} = req.params;
+        cloudinary.uploader.destroy(`${upload_preset}/${asset_name}`).then( ({result}) => {
             if(result === 'ok'){
                 return res.status(200).json({
                     message : 'Asset deleted successfully',

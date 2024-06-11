@@ -1,14 +1,12 @@
 import express from 'express'; 
 
 import protectRoute from '../middlewares/protectRoute.js';
-import { getUserDetails, updateUserNameAndProfilePic, getAllMatchingUsers } from '../controllers/userControllers.js'; 
+import { getUserDetails } from '../controllers/userController.js'; 
 
 const router = express.Router(); 
 
 
-router.post('/details', protectRoute, getUserDetails); 
-router.put('/update', protectRoute, updateUserNameAndProfilePic); 
-router.put('/get-user-search-result', protectRoute, getAllMatchingUsers); 
+router.get('/details', protectRoute, getUserDetails); 
 
 
 export default router; 

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react' 
-import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import toast from 'react-hot-toast';
+import { useLocation, useNavigate } from 'react-router-dom' 
+import axios from 'axios' 
+import toast from 'react-hot-toast' 
 
-import { FiEye, FiEyeOff } from "react-icons/fi";
+import { FiEye, FiEyeOff } from 'react-icons/fi' 
 
-import validateInputFields from '../helpers/validateInputFields' 
-import LoadingSpinner from '../small components/LoadingSpinner'; 
+import validateInputFields from '../input field validation helpers/validateInputFields' 
+import LoadingSpinner from '../small components/LoadingSpinner' 
 
 
 const EnterUsernameAndPassword = () => {
@@ -167,7 +167,7 @@ const EnterUsernameAndPassword = () => {
                     </div>
                 </div> 
                 <div className='w-full flex justify-center items-center'>
-                    <button disabled={isProceedButtonDisabled || formSubmissionLoading} className={`mt-10 w-[280px] h-[50px] text-xl font-semibold rounded-full flex items-center justify-center ${isProceedButtonDisabled || formSubmissionLoading ? 'bg-gray-600' : 'bg-white hover:bg-[#1d9bf0] hover:text-white select-none'}`}>
+                    <button disabled={isProceedButtonDisabled || formSubmissionLoading} className={`mt-8 w-[280px] h-[50px] text-xl font-semibold rounded-full flex items-center justify-center ${isProceedButtonDisabled || formSubmissionLoading ? 'bg-gray-600' : 'bg-white hover:bg-[#1d9bf0] hover:text-white select-none'}`}>
                         {
                             formSubmissionLoading ? 
                                 <LoadingSpinner /> 

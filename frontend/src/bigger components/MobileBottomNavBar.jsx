@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { HiOutlineUser } from "react-icons/hi2" 
-import { GoHomeFill } from "react-icons/go"  
-import { IoSearchOutline, IoLogOutOutline } from "react-icons/io5" 
+import { HiOutlineUser } from 'react-icons/hi2' 
+import { GoHomeFill } from 'react-icons/go'  
+import { IoSearchOutline, IoLogOutOutline } from 'react-icons/io5' 
 
 import toast from 'react-hot-toast'
 

@@ -1,7 +1,7 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import TwitterLogo from '../assets/logo.png'
-import { Link } from 'react-router-dom'
 
 
 const LandingPage = () => {

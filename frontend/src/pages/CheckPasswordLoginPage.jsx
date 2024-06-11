@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react' 
-import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import toast from 'react-hot-toast';
+import { useLocation, useNavigate } from 'react-router-dom' 
+import axios from 'axios' 
+import toast from 'react-hot-toast' 
 
-import { FiEye, FiEyeOff } from "react-icons/fi";
-import { RxCross2 } from "react-icons/rx";
+import { FiEye, FiEyeOff } from 'react-icons/fi' 
+import { RxCross2 } from 'react-icons/rx' 
 
-import TwitterLogo from '../assets/logo.png'
-import Avatar from '../small components/Avatar';
-import validateInputFields from '../helpers/validateInputFields' 
-import LoadingSpinner from '../small components/LoadingSpinner'; 
+import TwitterLogo from '../assets/logo.png' 
+import Avatar from '../small components/Avatar' 
+import validateInputFields from '../input field validation helpers/validateInputFields' 
+import LoadingSpinner from '../small components/LoadingSpinner' 
 
 
 const CheckPasswordLoginPage = () => {
@@ -57,7 +57,7 @@ const CheckPasswordLoginPage = () => {
 
         setLoginLoading(true); 
 
-        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login/checkpassword`, {
+        axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login/checkpassword`, {
             password, 
             _id
         })

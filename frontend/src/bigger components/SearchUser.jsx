@@ -1,14 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react' 
 
-import { IoClose } from "react-icons/io5"
-import { FaSearch } from "react-icons/fa" 
+import { IoClose } from 'react-icons/io5'
+import { FaSearch } from 'react-icons/fa' 
 import axios from 'axios'
 import toast from 'react-hot-toast'
 
 import SearchResultUserCard from '../small components/SearchResultUserCard.jsx' 
 import LoadingSpinner from '../small components/LoadingSpinner.jsx'
-import validateSearchQuery from '../helpers/validateSearchQuery.js'
-
+import validateSearchQuery from '../input field validation helpers/validateSearchQuery.js'
 
 let shouldConstantSearchOccur = true; 
 let searchWhenUserStopsTypingFor500ms; 

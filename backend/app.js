@@ -9,6 +9,7 @@ import connectToMongoDB from './db/connectToMongoDB.js';
 import authRoutes from './routes/authRoutes.js'; 
 import cloudinaryRoutes from './routes/cloudinaryRoutes.js'; 
 import userRoutes from './routes/userRoutes.js'; 
+import tweetRoutes from './routes/tweetRoutes.js'; 
 
 
 dotenv.config(); 
@@ -33,6 +34,7 @@ app.use(cors({
 app.use('/api/auth', authRoutes); 
 app.use('/api/cloudinary', cloudinaryRoutes); 
 app.use('/api/user', userRoutes); 
+app.use('/api/tweet', tweetRoutes); 
 
 
 connectToMongoDB().then( () => {

@@ -1,10 +1,10 @@
 import React from 'react' 
 
-import { IoMdArrowBack } from "react-icons/io";
+import { IoMdArrowBack } from 'react-icons/io'
 
 import { useSelector } from 'react-redux'
-import MiniAvatar from '../small components/MiniAvatar';
-import { Link } from 'react-router-dom';
+import MiniAvatar from '../small components/MiniAvatar'
+import { Link } from 'react-router-dom'
 
 
 const Feed = () => {
@@ -32,7 +32,7 @@ const Feed = () => {
                     <img src={user?.banner_img} alt='banner' /> 
                 </div>         
 
-                <div className='absolute top-28 left-4'>
+                <div className='absolute top-28 hidden sm:flex left-4'>
                     <MiniAvatar 
                         name={user?.name} 
                         secureImageURL={user?.profile_pic}
@@ -41,9 +41,27 @@ const Feed = () => {
                         haveBorder={true}
                     />
                 </div>
+                <div className='absolute top-20 flex min-[400px]:hidden left-4'>
+                    <MiniAvatar 
+                        name={user?.name} 
+                        secureImageURL={user?.profile_pic}
+                        height={80}
+                        width={80}
+                        haveBorder={true}
+                    />
+                </div>
+                <div className='absolute top-[80px] hidden min-[400px]:flex sm:hidden left-4'>
+                    <MiniAvatar 
+                        name={user?.name} 
+                        secureImageURL={user?.profile_pic}
+                        height={120}
+                        width={120}
+                        haveBorder={true}
+                    />
+                </div>
             </div>
 
-            <div className='h-60 pt-16'>
+            <div className='h-60 pt-12 min-[400px]:pt-[75px] sm:pt-16'>
                 <div className='ml-4 text-xl text-bold text-white'>
                     {user?.name}
                 </div>

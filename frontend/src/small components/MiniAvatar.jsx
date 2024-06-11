@@ -1,6 +1,5 @@
-import React from "react"; 
-import { FaUser } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import React from 'react' 
+import { FaUser } from 'react-icons/fa' 
 
 
 const MiniAvatar = ({userId, name, secureImageURL, height, width, haveBorder = false}) => {

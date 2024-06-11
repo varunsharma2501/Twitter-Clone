@@ -1,7 +1,7 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
-import { RxCross2 } from "react-icons/rx";
+import { RxCross2 } from 'react-icons/rx' 
 
 import TwitterLogo from '../assets/logo.png'
 

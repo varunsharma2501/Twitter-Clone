@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react' 
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import toast from 'react-hot-toast'
 
-import validateInputFields from '../helpers/validateInputFields' 
-import LoadingSpinner from '../small components/LoadingSpinner';
+import validateInputFields from '../input field validation helpers/validateInputFields' 
+import LoadingSpinner from '../small components/LoadingSpinner' 
 
 
 const CheckEmailLoginPage = () => {
@@ -48,7 +48,7 @@ const CheckEmailLoginPage = () => {
 
         setVerifyEmailLoading(true); 
 
-        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login/checkemail`, {
+        axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login/checkemail`, {
             email 
         }) 
         .then( (res) => { 
@@ -112,7 +112,7 @@ const CheckEmailLoginPage = () => {
                             verifyEmailLoading ? 
                                 <LoadingSpinner /> 
                             :
-                                'Verify Email' 
+                                'Next' 
                         }
                     </button>
                 </div>

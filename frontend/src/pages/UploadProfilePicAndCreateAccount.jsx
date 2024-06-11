@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react' 
-import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import toast from 'react-hot-toast';
+import { useLocation, useNavigate } from 'react-router-dom' 
+import axios from 'axios' 
+import toast from 'react-hot-toast' 
 
-import { IoClose } from "react-icons/io5";
-import { FaRegImage } from "react-icons/fa6";
-import { RxCross2 } from "react-icons/rx";
+import { IoClose } from 'react-icons/io5' 
+import { FaRegImage } from 'react-icons/fa6' 
+import { RxCross2 } from 'react-icons/rx' 
 
-import TwitterLogo from '../assets/logo.png'
-import Avatar from '../small components/Avatar'; 
-import LoadingSpinner from '../small components/LoadingSpinner'; 
-import uploadProfilePicToCloudinary from '../helpers/uploadProfilePicToCloudinary';  
+import TwitterLogo from '../assets/logo.png' 
+import Avatar from '../small components/Avatar' 
+import LoadingSpinner from '../small components/LoadingSpinner' 
+import uploadProfilePicToCloudinary from '../cloudinary/uploadProfilePicToCloudinary' 
 
 
 const UploadProfilePicAndCreateAccount = () => {
@@ -74,8 +74,14 @@ const UploadProfilePicAndCreateAccount = () => {
             setImageUploadOrDeleteLoading(false); 
         }
         catch(err){
-            toast.error(err?.response?.data?.message); 
+            if(err?.response?.data?.message){
+                toast.error(err?.response?.data?.message); 
+            }
+            else{
+                toast.error('Something went wrong'); 
+            }
             setImageUploadOrDeleteLoading(false); 
+            navigate('/');
             console.log(err); 
         }
     }
@@ -99,13 +105,11 @@ const UploadProfilePicAndCreateAccount = () => {
 
         try{
             if(cloudinaryImgPublicID !== ''){
-                const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/cloudinary/delete-cloudinary-asset`, {
-                    public_id : cloudinaryImgPublicID
-                })
-                setCloudinaryImgPublicID(''); 
+                const response = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/cloudinary/asset/${cloudinaryImgPublicID}`)
                 toast.success(response?.data?.message); 
-                setImageUploadOrDeleteLoading(false);
             }
+            setCloudinaryImgPublicID(''); 
+            setImageUploadOrDeleteLoading(false);
         }
         catch(err){
             toast.error(err?.response?.data?.message); 
@@ -174,9 +178,7 @@ const UploadProfilePicAndCreateAccount = () => {
         try{
             if(cloudinaryImgPublicID !== ''){
                 navigate('/'); 
-                await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/cloudinary/delete-cloudinary-asset`, {
-                    public_id : cloudinaryImgPublicID
-                })
+                await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/cloudinary/asset/${cloudinaryImgPublicID}`)
                 setCloudinaryImgPublicID(''); 
             }
             else{

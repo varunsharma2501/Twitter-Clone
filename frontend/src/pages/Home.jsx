@@ -8,9 +8,9 @@ import AddTweetButton from '../small components/AddTweetButton'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { Outlet, useNavigate } from 'react-router-dom'
-import axios from 'axios' 
 import toast from 'react-hot-toast'
 import { setUser, setProfilePicPublicId } from '../redux/userSlice'
+import { axiosTokenInstance } from '../axios/axiosTokenIntsance'
 
 
 const Home = () => {
@@ -22,9 +22,7 @@ const Home = () => {
   const dispatch = useDispatch(); 
 
   const fetchUserDetails = () => {
-    axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/details`, {
-        token : localStorage.getItem('jwt') 
-    })
+    axiosTokenInstance().get(`${import.meta.env.VITE_BACKEND_URL}/api/user/details`)
     .then( (response) => {
         dispatch(setProfilePicPublicId(response?.data?.data?.cloudinary_img_public_id)); 
         dispatch(setUser(response?.data?.data)); 

@@ -1,8 +1,8 @@
 import express from 'express'; 
-import { deleteCloudinaryAssetController } from '../controllers/cloudinaryControllers.js';
+import { deleteCloudinaryAsset } from '../controllers/cloudinaryController.js';
 
 const router = express.Router(); 
 
-router.post('/delete-cloudinary-asset', deleteCloudinaryAssetController); 
+router.delete('/asset/:upload_preset/:asset_name', deleteCloudinaryAsset); 
 
 export default router;

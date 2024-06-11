@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react' 
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom' 
+import axios from 'axios' 
+import toast from 'react-hot-toast' 
 
-import validateInputFields from '../helpers/validateInputFields' 
-import LoadingSpinner from '../small components/LoadingSpinner';
+import validateInputFields from '../input field validation helpers/validateInputFields' 
+import LoadingSpinner from '../small components/LoadingSpinner' 
 
 
 const SignUpPage = () => {
@@ -65,7 +65,6 @@ const SignUpPage = () => {
         }) 
         .then( (res) => {
             if(res.data.success){
-                toast.success('Sending OTP to given email');
                 toast.success(res?.data?.message); 
                 sendOtp(e); 
             }
@@ -84,7 +83,7 @@ const SignUpPage = () => {
 
         setOtpSendingLoading(true); 
 
-        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/send-otp`, {
+        axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/auth/send-otp`, {
             email,
             name 
         })

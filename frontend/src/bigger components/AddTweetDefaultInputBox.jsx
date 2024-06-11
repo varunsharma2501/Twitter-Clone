@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
-import { FaRegImage } from "react-icons/fa6";
+import { FaRegImage } from 'react-icons/fa6' 
 
-import MiniAvatar from '../small components/MiniAvatar';
-import { useSelector } from 'react-redux';
+import MiniAvatar from '../small components/MiniAvatar' 
+import { useSelector } from 'react-redux' 
 
 
 const AddTweetDefaultInputBox = () => {
