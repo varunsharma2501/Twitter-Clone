@@ -32,6 +32,10 @@ const userSchema = new mongoose.Schema({
         type : String, 
         default : "https://res.cloudinary.com/djdcjkgvc/image/upload/v1718051183/Twitter%20Banner%20Image/pyct9iecnvbvpenzodoa.jpg"
     },
+    bio : {
+        type : String,
+        default : "Heyy!! I am a new user on Twitter"
+    },
     followers : {
         type : Array,
         default : []
@@ -39,6 +43,10 @@ const userSchema = new mongoose.Schema({
     following : {
         type : Array, 
         default : [] 
+    },
+    bookmarks : {
+        type : Array,
+        default : []
     }
 }, {
     timestamps : true

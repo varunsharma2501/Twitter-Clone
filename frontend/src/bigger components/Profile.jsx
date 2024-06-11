@@ -70,8 +70,7 @@ const Feed = () => {
                 </div>
 
                 <div className='text-white text-md ml-4 mt-4'>
-                    <p> Heyy!! I am a new user on Twitter  </p>
-                    <p> Let's Connnect!! </p>
+                    <p> {user?.bio} </p>
                 </div>
 
                 <div className='flex mt-3 ml-4'>
