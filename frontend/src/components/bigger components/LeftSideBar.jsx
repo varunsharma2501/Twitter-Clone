@@ -7,10 +7,10 @@ import { IoSearchOutline, IoLogOutOutline } from "react-icons/io5"
 import toast from 'react-hot-toast'
 
 import { useDispatch, useSelector } from 'react-redux' 
-import { logout } from '../redux/userSlice'
+import { logout } from '../../redux/userSlice'
 import { Link, useNavigate } from 'react-router-dom'
 
-import TwitterLogo from '../assets/logo.png'
+import TwitterLogo from '../../assets/logo.png'
 import AddTweetButton from '../small components/AddTweetButton'
 import MiniAvatar from '../small components/MiniAvatar'
 
@@ -45,23 +45,27 @@ const LeftSideBar = () => {
             
             <div>
 
-                <div className='rounded-full bg-black h-[40px] w-[40px] overflow-hidden cursor-pointer hover:bg-[#323333]/60 my-4 mx-auto xl:ml-6'>
-                    <img 
-                        src={TwitterLogo} 
-                        alt='twitter-log' 
-                        height={40} 
-                        width={40} 
-                    />
-                </div>
+                <Link to={'/home'}>
+                    <div className='rounded-full bg-black h-[40px] w-[40px] overflow-hidden cursor-pointer hover:bg-[#323333]/60 my-4 mx-auto xl:ml-6'>
+                        <img 
+                            src={TwitterLogo} 
+                            alt='twitter-log' 
+                            height={40} 
+                            width={40} 
+                        />
+                    </div>
+                </Link>
 
                 <div>
                     <div className={row}>
-                        <Link to={'/home'} className={containerOfIconAndLogo}>
-                            <div>
-                                <GoHomeFill className={iconCSS} />
-                            </div>
-                            <div className={iconLabelCSS}>
-                                Home
+                        <Link to={'/home'}>
+                            <div className={containerOfIconAndLogo}>
+                                <div>
+                                    <GoHomeFill className={iconCSS} />
+                                </div>
+                                <div className={iconLabelCSS}>
+                                    Home
+                                </div>
                             </div>
                         </Link>
                     </div>
@@ -76,7 +80,7 @@ const LeftSideBar = () => {
                         </div>
                     </div>
                     <div className={row}>
-                        <Link to={'/home/profile'} className={containerOfIconAndLogo}>
+                        <Link to={`/home/profile/${user?._id}`} className={containerOfIconAndLogo}>
                             <div>
                                 <HiOutlineUser className={iconCSS} /> 
                             </div>
@@ -105,19 +109,21 @@ const LeftSideBar = () => {
         
             </div>
             
-            <div className='flex xl:px-4 xl:py-2 xl:h-[65px] xl:w-[240px] rounded-full cursor-pointer select-none hover:bg-[#323333]/60 mx-auto xl:ml-4 mb-3'> 
-                <MiniAvatar 
-                    userId={user?._id}
-                    name={user?.name}
-                    secureImageURL={user?.profile_pic}
-                    height={48}
-                    width={48}
-                /> 
-                <div className='hidden ml-1 xl:ml-3 xl:flex xl:flex-col'> 
-                    <h3 className='text-white font-semibold p-0 m-0'> Aryan Tomar </h3>
-                    <p className='text-gray-500 text-md'> @aryan04-t </p>
-                </div> 
-            </div> 
+            <Link to={`/home/profile/${user?._id}`} >
+                <div className='flex xl:px-4 xl:py-2 xl:h-[65px] xl:w-[240px] rounded-full cursor-pointer select-none hover:bg-[#323333]/60 mx-auto xl:ml-4 mb-3'> 
+                    <MiniAvatar 
+                        userId={user?._id}
+                        name={user?.name}
+                        secureImageURL={user?.profile_pic}
+                        height={48}
+                        width={48}
+                    /> 
+                    <div className='hidden ml-1 xl:ml-3 xl:flex xl:flex-col'> 
+                        <h3 className='text-white font-semibold p-0 m-0'> Aryan Tomar </h3>
+                        <p className='text-gray-500 text-md'> @aryan04-t </p>
+                    </div> 
+                </div>
+            </Link>
         </div>
     )
 }

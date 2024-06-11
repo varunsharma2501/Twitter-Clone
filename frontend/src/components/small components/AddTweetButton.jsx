@@ -1,6 +1,6 @@
 import React from 'react'
 
-import AddTweet from '../assets/addTweet.png'
+import AddTweet from '../../assets/addTweet.png'
 
 
 const AddTweetButton = ({CSS}) => {

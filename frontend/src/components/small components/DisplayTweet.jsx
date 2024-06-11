@@ -4,7 +4,7 @@ import { CiHeart } from 'react-icons/ci'
 import { FcLike } from 'react-icons/fc'
 {/* <FcLike /> */}
 
-import Dummy1 from '../assets/logo.png'
+import Dummy1 from '../../assets/logo.png'
 import MiniAvatar from './MiniAvatar'
 
 

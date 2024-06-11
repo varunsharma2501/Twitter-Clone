@@ -8,8 +8,8 @@ import { FaRegImage } from 'react-icons/fa6'
 import { RxCross2 } from 'react-icons/rx' 
 
 import TwitterLogo from '../assets/logo.png' 
-import Avatar from '../small components/Avatar' 
-import LoadingSpinner from '../small components/LoadingSpinner' 
+import Avatar from '../components/small components/Avatar' 
+import LoadingSpinner from '../components/small components/LoadingSpinner' 
 import uploadProfilePicToCloudinary from '../cloudinary/uploadProfilePicToCloudinary' 
 
 

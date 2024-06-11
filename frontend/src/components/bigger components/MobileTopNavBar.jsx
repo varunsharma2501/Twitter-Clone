@@ -1,6 +1,6 @@
 import React from 'react'
 
-import TwitterLogo from '../assets/logo.png'
+import TwitterLogo from '../../assets/logo.png'
 import MiniAvatar from '../small components/MiniAvatar'
 
 import { useSelector } from 'react-redux'

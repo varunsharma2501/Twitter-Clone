@@ -5,8 +5,8 @@ import toast from 'react-hot-toast'
 
 import { FiEye, FiEyeOff } from 'react-icons/fi' 
 
-import validateInputFields from '../input field validation helpers/validateInputFields' 
-import LoadingSpinner from '../small components/LoadingSpinner' 
+import validateInputFields from '../helpers/validateInputFields' 
+import LoadingSpinner from '../components/small components/LoadingSpinner' 
 
 
 const EnterUsernameAndPassword = () => {

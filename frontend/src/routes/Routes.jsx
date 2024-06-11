@@ -13,8 +13,8 @@ import CheckPasswordLoginPage from '../pages/CheckPasswordLoginPage';
 import ForgotPasswordPage from '../pages/ForgotPasswordPage'; 
 import Home from '../pages/Home'; 
 
-import Feed from '../bigger components/Feed'
-import Profile from '../bigger components/Profile';
+import Feed from '../components/bigger components/Feed'
+import Profile from '../components/bigger components/Profile';
 
 import ErrorPage from '../pages/ErrorPage'; 
 
@@ -115,7 +115,7 @@ const router = createBrowserRouter([
                 element : <Feed />
             },
             {
-                path : 'profile',
+                path : 'profile/:user_id',
                 element : <Profile />
             }
         ],

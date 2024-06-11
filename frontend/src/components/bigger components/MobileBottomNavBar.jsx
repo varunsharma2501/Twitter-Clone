@@ -7,7 +7,7 @@ import { IoSearchOutline, IoLogOutOutline } from 'react-icons/io5'
 import toast from 'react-hot-toast'
 
 import { useDispatch } from 'react-redux' 
-import { logout } from '../redux/userSlice'
+import { logout } from '../../redux/userSlice'
 import { useNavigate } from 'react-router-dom'
 
 

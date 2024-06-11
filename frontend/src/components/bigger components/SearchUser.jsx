@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
 
 import SearchResultUserCard from '../small components/SearchResultUserCard.jsx' 
 import LoadingSpinner from '../small components/LoadingSpinner.jsx'
-import validateSearchQuery from '../input field validation helpers/validateSearchQuery.js'
+import validateSearchQuery from '../../helpers/validateSearchQuery.js'
 
 let shouldConstantSearchOccur = true; 
 let searchWhenUserStopsTypingFor500ms; 

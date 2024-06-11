@@ -10,7 +10,8 @@ const initialState = {
     banner_img : '',
     bio : '',
     followers : [], 
-    following : [] 
+    following : [], 
+    bookmarks : []
 }
 
 export const userSlice = createSlice({
@@ -26,7 +27,8 @@ export const userSlice = createSlice({
             state.banner_img = action.payload.banner_img, 
             state.bio = action.payload.bio, 
             state.followers = action.payload.followers,
-            state.following = action.payload.following
+            state.following = action.payload.following,
+            state.following = action.payload.bookmarks 
         },
         setProfilePicPublicId : (state, action) => {
             state.cloudinary_img_public_id = action.payload 
@@ -41,7 +43,8 @@ export const userSlice = createSlice({
             state.bio = '',
             state.cloudinary_img_public_id = '',
             state.followers = [], 
-            state.following = []
+            state.following = [],
+            state.bookmarks = []
         }
     }
 })

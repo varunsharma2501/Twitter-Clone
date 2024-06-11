@@ -4,12 +4,16 @@ import { IoMdArrowBack } from 'react-icons/io'
 
 import { useSelector } from 'react-redux'
 import MiniAvatar from '../small components/MiniAvatar'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import { useGetOtherUserDetails } from '../../hooks/useGetOtherUserDetails'
 
 
 const Feed = () => {
 
-    const user = useSelector(state => state.user); 
+    const {user_id} = useParams(); 
+    useGetOtherUserDetails(user_id); 
+
+    const user = useSelector(store => store?.otherUsers?.otherUserDetails); 
 
   	return (
 		<div className='relative scrollbar-none w-[600px] xl:min-w-[600px] min-[500px]:border-x-[1px] max-[500px]:mt-[55px] max-[500px]:mb-[56px] border-gray-500 flex flex-col overflow-y-auto'>
@@ -75,10 +79,10 @@ const Feed = () => {
 
                 <div className='flex mt-3 ml-4'>
                     <div className='text-white mr-4'>
-                        <span className='font-bold'> {user?.following.length} </span> <span className='text-gray-500'> Following </span> 
+                        <span className='font-bold'> {user?.following?.length} </span> <span className='text-gray-500'> Following </span> 
                     </div>
                     <div className='text-white'>
-                        <span className='font-bold'> {user?.followers.length} </span> <span className='text-gray-500'> Followers </span>  
+                        <span className='font-bold'> {user?.followers?.length} </span> <span className='text-gray-500'> Followers </span>  
                     </div>
                 </div>
             </div>

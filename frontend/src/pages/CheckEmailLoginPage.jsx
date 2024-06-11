@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 
-import validateInputFields from '../input field validation helpers/validateInputFields' 
-import LoadingSpinner from '../small components/LoadingSpinner' 
+import validateInputFields from '../helpers/validateInputFields' 
+import LoadingSpinner from '../components/small components/LoadingSpinner' 
 
 
 const CheckEmailLoginPage = () => {
