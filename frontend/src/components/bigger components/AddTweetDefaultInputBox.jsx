@@ -7,7 +7,7 @@ import { FaRegImage, FaTowerBroadcast } from 'react-icons/fa6'
 
 import { logoutCleanUp } from '../../helpers/logoutCleanUp'
 import MiniAvatar from '../small components/MiniAvatar' 
-import { toggleRefresh } from '../../redux/tweetSlice'
+import { getRefresh } from '../../redux/tweetSlice'
 
 
 const AddTweetDefaultInputBox = () => {
@@ -71,7 +71,7 @@ const AddTweetDefaultInputBox = () => {
             })
             setTweetContent(''); 
             toast.success(res?.data?.message); 
-            dispatch(toggleRefresh());
+            dispatch(getRefresh());
         }
         catch(err){
             toast.error(err?.response?.data?.message); 

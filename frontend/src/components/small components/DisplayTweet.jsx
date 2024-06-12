@@ -1,12 +1,43 @@
 import React, { useState } from 'react'
+import toast from 'react-hot-toast'
 
 import { CiHeart } from 'react-icons/ci'
+import { FcLike } from 'react-icons/fc'
+
+import { axiosTokenInstance } from '../../axios/axiosTokenIntsance'
+import { logoutCleanUp } from '../../helpers/logoutCleanUp'
+import { getRefresh } from '../../redux/tweetSlice'
+import { useDispatch, useSelector } from 'react-redux'
+
 import MiniAvatar from './MiniAvatar'
 
 
 const DisplayTweet = ({currTweet}) => {
 
-    const [likeCount, setLikeCount] = useState(0); 
+    const user = useSelector(store => store.user); 
+    const dispatch = useDispatch();
+
+    const [liked, setLiked] = useState(currTweet?.likes?.includes(user?._id)); 
+    const [likeCount, setLikeCount] = useState(currTweet?.likes?.length); 
+
+    const handleLikeOrDislike = async (tweet_id) => {
+        try{
+            if(liked) setLikeCount(likeCount-1); 
+            else setLikeCount(likeCount+1); 
+            
+            setLiked(!liked); 
+
+            const res = await axiosTokenInstance().patch(`${import.meta.env.VITE_BACKEND_URL}/api/tweet/like-or-dislike/${tweet_id}`); 
+            dispatch(getRefresh()); 
+        }
+        catch(err){
+            console.log(err); 
+            if(err?.response?.data?.logout){
+                logoutCleanUp(dispatch); 
+                navigate('/'); 
+            }
+        }
+    }
 
     return (
         <div className='flex px-4 py-3 h-auto w-full border-b-[1px] border-gray-500'>
@@ -38,8 +69,17 @@ const DisplayTweet = ({currTweet}) => {
                     </div>
                 }
                 <div className='h-[28px] flex items-center justify-start'>
-                    <CiHeart className='inline text-lg text-white mx-2 cursor-pointer hover:bg-red-500/100 rounded-full'/>    
-                    <span className='text-white'> {currTweet?.likes?.length} </span> 
+                    <button onClick={() => handleLikeOrDislike(currTweet?._id)} className='rounded-full h-[20px] w-[20px] mx-2 flex items-center justify-center'>
+                        {
+                            liked && 
+                            <FcLike />
+                        }
+                        {
+                            !liked && 
+                            <CiHeart className='inline text-lg mt-[2px] text-white cursor-pointer hover:text-red-500 rounded-full'/>    
+                        }
+                    </button>
+                    <span className='text-white'> {likeCount} </span> 
                 </div>
             </div>
         </div>

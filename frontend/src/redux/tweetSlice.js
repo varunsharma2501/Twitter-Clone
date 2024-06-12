@@ -15,12 +15,12 @@ export const tweetSlice = createSlice({
         resetAllExistingTweets : (state, action) => {
             state.allExistingTweets = [] 
         },
-        toggleRefresh : (state, action) => {
+        getRefresh : (state, action) => {
             state.refresh = !state.refresh; 
         }
     }
 })
 
-export const { setAllExisitngTweets, resetAllExistingTweets, toggleRefresh } = tweetSlice.actions
+export const { setAllExisitngTweets, resetAllExistingTweets, getRefresh } = tweetSlice.actions
 
 export default tweetSlice.reducer 
