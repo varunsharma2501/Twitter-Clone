@@ -4,7 +4,9 @@ import { axiosTokenInstance } from '../axios/axiosTokenIntsance'
 
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { resetAllOtherUsersDetails, setAllOtherUsersDetails } from '../redux/otherUsersSlice'
+import { setAllOtherUsersDetails } from '../redux/otherUsersSlice'
+
+import { logoutCleanUp } from '../helpers/logoutCleanUp'
 
 
 export const useGetAllOtherUsersDetails = () => {
@@ -21,9 +23,7 @@ export const useGetAllOtherUsersDetails = () => {
             toast.error(err?.response?.data?.message); 
             console.log(err); 
             if(err?.response?.data?.logout){
-                dispatch(logout()); 
-                dispatch(resetAllOtherUsersDetails()); 
-                localStorage.removeItem('jwt'); 
+                logoutCleanUp(dispatch); 
                 navigate('/'); 
             }
         })
@@ -32,9 +32,7 @@ export const useGetAllOtherUsersDetails = () => {
     useEffect( () => {
         if(!localStorage.getItem('jwt')){ 
             toast.error("Security Logout"); 
-            localStorage.removeItem('jwt'); 
-            dispatch(logout());  
-            dispatch(resetAllOtherUsersDetails());
+            logoutCleanUp(dispatch); 
             navigate('/'); 
         }
         else{

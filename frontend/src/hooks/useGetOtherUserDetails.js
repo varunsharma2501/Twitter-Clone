@@ -3,8 +3,10 @@ import toast from 'react-hot-toast'
 import { axiosTokenInstance } from '../axios/axiosTokenIntsance'
 
 import { useDispatch } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom'
-import { resetAllOtherUsersDetails, resetOtherUserDetails, setOtherUserDetails } from '../redux/otherUsersSlice'
+import { useNavigate } from 'react-router-dom'
+
+import { setOtherUserDetails } from '../redux/otherUsersSlice'
+import { logoutCleanUp } from '../helpers/logoutCleanUp'
 
 
 export const useGetOtherUserDetails = (user_id) => {
@@ -21,10 +23,7 @@ export const useGetOtherUserDetails = (user_id) => {
             toast.error(err?.response?.data?.message); 
             console.log(err); 
             if(err?.response?.data?.logout){
-                dispatch(logout()); 
-                dispatch(resetAllOtherUsersDetails()); 
-                dispatch(resetOtherUserDetails()); 
-                localStorage.removeItem('jwt'); 
+                logoutCleanUp(dispatch); 
                 navigate('/'); 
             }
         })
@@ -33,10 +32,7 @@ export const useGetOtherUserDetails = (user_id) => {
     useEffect( () => {
         if(!localStorage.getItem('jwt')){ 
             toast.error("Security Logout"); 
-            localStorage.removeItem('jwt'); 
-            dispatch(logout()); 
-            dispatch(resetAllOtherUsersDetails()); 
-            dispatch(resetOtherUserDetails()); 
+            logoutCleanUp(dispatch); 
             navigate('/'); 
         }
         else{

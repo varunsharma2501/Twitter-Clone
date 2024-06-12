@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 
 const FollowUserSuggestion = ({currUser}) => {
+
     return (
         <Link to={`profile/${currUser._id}`}>
             <div className='relative flex py-2  hover:bg-[#323333]/60 cursor-pointer'>

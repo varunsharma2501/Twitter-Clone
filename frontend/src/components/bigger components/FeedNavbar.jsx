@@ -2,7 +2,7 @@ import React from 'react'
 
 const FeedNavbar = () => {
     return (
-        <div className='sticky top-0 w-full min-h-[50px] flex items-center justify-center border-b-[1px] border-gray-500 select-none backdrop-blur-lg'> 
+        <div className='sticky top-0 w-full min-h-[50px] flex items-center justify-center border-b-[1px] border-gray-500 select-none backdrop-blur-lg z-30'> 
             <div className='relative w-[50%] h-full flex items-center justify-center cursor-pointer hover:bg-[#323333]/60'>
                 <h1 className='text-white'> 
                     For You 

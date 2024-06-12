@@ -2,23 +2,23 @@ import { useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { axiosTokenInstance } from '../axios/axiosTokenIntsance'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { setUser, setProfilePicPublicId } from '../redux/userSlice'
 
+import { setAllExisitngTweets } from '../redux/tweetSlice'
 import { logoutCleanUp } from '../helpers/logoutCleanUp'
 
 
-export const useGetLoggedInUserDetails = () => {
-        
+export const useGetAllExistingTweets = () => {
+     
     const navigate = useNavigate(); 
     const dispatch = useDispatch(); 
 
-    const fetchUserDetails = () => {
-        axiosTokenInstance().get(`${import.meta.env.VITE_BACKEND_URL}/api/user/logged-in-user-details`)
+    const fetchAllExistingTweets = () => {
+        axiosTokenInstance().get(`${import.meta.env.VITE_BACKEND_URL}/api/tweet/all-existing-tweets`)
         .then( (response) => {
-            dispatch(setProfilePicPublicId(response?.data?.data?.cloudinary_img_public_id)); 
-            dispatch(setUser(response?.data?.data)); 
+            console.log(response?.data?.data)
+            dispatch(setAllExisitngTweets(response?.data?.data)); 
         }) 
         .catch( (err) => {
             toast.error(err?.response?.data?.message); 
@@ -30,14 +30,16 @@ export const useGetLoggedInUserDetails = () => {
         })
     }
 
+    const refresh = useSelector(store => store.tweets.refresh); 
+
     useEffect( () => {
         if(!localStorage.getItem('jwt')){ 
             toast.error("Security Logout"); 
-            logoutCleanUp(dispatch);  
+            logoutCleanUp(dispatch); 
             navigate('/'); 
         }
         else{
-            fetchUserDetails(); 
+            fetchAllExistingTweets(); 
         }
-    }, [])
+    }, [refresh])
 }

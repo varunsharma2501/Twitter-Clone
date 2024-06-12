@@ -1,7 +1,7 @@
 import express from 'express'; 
 
 import protectRoute from '../middlewares/protectRoute.js';
-import { createTweet, deleteTweet, editLoggedInUserTweet, getAllExistingTweetsExceptLoggedInUserTweets, getAllTweetsOfLoggedInUser, getAllTweetsOfOtherUser, getAllTweetsOfUsersWhoAreFollowedByLoggedInUser, likeOrDislike } from '../controllers/tweetController.js';
+import { createTweet, deleteTweet, editLoggedInUserTweet, getAllExistingTweets, getAllTweetsOfLoggedInUser, getAllTweetsOfOtherUser, getAllTweetsOfUsersWhoAreFollowedByLoggedInUser, likeOrDislike } from '../controllers/tweetController.js';
 
 const router = express.Router(); 
 
@@ -16,7 +16,7 @@ router.get('/all-tweets-of-logged-in-user', protectRoute, getAllTweetsOfLoggedIn
 router.get('/all-tweets-of-other-user/:user_id', protectRoute, getAllTweetsOfOtherUser); 
 
 router.get('/of-users-who-are-followed-by-logged-in-user', protectRoute, getAllTweetsOfUsersWhoAreFollowedByLoggedInUser); 
-router.get('/all-existing-tweets-except-logged-in-user-tweets', protectRoute, getAllExistingTweetsExceptLoggedInUserTweets); 
+router.get('/all-existing-tweets', protectRoute, getAllExistingTweets); 
 
 
 export default router; 

@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react'
+import { axiosTokenInstance } from '../../axios/axiosTokenIntsance'
+import { useSelector, useDispatch } from 'react-redux' 
+import toast from 'react-hot-toast'
 
-import { FaRegImage } from 'react-icons/fa6' 
+import { FaRegImage, FaTowerBroadcast } from 'react-icons/fa6' 
 
+import { logoutCleanUp } from '../../helpers/logoutCleanUp'
 import MiniAvatar from '../small components/MiniAvatar' 
-import { useSelector } from 'react-redux' 
+import { toggleRefresh } from '../../redux/tweetSlice'
 
 
 const AddTweetDefaultInputBox = () => {
   
     const user = useSelector(state => state.user); 
+    const dispatch = useDispatch(); 
 
     const [tweetContent, setTweetContent] = useState(''); 
     const [charCount, setCharCount] = useState(0); 
@@ -56,6 +61,28 @@ const AddTweetDefaultInputBox = () => {
         }; 
     }, [tweetContent]); 
 
+
+    const createTweet = async (e) => {
+        e.preventDefault();
+        e.stopPropagation(); 
+        try{
+            const res = await axiosTokenInstance().post(`${import.meta.env.VITE_BACKEND_URL}/api/tweet/create`, {
+                description : tweetContent 
+            })
+            setTweetContent(''); 
+            toast.success(res?.data?.message); 
+            dispatch(toggleRefresh());
+        }
+        catch(err){
+            toast.error(err?.response?.data?.message); 
+            console.log(err); 
+            if(err?.response?.data?.logout){
+                logoutCleanUp(dispatch); 
+                navigate('/'); 
+            }
+        }
+    }
+
     return (
         <div className='hidden min-[500px]:flex p-4 h-auto w-full border-b-[1px] border-gray-500'>
             
@@ -70,7 +97,7 @@ const AddTweetDefaultInputBox = () => {
             </div>
 
             <div className='ml-2 w-full h-auto rounded-lg'>
-                <form className='h-auto w-full'>
+                <form onSubmit={createTweet} className='h-auto w-full'>
                     
                     <textarea
                         maxLength={280} 

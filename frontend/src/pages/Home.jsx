@@ -9,12 +9,15 @@ import AddTweetButton from '../components/small components/AddTweetButton'
 import { useSelector } from 'react-redux'
 import { Outlet } from 'react-router-dom'
 import { useGetLoggedInUserDetails } from '../hooks/useGetLoggedInUserDetails'
+import { useGetAllExistingTweets } from '../hooks/useGetAllExistingTweets'
 
 
 const Home = () => {
 
     const user = useSelector(store => store.user); 
+    
     useGetLoggedInUserDetails(); 
+    useGetAllExistingTweets(); 
 
     return (
         <div className='w-full h-screen flex justify-center bg-black'> 

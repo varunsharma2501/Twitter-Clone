@@ -8,14 +8,15 @@ export const createTweet = async (req, res) => {
 
         if(!description){
             return res.status(400).json({
-                message : 'Bad backend call, details field is required', 
+                message : 'Bad backend call, description field is required', 
                 success : false 
             })
         }
 
         const tweetPayload = {
-            description,
-            userId : user._id
+            description, 
+            userId : user._id, 
+            userDetails : [user] 
         }
 
         const tweet = new tweetModel(tweetPayload); 
@@ -130,7 +131,7 @@ export const getAllTweetsOfLoggedInUser = async (req, res) => {
         const loggedInUser = req.body.user; 
         const tweetsOfLoggedInUser = await tweetModel.find({
             userId : loggedInUser._id 
-        }); 
+        }).sort({ createdAt: -1 }); 
         res.status(200).json({
             message : "Retrieved all tweets of logged in user successfully", 
             data : tweetsOfLoggedInUser, 
@@ -152,7 +153,7 @@ export const getAllTweetsOfOtherUser = async (req, res) => {
         const {user_id} = req.params; 
         const allTweetsOfUser = await tweetModel.find({
             userId : user_id 
-        }); 
+        }).sort({ createdAt: -1 }); 
         res.status(200).json({
             message : "Retrieved all tweets of requested particular user successfully", 
             data : allTweetsOfUser, 
@@ -172,15 +173,12 @@ export const getAllTweetsOfOtherUser = async (req, res) => {
 export const getAllTweetsOfUsersWhoAreFollowedByLoggedInUser = async (req, res) => {
     try{
         const loggedInUser = req.body.user; 
-        const tweetsOfAllUsersWhoAreFollowedByLoggedInUser = await Promise.all(
-            loggedInUser.following.map( async (currUserId) => {
-                const allTweetsOfThisUser = await tweetModel.find({
-                    userId : currUserId 
-                })
-                return allTweetsOfThisUser; 
-            })
-        )
-        console.log(tweetsOfAllUsersWhoAreFollowedByLoggedInUser); 
+        const followingUsers = loggedInUser.following; 
+        
+        const tweetsOfAllUsersWhoAreFollowedByLoggedInUser =  await tweetModel.find({
+            userId: { $in: followingUsers }
+        }).sort({ createdAt: -1 });    
+        
         res.status(200).json({
             message : 'Successfully retrieved tweets of all users who are followed by logged in user', 
             data : tweetsOfAllUsersWhoAreFollowedByLoggedInUser, 
@@ -197,17 +195,11 @@ export const getAllTweetsOfUsersWhoAreFollowedByLoggedInUser = async (req, res) 
 }
 
 
-export const getAllExistingTweetsExceptLoggedInUserTweets = async (req, res) => { 
+export const getAllExistingTweets = async (req, res) => { 
     try{
-        const loggedInUser = req.body.user; 
-        console.log(loggedInUser)
-        const allTweetsExceptLoggedInUserTweets = await tweetModel.find({
-            userId : {
-                $ne : loggedInUser._id
-            }
-        }); 
+        const allTweetsExceptLoggedInUserTweets = await tweetModel.find().sort({ createdAt: -1 }); 
         return res.status(200).json({
-            message : 'Retrieved all tweets except logged in user successfully', 
+            message : 'Retrieved all existing tweets successfully', 
             data : allTweetsExceptLoggedInUserTweets, 
             success : true 
         })
