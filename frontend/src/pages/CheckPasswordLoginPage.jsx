@@ -64,11 +64,9 @@ const CheckPasswordLoginPage = () => {
         .then( (res) => {
             console.log(res?.data);  
             if(res?.data?.success){
-                
                 toast.success(res?.data?.message); 
-
-				localStorage.setItem('jwt', res?.data?.token); 
-				setPassword(''); 
+				
+                localStorage.setItem('jwt', res?.data?.token); 
 
 				setLoginLoading(false); 
 				navigate('/home'); 

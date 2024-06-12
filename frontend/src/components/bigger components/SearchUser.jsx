@@ -25,22 +25,22 @@ const SearchBar = () => {
     const searchBarCardRef = useRef(); 
     const searchResultContainerRef = useRef(); 
 
-    useEffect( () => {
-        const handler = (e) => {
-            e.stopPropagation();
-            if(!searchBarCardRef.current.contains(e.target) && !searchResultContainerRef.current.contains(e.target)){
-                setSearchResultIsHidden(true); 
-                setSearchDone(false); 
-                setLoading(false); 
-                setSearchQuery('');
-                setUserSearchResult([]); 
-            }
-        }
-        document.addEventListener('mousedown', handler); 
-        return () => {
-            document.removeEventListener('mousedown', handler);
-        };
-    })
+    // useEffect( () => {
+    //     const handler = (e) => {
+    //         e.stopPropagation();
+    //         if(!searchBarCardRef.current.contains(e.target) && !searchResultContainerRef.current.contains(e.target)){
+    //             setSearchResultIsHidden(true); 
+    //             setSearchDone(false); 
+    //             setLoading(false); 
+    //             setSearchQuery('');
+    //             setUserSearchResult([]); 
+    //         }
+    //     }
+    //     document.addEventListener('mousedown', handler); 
+    //     return () => {
+    //         document.removeEventListener('mousedown', handler);
+    //     };
+    // })
 
     const onSubmitSearchDatabase = (e) => {
 

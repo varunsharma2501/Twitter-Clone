@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 
 const RightSideBar = () => {
     
-    const allOtherUsersDetails = useSelector(store => store?.otherUsers?.allOtherUsersDetails);
+    const allOtherUsersDetails = useSelector(store => store.user.allOtherUsersDetails); 
     useGetAllOtherUsersDetails(); 
 
     return (

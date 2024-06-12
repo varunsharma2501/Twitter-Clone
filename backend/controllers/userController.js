@@ -18,7 +18,7 @@ export const getLoggedInUserDetails = (req, res) => {
     }
 }
 
-export const getOtherUserDetails = async (req, res) => {
+export const getUserDetails = async (req, res) => {
     try{
         const {user_id} = req.params; 
         const userDetails = await userModel.findById(user_id); 

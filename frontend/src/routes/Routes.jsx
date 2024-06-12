@@ -10,11 +10,11 @@ import EnterUsernameAndPassword from '../pages/EnterUsernameAndPassword';
 import UploadProfilePicAndCreateAccount from '../pages/UploadProfilePicAndCreateAccount';
 import CheckEmailLoginPage from '../pages/CheckEmailLoginPage'; 
 import CheckPasswordLoginPage from '../pages/CheckPasswordLoginPage'; 
-import ForgotPasswordPage from '../pages/ForgotPasswordPage'; 
 import Home from '../pages/Home'; 
 
 import Feed from '../components/bigger components/Feed'
 import Profile from '../components/bigger components/Profile';
+import AllTweetsOfPeopleWhoAreFollowedByLoggedInUser from '../components/bigger components/AllTweetsOfPeopleWhoAreFollowedByLoggedInUser';
 
 import ErrorPage from '../pages/ErrorPage'; 
 
@@ -92,17 +92,6 @@ const router = createBrowserRouter([
         errorElement : <ErrorPage /> 
     },
     {
-        path : '/forgot-passsword',
-        element : (
-            <GlobalToasterLayout>
-                <AuthLayout>
-                    <ForgotPasswordPage />
-                </AuthLayout>
-            </GlobalToasterLayout>
-        ),
-        errorElement : <ErrorPage /> 
-    },
-    {
         path : '/home',
         element : (
             <GlobalToasterLayout>
@@ -117,6 +106,10 @@ const router = createBrowserRouter([
             {
                 path : 'profile/:user_id',
                 element : <Profile />
+            },
+            {
+                path : 'tweets-of-people-followed-by-logged-in-user',
+                element : <AllTweetsOfPeopleWhoAreFollowedByLoggedInUser />
             }
         ],
         errorElement : <ErrorPage /> 

@@ -1,15 +1,16 @@
-import { logout } from '../redux/userSlice'
-import { resetOtherUserDetails } from '../redux/otherUsersSlice'
-import { resetAllOtherUsersDetails } from '../redux/otherUsersSlice'
-import { resetAllExistingTweets } from '../redux/tweetSlice'
+import { resetLoggedInUserDetails, resetUserDetails, resetAllOtherUsersDetails } from '../redux/userSlice' 
+import { resetAllExistingTweets, resetAllTweetsOfPeopleWhoAreFollowedByLoggedInUser, resetAllTweetsOfUser } from '../redux/tweetSlice' 
 
 
 export const logoutCleanUp = (dispatch) => {
     
-    dispatch(logout()); 
-    dispatch(resetOtherUserDetails()); 
+    dispatch(resetLoggedInUserDetails()); 
+    dispatch(resetUserDetails()); 
     dispatch(resetAllOtherUsersDetails()); 
+
     dispatch(resetAllExistingTweets()); 
+    dispatch(resetAllTweetsOfPeopleWhoAreFollowedByLoggedInUser()); 
+    dispatch(resetAllTweetsOfUser()); 
 
     localStorage.removeItem('jwt'); 
 }

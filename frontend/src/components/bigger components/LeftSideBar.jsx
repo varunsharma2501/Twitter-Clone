@@ -7,17 +7,17 @@ import { IoSearchOutline, IoLogOutOutline } from "react-icons/io5"
 import toast from 'react-hot-toast'
 
 import { useDispatch, useSelector } from 'react-redux' 
-import { logout } from '../../redux/userSlice'
 import { Link, useNavigate } from 'react-router-dom'
 
 import TwitterLogo from '../../assets/logo.png'
 import AddTweetButton from '../small components/AddTweetButton'
 import MiniAvatar from '../small components/MiniAvatar'
+import { logoutCleanUp } from '../../helpers/logoutCleanUp'
 
 
 const LeftSideBar = () => {
 
-    const user = useSelector(state => state.user); 
+    const loggedInUserDetails = useSelector(store => store.user.loggedInUserDetails); 
 
     const navigate = useNavigate(); 
     const dispatch = useDispatch(); 
@@ -26,9 +26,7 @@ const LeftSideBar = () => {
         e.preventDefault(); 
         e.stopPropagation(); 
 
-        localStorage.removeItem('jwt'); 
-        dispatch(logout()); 
-
+        logoutCleanUp(dispatch); 
         toast.success('User logged out successfully'); 
         
         navigate('/'); 
@@ -80,7 +78,7 @@ const LeftSideBar = () => {
                         </div>
                     </div>
                     <div className={row}>
-                        <Link to={`/home/profile/${user?._id}`} className={containerOfIconAndLogo}>
+                        <Link to={`/home/profile/${loggedInUserDetails?._id}`} className={containerOfIconAndLogo}>
                             <div>
                                 <HiOutlineUser className={iconCSS} /> 
                             </div>
@@ -109,18 +107,18 @@ const LeftSideBar = () => {
         
             </div>
             
-            <Link to={`/home/profile/${user?._id}`} >
+            <Link to={`/home/profile/${loggedInUserDetails?._id}`} >
                 <div className='flex xl:px-4 xl:py-2 xl:h-[65px] xl:w-[240px] rounded-full cursor-pointer select-none hover:bg-[#323333]/60 mx-auto xl:ml-4 mb-3'> 
                     <MiniAvatar 
-                        userId={user?._id}
-                        name={user?.name}
-                        secureImageURL={user?.profile_pic}
+                        userId={loggedInUserDetails?._id}
+                        name={loggedInUserDetails?.name}
+                        secureImageURL={loggedInUserDetails?.profile_pic}
                         height={48}
                         width={48}
                     /> 
                     <div className='hidden ml-1 xl:ml-3 xl:flex xl:flex-col'> 
-                        <h3 className='text-white font-semibold p-0 m-0'> Aryan Tomar </h3>
-                        <p className='text-gray-500 text-md'> @aryan04-t </p>
+                        <h3 className='text-white font-semibold p-0 m-0'> {loggedInUserDetails?.name} </h3>
+                        <p className='text-gray-500 text-md'> @{loggedInUserDetails?.username} </p>
                     </div> 
                 </div>
             </Link>

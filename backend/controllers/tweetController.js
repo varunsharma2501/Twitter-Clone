@@ -126,36 +126,14 @@ export const likeOrDislike = async (req, res) => {
 }
 
 
-export const getAllTweetsOfLoggedInUser = async (req, res) => {
-    try{ 
-        const loggedInUser = req.body.user; 
-        const tweetsOfLoggedInUser = await tweetModel.find({
-            userId : loggedInUser._id 
-        }).sort({ createdAt: -1 }); 
-        res.status(200).json({
-            message : "Retrieved all tweets of logged in user successfully", 
-            data : tweetsOfLoggedInUser, 
-            success : true 
-        }); 
-    }
-    catch(err){
-        console.log(`Error occured in tweetController while getting all tweets of logged in user: ${err.message}`); 
-        return res.status(500).json({
-            message : 'Internal server error', 
-            error : true 
-        })
-    }
-}
-
-
-export const getAllTweetsOfOtherUser = async (req, res) => {
+export const getAllTweetsOfUser = async (req, res) => {
     try{ 
         const {user_id} = req.params; 
         const allTweetsOfUser = await tweetModel.find({
             userId : user_id 
         }).sort({ createdAt: -1 }); 
         res.status(200).json({
-            message : "Retrieved all tweets of requested particular user successfully", 
+            message : "Retrieved all tweets of requested user successfully", 
             data : allTweetsOfUser, 
             success : true 
         }); 

@@ -3,16 +3,16 @@ import { axiosTokenInstance } from '../../axios/axiosTokenIntsance'
 import { useSelector, useDispatch } from 'react-redux' 
 import toast from 'react-hot-toast'
 
-import { FaRegImage, FaTowerBroadcast } from 'react-icons/fa6' 
+import { FaRegImage } from 'react-icons/fa6' 
 
 import { logoutCleanUp } from '../../helpers/logoutCleanUp'
-import MiniAvatar from '../small components/MiniAvatar' 
 import { getRefresh } from '../../redux/tweetSlice'
+import MiniAvatar from '../small components/MiniAvatar' 
 
 
 const AddTweetDefaultInputBox = () => {
   
-    const user = useSelector(state => state.user); 
+    const loggedInUserDetails = useSelector(state => state.user.loggedInUserDetails); 
     const dispatch = useDispatch(); 
 
     const [tweetContent, setTweetContent] = useState(''); 
@@ -84,13 +84,13 @@ const AddTweetDefaultInputBox = () => {
     }
 
     return (
-        <div className='hidden min-[500px]:flex p-4 h-auto w-full border-b-[1px] border-gray-500'>
+        <div className='flex p-4 h-auto w-full border-b-[1px] border-gray-500'>
             
             <div className='hidden min-[500px]:block'>
                 <MiniAvatar 
-                    userId={user?._id}
-                    name={user?.name}
-                    secureImageURL={user?.profile_pic}
+                    userId={loggedInUserDetails?._id}
+                    name={loggedInUserDetails?.name}
+                    secureImageURL={loggedInUserDetails?.profile_pic}
                     height={48}
                     width={48}
                 /> 

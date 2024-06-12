@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
 import { CiHeart, CiEdit, CiBookmark } from 'react-icons/ci'
@@ -16,11 +16,16 @@ import MiniAvatar from './MiniAvatar'
 
 const DisplayTweet = ({currTweet, openEditATweet, setEditTweetContent, setOldTweetContent, setToBeEditedTweetId}) => {
 
-    const user = useSelector(store => store.user); 
+    const loggedInUserDetails = useSelector(store => store.user.loggedInUserDetails); 
     const dispatch = useDispatch();
 
-    const [liked, setLiked] = useState(currTweet?.likes?.includes(user?._id)); 
+    const [liked, setLiked] = useState(currTweet?.likes?.includes(loggedInUserDetails?._id)); 
     const [likeCount, setLikeCount] = useState(currTweet?.likes?.length); 
+
+    useEffect( () => {
+        setLiked(currTweet?.likes?.includes(loggedInUserDetails?._id)); 
+        setLikeCount(currTweet?.likes?.length); 
+    }, [currTweet])
 
     const handleLikeOrDislike = async (tweet_id) => {
         try{
@@ -31,7 +36,7 @@ const DisplayTweet = ({currTweet, openEditATweet, setEditTweetContent, setOldTwe
 
             const res = await axiosTokenInstance().patch(`${import.meta.env.VITE_BACKEND_URL}/api/tweet/like-or-dislike/${tweet_id}`); 
 
-            toast.success(res?.data?.message); 
+            // toast.success(res?.data?.message); 
             dispatch(getRefresh()); 
         }
         catch(err){
@@ -65,8 +70,8 @@ const DisplayTweet = ({currTweet, openEditATweet, setEditTweetContent, setOldTwe
         }
     }
 
-    const isLoggedInUserTweet = (user._id === currTweet?.userId); 
-    const [isBookmarkedByUser, setIsBookMarkedByUser] = useState(user?.bookmarks?.includes(currTweet?._id)); 
+    const isLoggedInUserTweet = (loggedInUserDetails._id === currTweet?.userId); 
+    const [isBookmarkedByUser, setIsBookMarkedByUser] = useState(loggedInUserDetails?.bookmarks?.includes(currTweet?._id)); 
 
     return (
         <div className='flex px-4 py-3 h-auto w-full border-b-[1px] border-gray-500'>

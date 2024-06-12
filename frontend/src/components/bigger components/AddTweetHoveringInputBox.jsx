@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { axiosTokenInstance } from '../../axios/axiosTokenIntsance'
 import { useSelector, useDispatch } from 'react-redux' 
 import toast from 'react-hot-toast'
 
-import { FaRegImage, FaTowerBroadcast } from 'react-icons/fa6' 
+import { FaRegImage } from 'react-icons/fa6' 
 import { Link } from 'react-router-dom'
 
 import { logoutCleanUp } from '../../helpers/logoutCleanUp'
@@ -15,7 +15,7 @@ import { IoMdArrowBack } from 'react-icons/io'
 
 const AddTweetHoveringInputBox = ({closeEditATweet, editTweetContent, setEditTweetContent, oldTweetContent, toBeEditedTweetId}) => {
     
-    const user = useSelector(state => state.user); 
+    const loggedInUserDetails = useSelector(state => state.user.loggedInUserDetails); 
     const dispatch = useDispatch(); 
 
     const [charCount, setCharCount] = useState(0); 
@@ -76,13 +76,13 @@ const AddTweetHoveringInputBox = ({closeEditATweet, editTweetContent, setEditTwe
             <Link to={'/home'} onClick={closeEditATweet} className='absolute top-0 cursor-pointer ml-3 mr-4 hover:bg-[#323333]/60 h-[40px] w-[40px] flex items-center justify-center rounded-full'>
                 <IoMdArrowBack className='text-white text-2xl rounded-full' />
             </Link>
-            <div className='hidden min-[500px]:flex p-4 h-[280px] w-full border-b-[1px] border-t-[1px] border-gray-500'>
+            <div className='flex p-4 h-[280px] w-full border-b-[1px] border-t-[1px] border-gray-500'>
                 
                 <div className='hidden min-[500px]:block'>
                     <MiniAvatar 
-                        userId={user?._id}
-                        name={user?.name}
-                        secureImageURL={user?.profile_pic}
+                        userId={loggedInUserDetails?._id}
+                        name={loggedInUserDetails?.name}
+                        secureImageURL={loggedInUserDetails?.profile_pic}
                         height={48}
                         width={48}
                     /> 

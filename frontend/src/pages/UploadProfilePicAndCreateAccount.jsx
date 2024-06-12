@@ -130,21 +130,7 @@ const UploadProfilePicAndCreateAccount = () => {
         
         axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/sign-up`, data)
         .then( (response) => {
-            
             toast.success(response?.data?.message); 
-
-            imageInputRef.current.value = ''; 
-            setUploadPic({});
-            setCloudinaryImgPublicID(''); 
-            setData({ 
-                name, 
-                email, 
-                username, 
-                password, 
-                profile_pic : '', 
-                cloudinary_img_public_id : '' 
-            });    
-            
             navigate('/login-email'); 
         })
         .catch( (err) => {

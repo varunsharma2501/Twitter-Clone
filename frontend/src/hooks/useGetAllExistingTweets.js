@@ -17,7 +17,6 @@ export const useGetAllExistingTweets = () => {
     const fetchAllExistingTweets = () => {
         axiosTokenInstance().get(`${import.meta.env.VITE_BACKEND_URL}/api/tweet/all-existing-tweets`)
         .then( (response) => {
-            console.log(response?.data?.data)
             dispatch(setAllExisitngTweets(response?.data?.data)); 
         }) 
         .catch( (err) => {

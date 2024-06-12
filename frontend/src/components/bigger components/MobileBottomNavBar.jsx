@@ -7,8 +7,8 @@ import { IoSearchOutline, IoLogOutOutline } from 'react-icons/io5'
 import toast from 'react-hot-toast'
 
 import { useDispatch } from 'react-redux' 
-import { logout } from '../../redux/userSlice'
 import { useNavigate } from 'react-router-dom'
+import { logoutCleanUp } from '../../helpers/logoutCleanUp'
 
 
 const MobileBottomNavBar = () => {
@@ -20,8 +20,7 @@ const MobileBottomNavBar = () => {
         e.preventDefault(); 
         e.stopPropagation(); 
 
-        localStorage.removeItem('jwt'); 
-        dispatch(logout()); 
+        logoutCleanUp(dispatch); 
 
         toast.success('User logged out successfully'); 
         

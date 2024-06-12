@@ -4,7 +4,7 @@ import { axiosTokenInstance } from '../axios/axiosTokenIntsance'
 
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { setAllOtherUsersDetails } from '../redux/otherUsersSlice'
+import { setAllOtherUsersDetails } from '../redux/userSlice'
 
 import { logoutCleanUp } from '../helpers/logoutCleanUp'
 

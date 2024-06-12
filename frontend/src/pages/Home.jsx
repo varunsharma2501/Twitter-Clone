@@ -14,7 +14,7 @@ import { useGetAllExistingTweets } from '../hooks/useGetAllExistingTweets'
 
 const Home = () => {
 
-    const user = useSelector(store => store.user); 
+    const loggedInUserDetails = useSelector(store => store.user.loggedInUserDetails); 
     
     useGetLoggedInUserDetails(); 
     useGetAllExistingTweets(); 

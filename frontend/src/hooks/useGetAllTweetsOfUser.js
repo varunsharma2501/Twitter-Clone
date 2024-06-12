@@ -2,22 +2,23 @@ import { useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { axiosTokenInstance } from '../axios/axiosTokenIntsance'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import { setLoggedInUserDetails } from '../redux/userSlice'
+
 import { logoutCleanUp } from '../helpers/logoutCleanUp'
+import { setAllTweetsOfUser } from '../redux/tweetSlice'
 
 
-export const useGetLoggedInUserDetails = () => {
-        
+export const useGetAllTweetsOfUser = (user_id) => {
+
     const navigate = useNavigate(); 
     const dispatch = useDispatch(); 
 
-    const fetchLoggedInUserDetails = () => {
-        axiosTokenInstance().get(`${import.meta.env.VITE_BACKEND_URL}/api/user/logged-in-user-details`)
+    const fetchAllTweetsOfUser = () => {
+        axiosTokenInstance().get(`${import.meta.env.VITE_BACKEND_URL}/api/tweet/all-tweets-of-user/${user_id}`)
         .then( (response) => {
-            dispatch(setLoggedInUserDetails(response?.data?.data)); 
+            dispatch(setAllTweetsOfUser(response?.data?.data)); 
         }) 
         .catch( (err) => {
             toast.error(err?.response?.data?.message); 
@@ -29,14 +30,17 @@ export const useGetLoggedInUserDetails = () => {
         })
     }
 
+    const refresh = useSelector(store => store.tweets.refresh); 
+
     useEffect( () => {
         if(!localStorage.getItem('jwt')){ 
             toast.error("Security Logout"); 
-            logoutCleanUp(dispatch);  
+            logoutCleanUp(dispatch); 
             navigate('/'); 
         }
         else{
-            fetchLoggedInUserDetails(); 
+            fetchAllTweetsOfUser(); 
         }
-    }, [])
+    }, [refresh])
+
 }
