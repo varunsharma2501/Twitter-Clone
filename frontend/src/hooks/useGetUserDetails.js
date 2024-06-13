@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { axiosTokenInstance } from '../axios/axiosTokenIntsance'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch , useSelector} from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { setUserDetails } from '../redux/userSlice'
@@ -28,6 +28,8 @@ export const useGetUserDetails = (user_id) => {
             }
         })
     }
+    
+    const refresh = useSelector(store => store.tweets.refresh); 
 
     useEffect( () => {
         if(!localStorage.getItem('jwt')){ 
@@ -38,5 +40,5 @@ export const useGetUserDetails = (user_id) => {
         else{
             fetchUserDetails(); 
         }
-    }, [user_id])
+    }, [user_id, refresh])
 }

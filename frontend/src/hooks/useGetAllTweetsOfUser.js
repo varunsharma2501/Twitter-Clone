@@ -41,6 +41,6 @@ export const useGetAllTweetsOfUser = (user_id) => {
         else{
             fetchAllTweetsOfUser(); 
         }
-    }, [refresh])
+    }, [user_id, refresh])
 
 }
