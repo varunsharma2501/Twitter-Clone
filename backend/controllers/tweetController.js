@@ -1,10 +1,11 @@
 import tweetModel from "../models/tweetModel.js";
+import userModel from "../models/userModel.js";
 
 
 export const createTweet = async (req, res) => {
     try{
         const {description} = req.body; 
-        const user = req.body.user; 
+        const loggedInUser = req.body.user; 
 
         if(!description){
             return res.status(400).json({
@@ -13,10 +14,22 @@ export const createTweet = async (req, res) => {
             })
         }
 
+        const updatedUser = await userModel.findByIdAndUpdate(loggedInUser._id, {
+                $inc : { tweetsCount : 1} 
+            },
+            { new: true }   // returns the updated document because of this option 
+        ); 
+
+        if(!updatedUser){
+            return res.status(500).json({
+                message : "User not found", 
+                error : true 
+            }) 
+        }
+
         const tweetPayload = {
             description, 
-            userId : user._id, 
-            userDetails : [user] 
+            userId : loggedInUser._id, 
         }
 
         const tweet = new tweetModel(tweetPayload); 
@@ -40,8 +53,40 @@ export const createTweet = async (req, res) => {
 
 export const deleteTweet = async (req, res) => {
     try{
+        const loggedInUser = req.body.user; 
         const {tweet_id} = req.params; 
+
+        if(!tweet_id || tweet_id === ':tweet_id'){
+            return res.status(400).json({
+                messsage : 'Bad backend call, tweet_id params cannot be empty', 
+                error : true 
+            })
+        }
+
+        const tweet = await tweetModel.findById(tweet_id); 
+
+        if(tweet.userId.toString() !== loggedInUser._id.toString()){
+            return res.status(400).json({
+                message : "You cannot delete someone else's tweet",
+                success : false 
+            })
+        }
+
+        const updatedUser = await userModel.findByIdAndUpdate(loggedInUser._id, {
+                $inc : { tweetsCount : -1} 
+            },
+            { new: true } 
+        )
+
+        if(!updatedUser){
+            return res.status(500).json({
+                message : "User not found", 
+                error : true 
+            }) 
+        }
+
         await tweetModel.findByIdAndDelete(tweet_id); 
+
         return res.status(200).json({
             message : 'Tweet deleted successfully', 
             success : true 
@@ -62,6 +107,13 @@ export const editLoggedInUserTweet = async (req, res) => {
         const loggedInUser = req.body.user; 
         const {tweet_id} = req.params; 
         
+        if(!tweet_id || tweet_id === ':tweet_id'){
+            return res.status(400).json({
+                messsage : 'Bad backend call, tweet_id params cannot be empty', 
+                error : true 
+            })
+        }
+
         const tweet = await tweetModel.findById(tweet_id); 
         if(tweet.userId.toString() !== loggedInUser._id.toString()){
             return res.status(400).json({
@@ -94,6 +146,14 @@ export const likeOrDislike = async (req, res) => {
     try{
         const loggedInUser = req.body.user; 
         const tweet_id = req.params.tweet_id; 
+
+        if(!tweet_id || tweet_id === ':tweet_id'){
+            return res.status(400).json({
+                messsage : 'Bad backend call, tweet_id params cannot be empty', 
+                error : true 
+            })
+        }
+
         const tweet = await tweetModel.findById(tweet_id); 
         if(tweet.likes.includes(loggedInUser._id)){
             await tweetModel.findByIdAndUpdate(tweet_id, {
@@ -129,10 +189,19 @@ export const likeOrDislike = async (req, res) => {
 export const getAllTweetsOfUser = async (req, res) => {
     try{ 
         const {user_id} = req.params; 
+
+        if(!user_id || user_id === ':user_id'){
+            return res.status(400).json({
+                messsage : 'Bad backend call, tweet_id params cannot be empty', 
+                error : true 
+            })
+        }
+
         const allTweetsOfUser = await tweetModel.find({
             userId : user_id 
-        }).sort({ createdAt: -1 }); 
-        res.status(200).json({
+        }).populate('userId', '-password').sort({ createdAt: -1 }); 
+
+        return res.status(200).json({
             message : "Retrieved all tweets of requested user successfully", 
             data : allTweetsOfUser, 
             success : true 
@@ -155,9 +224,9 @@ export const getAllTweetsOfUsersWhoAreFollowedByLoggedInUser = async (req, res) 
         
         const tweetsOfAllUsersWhoAreFollowedByLoggedInUser =  await tweetModel.find({
             userId: { $in: followingUsers }
-        }).sort({ createdAt: -1 });    
+        }).populate('userId', '-password').sort({ createdAt: -1 });    
         
-        res.status(200).json({
+        return res.status(200).json({
             message : 'Successfully retrieved tweets of all users who are followed by logged in user', 
             data : tweetsOfAllUsersWhoAreFollowedByLoggedInUser, 
             success : true, 
@@ -175,7 +244,7 @@ export const getAllTweetsOfUsersWhoAreFollowedByLoggedInUser = async (req, res) 
 
 export const getAllExistingTweets = async (req, res) => { 
     try{
-        const allTweetsExceptLoggedInUserTweets = await tweetModel.find().sort({ createdAt: -1 }); 
+        const allTweetsExceptLoggedInUserTweets = await tweetModel.find().populate('userId', '-password').sort({ createdAt: -1 }); 
         return res.status(200).json({
             message : 'Retrieved all existing tweets successfully', 
             data : allTweetsExceptLoggedInUserTweets, 

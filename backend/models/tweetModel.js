@@ -6,21 +6,17 @@ const tweetSchema = new mongoose.Schema({
         type : String, 
         required : true 
     },
-    likes : {
-        type : Array, 
-        default : []
-    },
-    userId : {
-        type : mongoose.Schema.ObjectId, 
-        ref : 'user'
-    },
-    userDetails : {
-        type : Array,
-        default : []
-    },
     image : {
         type : String, 
         default : ""
+    },
+    userId : {
+        type : mongoose.Schema.Types.ObjectId, 
+        ref : 'users'
+    },
+    likes : {
+        type : Array, 
+        default : []
     }
 }, {
     timestamps : true

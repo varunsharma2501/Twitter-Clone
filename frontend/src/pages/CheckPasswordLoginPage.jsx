@@ -62,7 +62,6 @@ const CheckPasswordLoginPage = () => {
             _id
         })
         .then( (res) => {
-            console.log(res?.data);  
             if(res?.data?.success){
                 toast.success(res?.data?.message); 
 				

@@ -71,9 +71,6 @@ const DisplayTweet = ({currTweet, openEditATweet, setEditTweetContent, setOldTwe
         }
     }
 
-    const isLoggedInUserTweet = (loggedInUserDetails._id === currTweet?.userId); 
-    const [isBookmarkedByUser, setIsBookMarkedByUser] = useState(loggedInUserDetails?.bookmarks?.includes(currTweet?._id)); 
-
     const getTweetCreationDisplayTime = () => {
 
         // I am hard coding time logic for IST (Indian Standard Time) 
@@ -158,21 +155,24 @@ const DisplayTweet = ({currTweet, openEditATweet, setEditTweetContent, setOldTwe
 
     const [displayTime, setDisplayTime] = useState(getTweetCreationDisplayTime()); 
 
+    const isLoggedInUserTweet = (loggedInUserDetails._id === currTweet?.userId._id); 
+    const [isBookmarkedByUser, setIsBookMarkedByUser] = useState(loggedInUserDetails?.bookmarks?.includes(currTweet?._id)); 
+
     return (
         <div className='flex px-4 py-3 h-auto w-full border-b-[1px] border-gray-500'>
             <div>
                 <MiniAvatar 
-                    userId={currTweet?.userDetails[0]?._id}
-                    name={currTweet?.userDetails[0]?.name}
-                    secureImageURL={currTweet?.userDetails[0]?.profile_pic}
+                    userId={currTweet?.userId?._id}
+                    name={currTweet?.userId?.name}
+                    secureImageURL={currTweet?.userId?.profile_pic}
                     height={45}
                     width={45}
                 />
             </div>
             <div className='ml-2 flex flex-col w-full h-auto rounded-lg overflow-hidden'>
                 <div> 
-                    <span className='text-white font-semibold py-2'> { currTweet?.userDetails[0]?.name } </span>
-                    <span className='text-gray-500 font-regular text-sm'> { `@${currTweet?.userDetails[0]?.username}` } </span>
+                    <span className='text-white font-semibold py-2'> { currTweet?.userId?.name } </span>
+                    <span className='text-gray-500 font-regular text-sm'> { `@${currTweet?.userId?.username}` } </span>
                     <span className='text-gray-500'>  &#183; </span>
                     <span className='text-gray-500 text-sm'> {displayTime} </span>
                 </div>

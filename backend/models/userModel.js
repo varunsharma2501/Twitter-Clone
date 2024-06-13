@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema({
         type : String,
         default : "Heyy!! I am a new user on Twitter"
     },
+    tweetsCount : {
+        type : Number,
+        default : 0
+    }, 
     followers : {
         type : Array,
         default : []
@@ -49,7 +53,7 @@ const userSchema = new mongoose.Schema({
         default : []
     }
 }, {
-    timestamps : true
+    timestamps : true 
 }); 
 
 
