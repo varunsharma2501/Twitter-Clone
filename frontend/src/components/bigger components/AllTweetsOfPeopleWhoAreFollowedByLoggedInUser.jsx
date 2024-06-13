@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 
 import FeedNavbar from './FeedNavbar'
-import DisplayTweet from '../small components/DisplayTweet'
+import DisplayTweet from './DisplayTweet'
 import { useSelector } from 'react-redux'
 import { useGetAllTweetsOfPeopleWhoAreFollowedByLoggedInUser } from '../../hooks/useGetAllTweetsOfPeopleWhoAreFollowedByLoggedInUser'
 

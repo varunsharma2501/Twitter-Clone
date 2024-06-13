@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { createContext } from 'react'
 
 import LeftSideBar from '../components/bigger components/LeftSideBar'
 import RightSideBar from '../components/bigger components/RightSideBar'
@@ -12,6 +13,9 @@ import { useGetLoggedInUserDetails } from '../hooks/useGetLoggedInUserDetails'
 import { useGetAllExistingTweets } from '../hooks/useGetAllExistingTweets'
 
 
+export const EditTweetContext = createContext(null); 
+
+
 const Home = () => {
 
     const loggedInUserDetails = useSelector(store => store.user.loggedInUserDetails); 
@@ -19,12 +23,32 @@ const Home = () => {
     useGetLoggedInUserDetails(); 
     useGetAllExistingTweets(); 
 
+    const [editATweet, setEditATweet] = useState(false); 
+
+	const [editTweetContent, setEditTweetContent] = useState(''); 
+	const [oldTweetContent, setOldTweetContent] = useState(''); 
+	const [toBeEditedTweetId, setToBeEditedTweetId] = useState(''); 
+
+
+    const objectOfAllStatesAndTheirSetters = {
+        editATweet, 
+        setEditATweet, 
+        editTweetContent, 
+        setEditTweetContent, 
+        oldTweetContent, 
+        setOldTweetContent, 
+        toBeEditedTweetId, 
+        setToBeEditedTweetId 
+    }
+
     return (
         <div className='w-full h-screen flex justify-center bg-black'> 
             <div className='relative flex justify-center w-[100%]'> 
                 
                 <LeftSideBar /> 
-                <Outlet />
+                <EditTweetContext.Provider value={objectOfAllStatesAndTheirSetters}>
+                    <Outlet />
+                </EditTweetContext.Provider>
                 <RightSideBar /> 
 
                 <MobileTopNavBar />

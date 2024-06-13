@@ -13,7 +13,7 @@ import { getRefresh } from '../../redux/tweetSlice'
 import { IoMdArrowBack } from 'react-icons/io'
 
 
-const AddTweetHoveringInputBox = ({closeEditATweet, editTweetContent, setEditTweetContent, oldTweetContent, toBeEditedTweetId}) => {
+const AddTweetHoveringInputBox = ({linkBackButtonTo, closeEditATweet, editTweetContent, setEditTweetContent, oldTweetContent, toBeEditedTweetId}) => {
     
     const loggedInUserDetails = useSelector(state => state.user.loggedInUserDetails); 
     const dispatch = useDispatch(); 
@@ -73,7 +73,7 @@ const AddTweetHoveringInputBox = ({closeEditATweet, editTweetContent, setEditTwe
 
     return (
         <div className='absolute bg-black h-full w-full z-30 flex items-center'>
-            <Link to={'/home'} onClick={closeEditATweet} className='absolute top-0 cursor-pointer ml-3 mr-4 hover:bg-[#323333]/60 h-[40px] w-[40px] flex items-center justify-center rounded-full'>
+            <Link to={linkBackButtonTo} onClick={closeEditATweet} className='absolute top-0 mt-3 cursor-pointer ml-3 mr-4 hover:bg-[#323333]/60 h-[40px] w-[40px] flex items-center justify-center rounded-full'>
                 <IoMdArrowBack className='text-white text-2xl rounded-full' />
             </Link>
             <div className='flex p-4 h-[280px] w-full border-b-[1px] border-t-[1px] border-gray-500'>

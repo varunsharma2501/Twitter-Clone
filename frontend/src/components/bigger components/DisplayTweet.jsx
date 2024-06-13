@@ -11,7 +11,7 @@ import { logoutCleanUp } from '../../helpers/logoutCleanUp'
 import { getRefresh } from '../../redux/tweetSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
-import MiniAvatar from './MiniAvatar'
+import MiniAvatar from '../small components/MiniAvatar'
 
 
 const DisplayTweet = ({currTweet, openEditATweet, setEditTweetContent, setOldTweetContent, setToBeEditedTweetId}) => {
