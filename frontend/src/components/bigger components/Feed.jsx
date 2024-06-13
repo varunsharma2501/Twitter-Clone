@@ -32,7 +32,7 @@ const Feed = () => {
 				<AddTweetHoveringInputBox linkBackButtonTo={`/home`}  closeEditATweet={ () => setEditATweet(false) } editTweetContent={editTweetContent} setEditTweetContent={setEditTweetContent} oldTweetContent={oldTweetContent} toBeEditedTweetId={toBeEditedTweetId} />
 			}
 			{
-				!editATweet && allExisitingTweets.map( (currTweet) => {
+				!editATweet && allExisitingTweets?.map( (currTweet) => {
 					return <DisplayTweet key={currTweet._id} currTweet={currTweet} openEditATweet={ () => setEditATweet(true) } setEditTweetContent={setEditTweetContent} setOldTweetContent={setOldTweetContent} setToBeEditedTweetId={setToBeEditedTweetId} /> 
 				}) 
 			}

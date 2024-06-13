@@ -43,16 +43,16 @@ const LeftSideBar = () => {
             
             <div>
 
-                <Link to={'/home'}>
-                    <div className='rounded-full bg-black h-[40px] w-[40px] overflow-hidden cursor-pointer hover:bg-[#323333]/60 my-4 mx-auto xl:ml-6'>
+                <div className='rounded-full bg-black h-[40px] w-[40px] overflow-hidden cursor-pointer hover:bg-[#323333]/60 my-4 mx-auto xl:ml-6'>
+                    <Link to={'/home'}>
                         <img 
                             src={TwitterLogo} 
                             alt='twitter-log' 
                             height={40} 
                             width={40} 
                         />
-                    </div>
-                </Link>
+                    </Link>
+                </div>
 
                 <div>
                     <div className={row}>

@@ -1,20 +1,26 @@
-import React, { useContext } from 'react' 
+import React, { useContext, useState } from 'react' 
+import toast from 'react-hot-toast'
+import { Link, useParams } from 'react-router-dom'
 
 import { IoMdArrowBack } from 'react-icons/io'
 
-import { useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { getRefresh } from '../../redux/tweetSlice'
+
 import { useGetUserDetails } from '../../hooks/useGetUserDetails'
 import { useGetAllTweetsOfUser } from '../../hooks/useGetAllTweetsOfUser'
 
+import DisplayTweet from './DisplayTweet'
 import AddTweetHoveringInputBox from './AddTweetHoveringInputBox'
 import MiniAvatar from '../small components/MiniAvatar'
-import DisplayTweet from './DisplayTweet'
 
 import { EditTweetContext } from '../../pages/Home'
+import { axiosTokenInstance } from '../../axios/axiosTokenIntsance'
 
 
 const Feed = () => {
+
+    const dispatch = useDispatch(); 
 
 	const {
 		editATweet, 
@@ -34,6 +40,20 @@ const Feed = () => {
 
     const allTweetsOfUser = useSelector(store => store?.tweets?.allTweetsOfUser); 
     const userDetails = useSelector(store => store?.user?.userDetails); 
+    const loggedInUserDetails = useSelector(store => store?.user?.loggedInUserDetails); 
+
+    const isLoggedInUser = (loggedInUserDetails._id === user_id); 
+    const [doesLoggedInUserFollowsThisUser, setDoesLoggedInUserFollowsThisUser] = useState(loggedInUserDetails?.following?.includes(user_id)); 
+
+    const handleFollowOrUnfollow = async (e) => {
+        
+        e.stopPropagation(); 
+        e.preventDefault(); 
+        
+        await axiosTokenInstance().patch(`${import.meta.env.VITE_BACKEND_URL}/api/user/follow-or-unfollow/${user_id}`); 
+        setDoesLoggedInUserFollowsThisUser(!doesLoggedInUserFollowsThisUser); 
+        dispatch(getRefresh()); 
+    }
 
   	return (
 		<div className='relative scrollbar-none w-[600px] xl:min-w-[600px] min-[500px]:border-x-[1px] max-[500px]:mt-[55px] max-[500px]:mb-[56px] border-gray-500 flex flex-col overflow-y-auto'>
@@ -91,18 +111,18 @@ const Feed = () => {
                                 haveBorder={true}
                             />
                         </div>
-                        <div className='absolute top-[80px] hidden min-[400px]:flex sm:hidden left-4'>
+                        <div className='absolute top-[95px] min-[400px]:top-[80px] min-[460px]:top-[95px] hidden min-[400px]:flex sm:hidden left-4'>
                             <MiniAvatar 
                                 name={userDetails?.name} 
                                 secureImageURL={userDetails?.profile_pic}
-                                height={120}
-                                width={120}
+                                height={130}
+                                width={130}
                                 haveBorder={true}
                             />
                         </div>
                     </div>
 
-                    <div className='border-t-4 pt-12 min-[400px]:pt-[75px] sm:pt-16 border-b-[1px] border-gray-500'>
+                    <div className='border-t-[1px] pt-12 min-[400px]:pt-[75px] sm:pt-16 border-b-[1px] border-gray-500'>
                         <div className='ml-4 text-xl text-bold text-white'>
                             {userDetails?.name}
                         </div>
@@ -122,8 +142,25 @@ const Feed = () => {
                                 <span className='font-bold'> {userDetails?.followers?.length} </span> <span className='text-gray-500'> Followers </span>  
                             </div>
                         </div>
-                    </div>
 
+                        {
+                            !isLoggedInUser && 
+                            <div className='absolute  w-32 h-10 max-[420px]:top-40 top-56 right-5 bg-blue-500 rounded-full overflow-hidden'>
+                                <button  onClick={handleFollowOrUnfollow} className={`absolute top-0 h-10 w-32 rounded-full font-semibold cursor-pointer select-none ${doesLoggedInUserFollowsThisUser ? 'bg-black border-[1px] text-white border-white' : 'bg-white border-[1px] text-black border-black'} `}> 
+                                    { doesLoggedInUserFollowsThisUser ? 'Unfollow' : 'Follow' } 
+                                </button>
+                            </div> 
+                        }
+
+                        {
+                            isLoggedInUser &&
+                            <button onClick={ () => { toast.error('This feature is under development. \n Please wait few days') }} className='absolute max-[420px]:top-40 top-56 right-5 bg-black border-[1px] border-white text-white font-semibold cursor-pointer select-none h-10 w-32 rounded-full'>
+                               Edit Profile 
+                            </button>
+                        }
+                    </div>
+                    
+                    
                     <div>
                         {
                             allTweetsOfUser?.map( (currTweet) => {
