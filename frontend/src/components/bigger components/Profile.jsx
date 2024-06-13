@@ -1,14 +1,15 @@
-import React, { useContext, useState } from 'react' 
+import React, { useContext, useEffect, useState } from 'react' 
 import toast from 'react-hot-toast'
 import { Link, useParams } from 'react-router-dom'
 
 import { IoMdArrowBack } from 'react-icons/io'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getRefresh } from '../../redux/tweetSlice'
+import { getUserSliceRefresh } from '../../redux/userSlice'
 
 import { useGetUserDetails } from '../../hooks/useGetUserDetails'
 import { useGetAllTweetsOfUser } from '../../hooks/useGetAllTweetsOfUser'
+import { useGetLoggedInUserDetails } from '../../hooks/useGetLoggedInUserDetails'
 
 import DisplayTweet from './DisplayTweet'
 import AddTweetHoveringInputBox from './AddTweetHoveringInputBox'
@@ -45,14 +46,18 @@ const Feed = () => {
     const isLoggedInUser = (loggedInUserDetails._id === user_id); 
     const [doesLoggedInUserFollowsThisUser, setDoesLoggedInUserFollowsThisUser] = useState(loggedInUserDetails?.following?.includes(user_id)); 
 
+    useEffect( () => {
+        setDoesLoggedInUserFollowsThisUser(loggedInUserDetails?.following?.includes(user_id)); 
+    }, [user_id]) 
+
     const handleFollowOrUnfollow = async (e) => {
         
         e.stopPropagation(); 
         e.preventDefault(); 
         
-        await axiosTokenInstance().patch(`${import.meta.env.VITE_BACKEND_URL}/api/user/follow-or-unfollow/${user_id}`); 
         setDoesLoggedInUserFollowsThisUser(!doesLoggedInUserFollowsThisUser); 
-        dispatch(getRefresh()); 
+        await axiosTokenInstance().patch(`${import.meta.env.VITE_BACKEND_URL}/api/user/follow-or-unfollow/${user_id}`); 
+        dispatch(getUserSliceRefresh()); 
     }
 
   	return (
@@ -149,6 +154,9 @@ const Feed = () => {
                                 <button  onClick={handleFollowOrUnfollow} className={`absolute top-0 h-10 w-32 rounded-full font-semibold cursor-pointer select-none ${doesLoggedInUserFollowsThisUser ? 'bg-black border-[1px] text-white border-white' : 'bg-white border-[1px] text-black border-black'} `}> 
                                     { doesLoggedInUserFollowsThisUser ? 'Unfollow' : 'Follow' } 
                                 </button>
+                                {
+                                    console.log(doesLoggedInUserFollowsThisUser) 
+                                }
                             </div> 
                         }
 

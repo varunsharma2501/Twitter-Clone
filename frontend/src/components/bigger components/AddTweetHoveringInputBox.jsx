@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 
 import { logoutCleanUp } from '../../helpers/logoutCleanUp'
 import MiniAvatar from '../small components/MiniAvatar' 
-import { getRefresh } from '../../redux/tweetSlice'
+import { getTweetSliceRefresh } from '../../redux/tweetSlice'
 
 import { IoMdArrowBack } from 'react-icons/io'
 
@@ -59,7 +59,7 @@ const AddTweetHoveringInputBox = ({linkBackButtonTo, closeEditATweet, editTweetC
                 new_description : editTweetContent
             }); 
             toast.success(res?.data?.message); 
-            dispatch(getRefresh()); 
+            dispatch(getTweetSliceRefresh()); 
             closeEditATweet();
         }
         catch(err){

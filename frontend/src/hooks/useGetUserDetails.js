@@ -26,10 +26,11 @@ export const useGetUserDetails = (user_id) => {
                 logoutCleanUp(dispatch); 
                 navigate('/'); 
             }
-        })
+        }) 
     }
     
-    const refresh = useSelector(store => store.tweets.refresh); 
+    const tweetSliceRefresh = useSelector(store => store.tweets.tweetSliceRefresh); 
+    const userSliceRefresh = useSelector(store => store.user.userSliceRefresh); 
 
     useEffect( () => {
         if(!localStorage.getItem('jwt')){ 
@@ -40,5 +41,5 @@ export const useGetUserDetails = (user_id) => {
         else{
             fetchUserDetails(); 
         }
-    }, [user_id, refresh])
+    }, [user_id, tweetSliceRefresh, userSliceRefresh])
 }

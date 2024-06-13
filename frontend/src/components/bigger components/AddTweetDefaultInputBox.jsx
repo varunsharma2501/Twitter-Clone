@@ -6,7 +6,7 @@ import toast from 'react-hot-toast'
 import { FaRegImage } from 'react-icons/fa6' 
 
 import { logoutCleanUp } from '../../helpers/logoutCleanUp'
-import { getRefresh } from '../../redux/tweetSlice'
+import { getTweetSliceRefresh } from '../../redux/tweetSlice'
 import MiniAvatar from '../small components/MiniAvatar' 
 
 
@@ -72,7 +72,7 @@ const AddTweetDefaultInputBox = () => {
             setTweetContent(''); 
             toast.success(res?.data?.message); 
             setCharCount(0); 
-            dispatch(getRefresh());
+            dispatch(getTweetSliceRefresh());
         }
         catch(err){
             toast.error(err?.response?.data?.message); 

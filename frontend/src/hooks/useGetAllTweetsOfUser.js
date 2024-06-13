@@ -30,7 +30,7 @@ export const useGetAllTweetsOfUser = (user_id) => {
         })
     }
 
-    const refresh = useSelector(store => store.tweets.refresh); 
+    const tweetSliceRefresh = useSelector(store => store.tweets.tweetSliceRefresh); 
 
     useEffect( () => {
         if(!localStorage.getItem('jwt')){ 
@@ -41,6 +41,6 @@ export const useGetAllTweetsOfUser = (user_id) => {
         else{
             fetchAllTweetsOfUser(); 
         }
-    }, [user_id, refresh])
+    }, [user_id, tweetSliceRefresh])
 
 }

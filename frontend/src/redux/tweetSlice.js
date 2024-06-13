@@ -4,7 +4,7 @@ const initialState = {
     allExistingTweets : [],
     allTweetsOfPeopleWhoAreFollowedByLoggedInUser : [], 
     allTweetsOfUser : [], 
-    refresh : false
+    tweetSliceRefresh : false
 }
 
 export const tweetSlice = createSlice({
@@ -29,12 +29,12 @@ export const tweetSlice = createSlice({
         resetAllTweetsOfUser : (state, action) => {    
             state.allTweetsOfUser = [] 
         },
-        getRefresh : (state, action) => {
-            state.refresh = !state.refresh; 
+        getTweetSliceRefresh : (state, action) => {
+            state.tweetSliceRefresh = !state.tweetSliceRefresh; 
         }
     }
 })
 
-export const { setAllExisitngTweets, resetAllExistingTweets, getRefresh, setAllTweetsOfPeopleWhoAreFollowedByLoggedInUser, resetAllTweetsOfPeopleWhoAreFollowedByLoggedInUser, setAllTweetsOfUser, resetAllTweetsOfUser } = tweetSlice.actions 
+export const { setAllExisitngTweets, resetAllExistingTweets, getTweetSliceRefresh, setAllTweetsOfPeopleWhoAreFollowedByLoggedInUser, resetAllTweetsOfPeopleWhoAreFollowedByLoggedInUser, setAllTweetsOfUser, resetAllTweetsOfUser } = tweetSlice.actions 
 
 export default tweetSlice.reducer 

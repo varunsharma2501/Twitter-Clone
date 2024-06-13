@@ -8,9 +8,9 @@ import { IoBookmark } from 'react-icons/io5'
 
 import { axiosTokenInstance } from '../../axios/axiosTokenIntsance'
 import { logoutCleanUp } from '../../helpers/logoutCleanUp'
-import { getRefresh } from '../../redux/tweetSlice'
-import { useDispatch, useSelector } from 'react-redux'
 
+import { useDispatch, useSelector } from 'react-redux'
+import { getTweetSliceRefresh } from '../../redux/tweetSlice'
 
 import MiniAvatar from '../small components/MiniAvatar'
 
@@ -39,7 +39,7 @@ const DisplayTweet = ({currTweet, openEditATweet, setEditTweetContent, setOldTwe
             const res = await axiosTokenInstance().patch(`${import.meta.env.VITE_BACKEND_URL}/api/tweet/like-or-dislike/${tweet_id}`); 
 
             // toast.success(res?.data?.message); 
-            dispatch(getRefresh()); 
+            dispatch(getTweetSliceRefresh());
         }
         catch(err){
             console.log(err); 
@@ -61,7 +61,7 @@ const DisplayTweet = ({currTweet, openEditATweet, setEditTweetContent, setOldTwe
         try{
             const res = await axiosTokenInstance().delete(`${import.meta.env.VITE_BACKEND_URL}/api/tweet/${tweet_id}`); 
             toast.success(res?.data?.message); 
-            dispatch(getRefresh()); 
+            dispatch(getTweetSliceRefresh()); 
         }
         catch(err){
             console.log(err); 

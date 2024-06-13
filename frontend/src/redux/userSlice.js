@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     loggedInUserDetails : {},
     userDetails : {}, 
-    allOtherUsersDetails : [] 
+    allOtherUsersDetails : [],
+    userSliceRefresh : false 
 }
 
 export const userSlice = createSlice({
@@ -27,11 +28,14 @@ export const userSlice = createSlice({
         },
         resetAllOtherUsersDetails : (state, action) => {
             state.allOtherUsersDetails = [] 
+        },
+        getUserSliceRefresh : (state, action) => {
+            state.userSliceRefresh = !state.userSliceRefresh; 
         }
     }
 })
 
 // Action creators are generated for each case reducer function 
-export const { setLoggedInUserDetails, resetLoggedInUserDetails, setUserDetails, resetUserDetails, setAllOtherUsersDetails, resetAllOtherUsersDetails } = userSlice.actions 
+export const { setLoggedInUserDetails, resetLoggedInUserDetails, setUserDetails, resetUserDetails, setAllOtherUsersDetails, resetAllOtherUsersDetails, getUserSliceRefresh } = userSlice.actions 
 
 export default userSlice.reducer 
