@@ -71,6 +71,7 @@ const AddTweetDefaultInputBox = () => {
             })
             setTweetContent(''); 
             toast.success(res?.data?.message); 
+            setCharCount(0); 
             dispatch(getRefresh());
         }
         catch(err){
