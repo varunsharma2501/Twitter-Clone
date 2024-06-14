@@ -30,6 +30,7 @@ export const useGetAllTweetsOfPeopleWhoAreFollowedByLoggedInUser = () => {
     }
 
     const tweetSliceRefresh = useSelector(store => store.tweets.tweetSliceRefresh); 
+    const userSliceRefresh = useSelector(store => store.user.userSliceRefresh); 
 
     useEffect( () => {
         if(!localStorage.getItem('jwt')){ 
@@ -40,5 +41,5 @@ export const useGetAllTweetsOfPeopleWhoAreFollowedByLoggedInUser = () => {
         else{
             fetchAllTweetsOfPeopleWhoAreFollowedByLoggedInUser(); 
         }
-    }, [tweetSliceRefresh])
+    }, [tweetSliceRefresh, userSliceRefresh])
 }

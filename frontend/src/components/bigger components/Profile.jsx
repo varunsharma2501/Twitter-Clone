@@ -5,18 +5,16 @@ import { Link, useParams } from 'react-router-dom'
 import { IoMdArrowBack } from 'react-icons/io'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserSliceRefresh } from '../../redux/userSlice'
+import handleFollowOrUnfollow from '../../helpers/handleFollowOrUnfollow'
 
 import { useGetUserDetails } from '../../hooks/useGetUserDetails'
-import { useGetAllTweetsOfUser } from '../../hooks/useGetAllTweetsOfUser'
-import { useGetLoggedInUserDetails } from '../../hooks/useGetLoggedInUserDetails'
+import { useGetAllTweetsOfUser } from '../../hooks/useGetAllTweetsOfUser' 
 
 import DisplayTweet from './DisplayTweet'
 import AddTweetHoveringInputBox from './AddTweetHoveringInputBox'
 import MiniAvatar from '../small components/MiniAvatar'
 
 import { EditTweetContext } from '../../pages/Home'
-import { axiosTokenInstance } from '../../axios/axiosTokenIntsance'
 
 
 const Feed = () => {
@@ -48,16 +46,10 @@ const Feed = () => {
 
     useEffect( () => {
         setDoesLoggedInUserFollowsThisUser(loggedInUserDetails?.following?.includes(user_id)); 
-    }, [user_id]) 
+    }, [user_id, loggedInUserDetails]) 
 
-    const handleFollowOrUnfollow = async (e) => {
-        
-        e.stopPropagation(); 
-        e.preventDefault(); 
-        
-        setDoesLoggedInUserFollowsThisUser(!doesLoggedInUserFollowsThisUser); 
-        await axiosTokenInstance().patch(`${import.meta.env.VITE_BACKEND_URL}/api/user/follow-or-unfollow/${user_id}`); 
-        dispatch(getUserSliceRefresh()); 
+    const doFollowOrUnfollow = (e) => {
+        handleFollowOrUnfollow(e, user_id, doesLoggedInUserFollowsThisUser, setDoesLoggedInUserFollowsThisUser, dispatch); 
     }
 
   	return (
@@ -150,13 +142,10 @@ const Feed = () => {
 
                         {
                             !isLoggedInUser && 
-                            <div className='absolute  w-32 h-10 max-[420px]:top-40 top-56 right-5 bg-blue-500 rounded-full overflow-hidden'>
-                                <button  onClick={handleFollowOrUnfollow} className={`absolute top-0 h-10 w-32 rounded-full font-semibold cursor-pointer select-none ${doesLoggedInUserFollowsThisUser ? 'bg-black border-[1px] text-white border-white' : 'bg-white border-[1px] text-black border-black'} `}> 
+                            <div className='absolute  w-32 h-10 max-[420px]:top-40 top-56 right-5 rounded-full overflow-hidden'>
+                                <button  onClick={doFollowOrUnfollow} className={`absolute top-0 h-10 w-32 rounded-full font-semibold cursor-pointer select-none ${doesLoggedInUserFollowsThisUser ? 'bg-black border-[1px] text-white border-white' : 'bg-white border-[1px] text-black border-black'} `}> 
                                     { doesLoggedInUserFollowsThisUser ? 'Unfollow' : 'Follow' } 
                                 </button>
-                                {
-                                    console.log(doesLoggedInUserFollowsThisUser) 
-                                }
                             </div> 
                         }
 
