@@ -17,9 +17,9 @@ export const voluntaryLogout = (e, dispatch, navigate,) => {
     navigate('/'); 
 }
 
-export const navigateToProfilePage = (e, dispatch, navigate, loggedInUserDetails) => {
+export const navigateToProfilePage = (e, dispatch, navigate, currUser) => {
     e.preventDefault(); 
     e.stopPropagation(); 
     dispatch(setWhichDivIsActive('profile-div-is-active')); 
-    navigate(`/home/profile/${loggedInUserDetails?._id}`); 
+    navigate(`/home/profile/${currUser?._id}`); 
 }

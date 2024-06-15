@@ -140,7 +140,7 @@ const SignUpPage = () => {
                 </div>
                 <div className='w-full flex justify-center items-center'>
                     <label htmlFor='email' className='mt-5 pl-5 w-[500px] text-white h-10 text-2xl pr-6 flex items-center'>
-                        G-mail
+                        Gmail
                     </label>
                 </div>
                 <div className='w-full flex justify-center items-center'>
@@ -152,7 +152,7 @@ const SignUpPage = () => {
                         value={email} 
                         onChange={handleChange} 
                         className={`mt-2 h-[50px] w-[500px] px-4 py-2 mx-5 rounded-md border-2 border-gray-500 bg-black outline-none focus:border-[#1d9bf0] focus:border-[3px] text-white text-lg ${isEmailErrorTextInvisible ? '' : 'focus:border-red-500 border-red-500'}`}
-                        placeholder='Enter your e-mail here' 
+                        placeholder='Enter your gmail here' 
                         required 
                     />
                 </div>

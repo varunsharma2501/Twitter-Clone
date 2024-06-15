@@ -60,8 +60,8 @@ export const useGetTweets = (user_id) => {
         })
     }
 
-    const tweetSliceRefresh = useSelector(store => store.tweets.tweetSliceRefresh); 
     const whichDivIsActive = useSelector(store => store.tweets.whichDivIsActive); 
+    const tweetSliceRefresh = useSelector(store => store.tweets.tweetSliceRefresh); 
 
     useEffect( () => {
         if(!localStorage.getItem('jwt')){ 

@@ -79,13 +79,13 @@ const CheckEmailLoginPage = () => {
         <div className='h-full w-full flex flex-col items-center'>
             <div className='w-full flex justify-center items-center'>
                 <h1 className='mt-20 h-[60px] w-[500px] text-3xl sm:text-4xl font-semibold text-white px-5'>
-                    Enter your email for <span className='text-[#1d9bf0]'> logging in </span> 
+                    Enter your gmail for <span className='text-[#1d9bf0]'> logging in </span> 
                 </h1>
             </div>
             <form onSubmit={verifyEmail} className='flex flex-col items-center w-full'>
                 <div className='w-full flex justify-center items-center'>
                     <label htmlFor='email' className='mt-20 pl-5 w-[500px] text-white h-10 text-2xl pr-6 flex items-center'>
-                        G-mail
+                        Gmail
                     </label>
                 </div>
                 <div className='w-full flex justify-center items-center'>
@@ -97,7 +97,7 @@ const CheckEmailLoginPage = () => {
                         value={email} 
                         onChange={handleChange} 
                         className={`mt-2 h-[50px] w-[500px] px-4 py-2 mx-5 rounded-md border-2 border-gray-500 bg-black outline-none focus:border-[#1d9bf0] focus:border-[3px] text-white text-lg ${isEmailErrorTextInvisible ? '' : 'focus:border-red-500 border-red-500'}`}
-                        placeholder='Enter your e-mail here' 
+                        placeholder='Enter your gmail here' 
                         required 
                     />
                 </div>

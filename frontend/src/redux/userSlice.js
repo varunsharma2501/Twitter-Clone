@@ -31,20 +31,69 @@ export const userSlice = createSlice({
         resetUserDetails : (state, action) => {
             state.userDetails = {} 
         },
+        setFollowOrUnfollow : (state, action) => {
+            
+            const {toBeFollowedOrUnfollowedUserId} = action.payload; 
+
+            if(state.loggedInUserDetails.following.includes(toBeFollowedOrUnfollowedUserId)){
+
+                state.loggedInUserDetails.following = state.loggedInUserDetails.following.filter( (currUserId) => {
+                    if(currUserId === toBeFollowedOrUnfollowedUserId) return false; 
+                    return true; 
+                })
+
+                if(state.userDetails._id === toBeFollowedOrUnfollowedUserId){
+                    state.userDetails.followers = state.userDetails.followers.filter( (currUserId) => {
+                        if(currUserId === state.loggedInUserDetails._id) return false;
+                        return true; 
+                    })
+                }
+
+                if(state.userDetails._id === state.loggedInUserDetails._id){
+                    state.userDetails.following = state.userDetails.following.filter( (currUserId) => {
+                        if(currUserId === toBeFollowedOrUnfollowedUserId) return false; 
+                        return true; 
+                    })
+                }
+
+                state.allOtherUsersDetails.map( (currUser) => {
+                    if(currUser._id === toBeFollowedOrUnfollowedUserId){
+                        currUser.followers = currUser.followers.filter( (followerId) => {
+                            if(followerId === state.loggedInUserDetails._id) return false; 
+                            return true;
+                        }); 
+                    }
+                })
+            }
+            else{
+                state.loggedInUserDetails.following.push(toBeFollowedOrUnfollowedUserId); 
+
+                if(state.userDetails._id === toBeFollowedOrUnfollowedUserId){
+                    state.userDetails.followers.push(state.loggedInUserDetails._id); 
+                }
+
+                if(state.userDetails._id === state.loggedInUserDetails._id){
+                    state.userDetails.following.push(toBeFollowedOrUnfollowedUserId); 
+                }
+
+                state.allOtherUsersDetails.map( (currUser) => {
+                    if(currUser._id === toBeFollowedOrUnfollowedUserId){
+                        currUser.followers.push(state.loggedInUserDetails._id); 
+                    }
+                })
+            }
+        },
         // Recheck these once ahead  
         setAllOtherUsersDetails : (state, action) => {
             state.allOtherUsersDetails = action.payload 
         },
         resetAllOtherUsersDetails : (state, action) => {
             state.allOtherUsersDetails = [] 
-        },
-        getUserSliceRefresh : (state, action) => {
-            state.userSliceRefresh = !state.userSliceRefresh; 
         }
     }
 })
 
 // Action creators are generated for each case reducer function 
-export const { setLoggedInUserDetails, resetLoggedInUserDetails, decreaseTweetsCount, increaseTweetsCount, setUserDetails, resetUserDetails, setAllOtherUsersDetails, resetAllOtherUsersDetails, getUserSliceRefresh } = userSlice.actions 
+export const { setLoggedInUserDetails, resetLoggedInUserDetails, decreaseTweetsCount, increaseTweetsCount, setUserDetails, resetUserDetails, setFollowOrUnfollow, setAllOtherUsersDetails, resetAllOtherUsersDetails } = userSlice.actions 
 
 export default userSlice.reducer 

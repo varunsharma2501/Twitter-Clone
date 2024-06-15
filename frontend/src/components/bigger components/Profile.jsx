@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react' 
+import React, { useContext } from 'react' 
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
 
@@ -45,20 +45,11 @@ const Profile = () => {
     const userDetails = useSelector(store => store?.user?.userDetails); 
 
     const isLoggedInUser = (loggedInUserDetails._id === user_id); 
-    const [doesLoggedInUserFollowsThisUser, setDoesLoggedInUserFollowsThisUser] = useState(loggedInUserDetails?.following?.includes(user_id)); 
-
-    useEffect( () => {
-        setDoesLoggedInUserFollowsThisUser(loggedInUserDetails?.following?.includes(user_id)); 
-    }, [user_id, loggedInUserDetails]) 
-
-    const doFollowOrUnfollow = (e) => {
-        handleFollowOrUnfollow(e, user_id, doesLoggedInUserFollowsThisUser, setDoesLoggedInUserFollowsThisUser, dispatch); 
-    }
+    const doesLoggedInUserFollowsThisUser = loggedInUserDetails?.following?.includes(user_id);  
 
     const navigateToHome = (e) => {
         e.preventDefault(); 
         e.stopPropagation(); 
-        
         navigate('/home'); 
         dispatch(setWhichDivIsActive('for-you-div-is-active')); 
     }
@@ -147,14 +138,14 @@ const Profile = () => {
                                 <span className='font-bold'> {userDetails?.following?.length} </span> <span className='text-gray-500'> Following </span> 
                             </div>
                             <div className='text-white'>
-                                <span className='font-bold'> {userDetails?.followers?.length} </span> <span className='text-gray-500'> Followers </span>  
+                                <span className='font-bold'> {userDetails?.followers?.length} </span> <span className='text-gray-500'> Followers </span> 
                             </div>
                         </div>
 
                         {
                             !isLoggedInUser && 
                             <div className='absolute w-32 h-10 max-[420px]:top-40 top-56 right-5 rounded-full overflow-hidden'>
-                                <button  onClick={doFollowOrUnfollow} className={`absolute top-0 h-10 w-32 rounded-full font-semibold cursor-pointer select-none ${doesLoggedInUserFollowsThisUser ? 'bg-black border-[1px] text-white border-white' : 'bg-white border-[1px] text-black border-black'} `}> 
+                                <button  onClick={ (e) => handleFollowOrUnfollow(e, dispatch, userDetails._id) } className={`absolute top-0 h-10 w-32 rounded-full font-semibold cursor-pointer select-none ${doesLoggedInUserFollowsThisUser ? 'bg-black border-[1px] text-white border-white' : 'bg-white border-[1px] text-black border-black'} `}> 
                                     { doesLoggedInUserFollowsThisUser ? 'Unfollow' : 'Follow' } 
                                 </button>
                             </div> 
