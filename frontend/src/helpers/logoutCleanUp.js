@@ -1,5 +1,5 @@
 import { resetLoggedInUserDetails, resetUserDetails, resetAllOtherUsersDetails } from '../redux/userSlice' 
-import { resetAllExistingTweets, resetAllTweetsOfPeopleWhoAreFollowedByLoggedInUser, resetAllTweetsOfUser } from '../redux/tweetSlice' 
+import { resetAllDisplayTweets, resetWhichDivIsActive } from '../redux/tweetSlice' 
 
 
 export const logoutCleanUp = (dispatch) => {
@@ -8,9 +8,8 @@ export const logoutCleanUp = (dispatch) => {
     dispatch(resetUserDetails()); 
     dispatch(resetAllOtherUsersDetails()); 
 
-    dispatch(resetAllExistingTweets()); 
-    dispatch(resetAllTweetsOfPeopleWhoAreFollowedByLoggedInUser()); 
-    dispatch(resetAllTweetsOfUser()); 
-
+    dispatch(resetAllDisplayTweets()); 
+    dispatch(resetWhichDivIsActive()); 
+    
     localStorage.removeItem('jwt'); 
 }

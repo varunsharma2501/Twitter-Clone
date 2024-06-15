@@ -1,40 +1,59 @@
 import { createSlice } from "@reduxjs/toolkit"; 
 
 const initialState = {
-    allExistingTweets : [],
-    allTweetsOfPeopleWhoAreFollowedByLoggedInUser : [], 
-    allTweetsOfUser : [], 
-    tweetSliceRefresh : false
+    allDisplayTweets : [], 
+    tweetSliceRefresh : false, 
+    whichDivIsActive : 'for-you-div-is-active' 
 }
 
 export const tweetSlice = createSlice({
     name: 'tweets',
     initialState,
     reducers: {
-        setAllExisitngTweets : (state, action) => {
-            state.allExistingTweets = action.payload 
+        setAllDisplayTweets : (state, action) => {
+            state.allDisplayTweets = action.payload 
         },
-        resetAllExistingTweets : (state, action) => {
-            state.allExistingTweets = [] 
-        },
-        setAllTweetsOfPeopleWhoAreFollowedByLoggedInUser : (state, action) => {
-            state.allTweetsOfPeopleWhoAreFollowedByLoggedInUser = action.payload 
-        },
-        resetAllTweetsOfPeopleWhoAreFollowedByLoggedInUser : (state, action) => {
-            state.allTweetsOfPeopleWhoAreFollowedByLoggedInUser = [] 
-        },
-        setAllTweetsOfUser : (state, action) => {
-            state.allTweetsOfUser = action.payload 
-        },
-        resetAllTweetsOfUser : (state, action) => {    
-            state.allTweetsOfUser = [] 
+        resetAllDisplayTweets : (state, action) => {
+            state.allDisplayTweets = [] 
         },
         getTweetSliceRefresh : (state, action) => {
-            state.tweetSliceRefresh = !state.tweetSliceRefresh; 
+            state.tweetSliceRefresh = !state.tweetSliceRefresh 
+        },
+        setWhichDivIsActive : (state, action) => {
+            state.whichDivIsActive = action.payload 
+        },
+        resetWhichDivIsActive : (state, action) => {
+            state.whichDivIsActive = 'for-you-div-is-active' 
+        },
+        setLikeOrDislike : (state, action) => {
+            const { tweetId, loggedInUserId } = action.payload; 
+            state.allDisplayTweets = state.allDisplayTweets.map( (currTweet) => {
+                if(currTweet._id === tweetId){
+                    if(currTweet.likes.includes(loggedInUserId)){
+                        const indexOfLoggedInUser = currTweet.likes.indexOf(loggedInUserId); 
+                        currTweet.likes.splice(indexOfLoggedInUser, 1); 
+                    }
+                    else{
+                        currTweet.likes.push(loggedInUserId); 
+                    }
+                }
+                return currTweet; 
+            })
+        },
+        deleteTweet : (state, action) => {
+            const { tweetId, loggedInUserId } = action.payload; 
+            state.allDisplayTweets = state.allDisplayTweets.filter( (currTweet) => {
+                if(currTweet._id === tweetId){
+                    if(currTweet.userId._id === loggedInUserId){
+                        return false; 
+                    }
+                }
+                return true;
+            })
         }
     }
 })
 
-export const { setAllExisitngTweets, resetAllExistingTweets, getTweetSliceRefresh, setAllTweetsOfPeopleWhoAreFollowedByLoggedInUser, resetAllTweetsOfPeopleWhoAreFollowedByLoggedInUser, setAllTweetsOfUser, resetAllTweetsOfUser } = tweetSlice.actions 
+export const { setAllDisplayTweets, resetAllDisplayTweets, getTweetSliceRefresh, setWhichDivIsActive, resetWhichDivIsActive, setLikeOrDislike, deleteTweet } = tweetSlice.actions 
 
 export default tweetSlice.reducer 

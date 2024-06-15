@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react' 
 import toast from 'react-hot-toast'
-import { Link, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { IoMdArrowBack } from 'react-icons/io'
 
@@ -8,18 +8,20 @@ import { useDispatch, useSelector } from 'react-redux'
 import handleFollowOrUnfollow from '../../helpers/handleFollowOrUnfollow'
 
 import { useGetUserDetails } from '../../hooks/useGetUserDetails'
-import { useGetAllTweetsOfUser } from '../../hooks/useGetAllTweetsOfUser' 
 
 import DisplayTweet from './DisplayTweet'
-import AddTweetHoveringInputBox from './AddTweetHoveringInputBox'
+import EditTweetInputBox from './EditTweetInputBox'
 import MiniAvatar from '../small components/MiniAvatar'
 
 import { EditTweetContext } from '../../pages/Home'
+import { useGetTweets } from '../../hooks/useGetTweets'
+import { setWhichDivIsActive } from '../../redux/tweetSlice'
 
 
-const Feed = () => {
+const Profile = () => {
 
     const dispatch = useDispatch(); 
+    const navigate = useNavigate(); 
 
 	const {
 		editATweet, 
@@ -35,11 +37,12 @@ const Feed = () => {
     const {user_id} = useParams(); 
 
     useGetUserDetails(user_id); 
-    useGetAllTweetsOfUser(user_id); 
+    useGetTweets(user_id); 
 
-    const allTweetsOfUser = useSelector(store => store?.tweets?.allTweetsOfUser); 
-    const userDetails = useSelector(store => store?.user?.userDetails); 
+	const allDisplayTweets = useSelector(store => store?.tweets?.allDisplayTweets); 
+
     const loggedInUserDetails = useSelector(store => store?.user?.loggedInUserDetails); 
+    const userDetails = useSelector(store => store?.user?.userDetails); 
 
     const isLoggedInUser = (loggedInUserDetails._id === user_id); 
     const [doesLoggedInUserFollowsThisUser, setDoesLoggedInUserFollowsThisUser] = useState(loggedInUserDetails?.following?.includes(user_id)); 
@@ -52,12 +55,20 @@ const Feed = () => {
         handleFollowOrUnfollow(e, user_id, doesLoggedInUserFollowsThisUser, setDoesLoggedInUserFollowsThisUser, dispatch); 
     }
 
+    const navigateToHome = (e) => {
+        e.preventDefault(); 
+        e.stopPropagation(); 
+        
+        navigate('/home'); 
+        dispatch(setWhichDivIsActive('for-you-div-is-active')); 
+    }
+
   	return (
 		<div className='relative scrollbar-none w-[600px] xl:min-w-[600px] min-[500px]:border-x-[1px] max-[500px]:mt-[55px] max-[500px]:mb-[56px] border-gray-500 flex flex-col overflow-y-auto'>
             <div className='sticky top-0 border-t-[1px] border-gray-500 z-10 bg-black flex items-center justify-start'>
-                <Link to={'/home'} className='cursor-pointer ml-3 mr-4 hover:bg-[#323333]/60 h-[40px] w-[40px] flex items-center justify-center rounded-full'>
+                <div onClick={navigateToHome} className='cursor-pointer ml-3 mr-4 hover:bg-[#323333]/60 h-[40px] w-[40px] flex items-center justify-center rounded-full'>
                     <IoMdArrowBack className='text-white text-2xl rounded-full' />
-                </Link>
+                </div>
                 <div>
                     <div className='text-white text-2xl font-bold mt-2'>
                         {userDetails?.name}
@@ -70,7 +81,7 @@ const Feed = () => {
 
             {
                 editATweet && 
-				<AddTweetHoveringInputBox linkBackButtonTo={`/home/profile/${user_id}`} closeEditATweet={ () => setEditATweet(false) } editTweetContent={editTweetContent} setEditTweetContent={setEditTweetContent} oldTweetContent={oldTweetContent} toBeEditedTweetId={toBeEditedTweetId} />
+				<EditTweetInputBox linkBackButtonTo={`/home/profile/${user_id}`} closeEditATweet={ () => setEditATweet(false) } editTweetContent={editTweetContent} setEditTweetContent={setEditTweetContent} oldTweetContent={oldTweetContent} toBeEditedTweetId={toBeEditedTweetId} />
             }
 
             {
@@ -142,7 +153,7 @@ const Feed = () => {
 
                         {
                             !isLoggedInUser && 
-                            <div className='absolute  w-32 h-10 max-[420px]:top-40 top-56 right-5 rounded-full overflow-hidden'>
+                            <div className='absolute w-32 h-10 max-[420px]:top-40 top-56 right-5 rounded-full overflow-hidden'>
                                 <button  onClick={doFollowOrUnfollow} className={`absolute top-0 h-10 w-32 rounded-full font-semibold cursor-pointer select-none ${doesLoggedInUserFollowsThisUser ? 'bg-black border-[1px] text-white border-white' : 'bg-white border-[1px] text-black border-black'} `}> 
                                     { doesLoggedInUserFollowsThisUser ? 'Unfollow' : 'Follow' } 
                                 </button>
@@ -160,7 +171,7 @@ const Feed = () => {
                     
                     <div>
                         {
-                            allTweetsOfUser?.map( (currTweet) => {
+                            allDisplayTweets?.map( (currTweet) => {
                                 return <DisplayTweet key={currTweet._id} currTweet={currTweet} openEditATweet={ () => setEditATweet(true) } setEditTweetContent={setEditTweetContent} setOldTweetContent={setOldTweetContent} setToBeEditedTweetId={setToBeEditedTweetId} /> 
                             })
                         }
@@ -171,4 +182,4 @@ const Feed = () => {
   	)
 }
 
-export default Feed
+export default Profile

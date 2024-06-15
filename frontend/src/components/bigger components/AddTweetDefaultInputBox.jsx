@@ -7,6 +7,8 @@ import { FaRegImage } from 'react-icons/fa6'
 
 import { logoutCleanUp } from '../../helpers/logoutCleanUp'
 import { getTweetSliceRefresh } from '../../redux/tweetSlice'
+import { increaseTweetsCount } from '../../redux/userSlice'
+
 import MiniAvatar from '../small components/MiniAvatar' 
 
 
@@ -72,6 +74,7 @@ const AddTweetDefaultInputBox = () => {
             setTweetContent(''); 
             toast.success(res?.data?.message); 
             setCharCount(0); 
+            dispatch(increaseTweetsCount());
             dispatch(getTweetSliceRefresh());
         }
         catch(err){

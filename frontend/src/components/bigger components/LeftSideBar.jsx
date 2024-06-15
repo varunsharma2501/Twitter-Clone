@@ -1,36 +1,24 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { HiOutlineUser } from "react-icons/hi2" 
 import { GoHomeFill } from "react-icons/go"  
 import { IoSearchOutline, IoLogOutOutline } from "react-icons/io5" 
 
-import toast from 'react-hot-toast'
-
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux' 
-import { Link, useNavigate } from 'react-router-dom'
 
 import TwitterLogo from '../../assets/logo.png'
 import AddTweetButton from '../small components/AddTweetButton'
 import MiniAvatar from '../small components/MiniAvatar'
-import { logoutCleanUp } from '../../helpers/logoutCleanUp'
+import { navigateToHome, navigateToProfilePage, voluntaryLogout } from '../../helpers/navigationUtils'
 
 
 const LeftSideBar = () => {
 
     const loggedInUserDetails = useSelector(store => store.user.loggedInUserDetails); 
 
-    const navigate = useNavigate(); 
     const dispatch = useDispatch(); 
-    
-    const logoutUser = (e) => {
-        e.preventDefault(); 
-        e.stopPropagation(); 
-
-        logoutCleanUp(dispatch); 
-        toast.success('User logged out successfully'); 
-        
-        navigate('/'); 
-    }
+    const navigate = useNavigate(); 
 
     const iconCSS = 'w-[28px] h-[28px] text-white '; 
     const iconLabelCSS = 'hidden xl:flex items-center text-white px-3'; 
@@ -44,28 +32,26 @@ const LeftSideBar = () => {
             <div>
 
                 <div className='rounded-full bg-black h-[40px] w-[40px] overflow-hidden cursor-pointer hover:bg-[#323333]/60 my-4 mx-auto xl:ml-6'>
-                    <Link to={'/home'}>
+                    <div onClick={ (e) => navigateToHome(e, dispatch, navigate) } >
                         <img 
                             src={TwitterLogo} 
                             alt='twitter-log' 
                             height={40} 
                             width={40} 
                         />
-                    </Link>
+                    </div>
                 </div>
 
                 <div>
-                    <div className={row}>
-                        <Link to={'/home'}>
-                            <div className={containerOfIconAndLogo}>
-                                <div>
-                                    <GoHomeFill className={iconCSS} />
-                                </div>
-                                <div className={iconLabelCSS}>
-                                    Home
-                                </div>
+                    <div onClick={ (e) => navigateToHome(e, dispatch, navigate) } className={row}>
+                        <div className={containerOfIconAndLogo}>
+                            <div>
+                                <GoHomeFill className={iconCSS} />
                             </div>
-                        </Link>
+                            <div className={iconLabelCSS}>
+                                Home
+                            </div>
+                        </div>
                     </div>
                     <div className={row}>
                         <div className={containerOfIconAndLogo}>
@@ -78,17 +64,17 @@ const LeftSideBar = () => {
                         </div>
                     </div>
                     <div className={row}>
-                        <Link to={`/home/profile/${loggedInUserDetails?._id}`} className={containerOfIconAndLogo}>
+                        <div onClick={ (e) => navigateToProfilePage(e, dispatch, navigate, loggedInUserDetails) } className={containerOfIconAndLogo}>
                             <div>
                                 <HiOutlineUser className={iconCSS} /> 
                             </div>
                             <div className={iconLabelCSS}>
                                 Profile 
                             </div>
-                        </Link>
+                        </div>
                     </div>
                     <div className={row}>
-                        <div onClick={logoutUser} className={containerOfIconAndLogo}>
+                        <div onClick={ (e) => voluntaryLogout(e, dispatch, navigate) } className={containerOfIconAndLogo}>
                             <div>
                                 <IoLogOutOutline className={iconCSS  + 'rotate-180'} /> 
                             </div>
@@ -107,21 +93,19 @@ const LeftSideBar = () => {
         
             </div>
             
-            <Link to={`/home/profile/${loggedInUserDetails?._id}`} >
-                <div className='flex xl:px-4 xl:py-2 xl:h-[65px] xl:w-[240px] rounded-full cursor-pointer select-none hover:bg-[#323333]/60 mx-auto xl:ml-4 mb-3'> 
-                    <MiniAvatar 
-                        userId={loggedInUserDetails?._id}
-                        name={loggedInUserDetails?.name}
-                        secureImageURL={loggedInUserDetails?.profile_pic}
-                        height={48}
-                        width={48}
-                    /> 
-                    <div className='hidden ml-1 xl:ml-3 xl:flex xl:flex-col'> 
-                        <h3 className='text-white font-semibold p-0 m-0'> {loggedInUserDetails?.name} </h3>
-                        <p className='text-gray-500 text-md'> @{loggedInUserDetails?.username} </p>
-                    </div> 
-                </div>
-            </Link>
+            <div onClick={ (e) => navigateToProfilePage(e, dispatch, navigate, loggedInUserDetails) }  className='flex xl:px-4 xl:py-2 xl:h-[65px] xl:w-[240px] rounded-full cursor-pointer select-none hover:bg-[#323333]/60 mx-auto xl:ml-4 mb-3'> 
+                <MiniAvatar 
+                    userId={loggedInUserDetails?._id}
+                    name={loggedInUserDetails?.name}
+                    secureImageURL={loggedInUserDetails?.profile_pic}
+                    height={48}
+                    width={48}
+                /> 
+                <div className='hidden ml-1 xl:ml-3 xl:flex xl:flex-col'> 
+                    <h3 className='text-white font-semibold p-0 m-0'> {loggedInUserDetails?.name} </h3>
+                    <p className='text-gray-500 text-md'> @{loggedInUserDetails?.username} </p>
+                </div> 
+            </div> 
         </div>
     )
 }

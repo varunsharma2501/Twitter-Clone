@@ -13,7 +13,7 @@ import { getTweetSliceRefresh } from '../../redux/tweetSlice'
 import { IoMdArrowBack } from 'react-icons/io'
 
 
-const AddTweetHoveringInputBox = ({linkBackButtonTo, closeEditATweet, editTweetContent, setEditTweetContent, oldTweetContent, toBeEditedTweetId}) => {
+const EditTweetInputBox = ({linkBackButtonTo, closeEditATweet, editTweetContent, setEditTweetContent, oldTweetContent, toBeEditedTweetId}) => {
     
     const loggedInUserDetails = useSelector(state => state.user.loggedInUserDetails); 
     const dispatch = useDispatch(); 
@@ -138,4 +138,4 @@ const AddTweetHoveringInputBox = ({linkBackButtonTo, closeEditATweet, editTweetC
     )
 }
 
-export default AddTweetHoveringInputBox
+export default EditTweetInputBox

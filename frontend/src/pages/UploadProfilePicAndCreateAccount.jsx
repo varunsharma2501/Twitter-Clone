@@ -164,7 +164,7 @@ const UploadProfilePicAndCreateAccount = () => {
         try{
             if(cloudinaryImgPublicID !== ''){
                 navigate('/'); 
-                await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/cloudinary/asset/${cloudinaryImgPublicID}`)
+                await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/cloudinary/asset/${cloudinaryImgPublicID}`); 
                 setCloudinaryImgPublicID(''); 
             }
             else{

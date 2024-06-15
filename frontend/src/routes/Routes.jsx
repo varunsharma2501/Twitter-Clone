@@ -14,7 +14,6 @@ import Home from '../pages/Home';
 
 import Feed from '../components/bigger components/Feed'
 import Profile from '../components/bigger components/Profile';
-import AllTweetsOfPeopleWhoAreFollowedByLoggedInUser from '../components/bigger components/AllTweetsOfPeopleWhoAreFollowedByLoggedInUser';
 
 import ErrorPage from '../pages/ErrorPage'; 
 
@@ -106,10 +105,6 @@ const router = createBrowserRouter([
             {
                 path : 'profile/:user_id',
                 element : <Profile />
-            },
-            {
-                path : 'tweets-of-people-followed-by-logged-in-user',
-                element : <AllTweetsOfPeopleWhoAreFollowedByLoggedInUser />
             }
         ],
         errorElement : <ErrorPage /> 

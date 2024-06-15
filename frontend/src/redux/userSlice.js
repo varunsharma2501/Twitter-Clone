@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"; 
 
 const initialState = {
-    loggedInUserDetails : {},
+    loggedInUserDetails : {}, 
     userDetails : {}, 
     allOtherUsersDetails : [],
     userSliceRefresh : false 
@@ -17,12 +17,21 @@ export const userSlice = createSlice({
         resetLoggedInUserDetails : (state, action) => {
             state.loggedInUserDetails = {}
         },
+        decreaseTweetsCount : (state, action) => {
+            state.loggedInUserDetails.tweetsCount = state.loggedInUserDetails.tweetsCount - 1; 
+            state.userDetails.tweetsCount = state.userDetails.tweetsCount - 1; 
+        },
+        increaseTweetsCount : (state, action) => {
+            state.loggedInUserDetails.tweetsCount = state.loggedInUserDetails.tweetsCount + 1; 
+            state.userDetails.tweetsCount = state.userDetails.tweetsCount + 1; 
+        },
         setUserDetails : (state, action) => {
             state.userDetails = action.payload 
         },
         resetUserDetails : (state, action) => {
             state.userDetails = {} 
-        }, 
+        },
+        // Recheck these once ahead  
         setAllOtherUsersDetails : (state, action) => {
             state.allOtherUsersDetails = action.payload 
         },
@@ -36,6 +45,6 @@ export const userSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function 
-export const { setLoggedInUserDetails, resetLoggedInUserDetails, setUserDetails, resetUserDetails, setAllOtherUsersDetails, resetAllOtherUsersDetails, getUserSliceRefresh } = userSlice.actions 
+export const { setLoggedInUserDetails, resetLoggedInUserDetails, decreaseTweetsCount, increaseTweetsCount, setUserDetails, resetUserDetails, setAllOtherUsersDetails, resetAllOtherUsersDetails, getUserSliceRefresh } = userSlice.actions 
 
 export default userSlice.reducer 

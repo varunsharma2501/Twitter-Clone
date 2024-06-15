@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { axiosTokenInstance } from '../axios/axiosTokenIntsance'
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { setLoggedInUserDetails } from '../redux/userSlice'
@@ -29,8 +29,6 @@ export const useGetLoggedInUserDetails = () => {
         })
     }
 
-    const userSliceRefresh = useSelector(store => store.user.userSliceRefresh); 
-
     useEffect( () => {
         if(!localStorage.getItem('jwt')){ 
             toast.error("Security Logout"); 
@@ -40,5 +38,5 @@ export const useGetLoggedInUserDetails = () => {
         else{
             fetchLoggedInUserDetails(); 
         }
-    }, [userSliceRefresh])
+    }, [])
 }

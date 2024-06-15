@@ -7,10 +7,8 @@ import MobileBottomNavBar from '../components/bigger components/MobileBottomNavB
 import MobileTopNavBar from '../components/bigger components/MobileTopNavBar'
 import AddTweetButton from '../components/small components/AddTweetButton'
 
-import { useSelector } from 'react-redux'
 import { Outlet } from 'react-router-dom'
 import { useGetLoggedInUserDetails } from '../hooks/useGetLoggedInUserDetails'
-import { useGetAllExistingTweets } from '../hooks/useGetAllExistingTweets'
 
 
 export const EditTweetContext = createContext(null); 
@@ -18,10 +16,7 @@ export const EditTweetContext = createContext(null);
 
 const Home = () => {
 
-    const loggedInUserDetails = useSelector(store => store.user.loggedInUserDetails); 
-    
     useGetLoggedInUserDetails(); 
-    useGetAllExistingTweets(); 
 
     const [editATweet, setEditATweet] = useState(false); 
 
