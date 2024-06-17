@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 import { HiOutlineUser } from "react-icons/hi2" 
 import { GoHomeFill } from "react-icons/go"  
@@ -11,6 +11,7 @@ import TwitterLogo from '../../assets/logo.png'
 import AddTweetButton from '../small components/AddTweetButton'
 import MiniAvatar from '../small components/MiniAvatar'
 import { navigateToHome, navigateToProfilePage, voluntaryLogout } from '../../helpers/navigationUtils'
+import { PostTweetUsingHoveringTabContext } from '../../pages/Home'
 
 
 const LeftSideBar = () => {
@@ -19,6 +20,10 @@ const LeftSideBar = () => {
 
     const dispatch = useDispatch(); 
     const navigate = useNavigate(); 
+
+    const {
+		openAddTweetHoveringTab 
+	} = useContext(PostTweetUsingHoveringTabContext); 
 
     const iconCSS = 'w-[28px] h-[28px] text-white '; 
     const iconLabelCSS = 'hidden xl:flex items-center text-white px-3'; 
@@ -87,7 +92,7 @@ const LeftSideBar = () => {
                     </div>
                 </div>
 
-                <button className='hidden xl:flex justify-center items-center bg-[#1d9bf0] h-[50px] w-[220px] hover:bg-blue-500 py-3 px-[96px] mt-2 rounded-full ml-4 overflow-hidden'>
+                <button onClick={openAddTweetHoveringTab} className='hidden xl:flex justify-center items-center bg-[#1d9bf0] h-[50px] w-[220px] hover:bg-blue-500 py-3 px-[96px] mt-2 rounded-full ml-4 overflow-hidden'>
                     <p className='text-white font-bold text-lg'> Post </p> 
                 </button>
 

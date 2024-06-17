@@ -6,27 +6,22 @@ import toast from 'react-hot-toast'
 import { FaRegImage } from 'react-icons/fa6' 
 
 import { logoutCleanUp } from '../../helpers/logoutCleanUp'
+import { getTweetSliceRefresh } from '../../redux/tweetSlice'
+import { increaseTweetsCount } from '../../redux/userSlice'
+
 import MiniAvatar from '../small components/MiniAvatar' 
-import { editTweetInRedux } from '../../redux/tweetSlice'
 
 import { IoMdArrowBack } from 'react-icons/io'
 import { useNavigate } from 'react-router-dom'
 
 
-const EditTweetInputBox = ({editTweetInputBoxProps}) => {
+const EditTweetInputBox = ({closeAddTweetHoveringTab}) => {
     
-    const {
-        closeEditATweet, 
-        editTweetContent, 
-        setEditTweetContent, 
-        oldTweetContent, 
-        toBeEditedTweetId
-    } = editTweetInputBoxProps; 
-
     const loggedInUserDetails = useSelector(state => state?.user?.loggedInUserDetails); 
     const dispatch = useDispatch(); 
     const navigate = useNavigate(); 
 
+    const [tweetContent, setTweetContent] = useState(''); 
     const [charCount, setCharCount] = useState(0); 
     const [errorTextForCharLimitExceeded, setErrortTextForCharLimitExceeded] = useState('No error, Limit Not Excedded'); 
 
@@ -49,28 +44,26 @@ const EditTweetInputBox = ({editTweetInputBoxProps}) => {
         else{
             setErrortTextForCharLimitExceeded('Limit not exceeded'); 
         }
-        setEditTweetContent(tweet); 
+        setTweetContent(tweet); 
     }
 
 
-    const updateTweet = async (e) => {
+    const createTweet = async (e) => {
         e.preventDefault();
         e.stopPropagation(); 
-
-        if(editTweetContent === oldTweetContent){
-            toast.error('You have to add something new to input field for editing the tweet, current data is same as existing tweet.')
-            return;
-        }
-
         try{
-            dispatch(editTweetInRedux({toBeEditedTweetId, editTweetContent})); 
-            closeEditATweet();
-            const res = await axiosTokenInstance().patch(`${import.meta.env.VITE_BACKEND_URL}/api/tweet/edit-logged-in-user-tweet/${toBeEditedTweetId}`, {
-                new_description : editTweetContent
-            }); 
+            const res = await axiosTokenInstance().post(`${import.meta.env.VITE_BACKEND_URL}/api/tweet/create`, {
+                description : tweetContent 
+            })
+            setTweetContent(''); 
             toast.success(res?.data?.message); 
+            setCharCount(0); 
+            dispatch(increaseTweetsCount());
+            dispatch(getTweetSliceRefresh());
+            closeAddTweetHoveringTab(); 
         }
         catch(err){
+            toast.error(err?.response?.data?.message); 
             console.log(err); 
             if(err?.response?.data?.logout){
                 logoutCleanUp(dispatch); 
@@ -79,9 +72,10 @@ const EditTweetInputBox = ({editTweetInputBoxProps}) => {
         }
     }
 
+
     return (
-        <div className='absolute bg-black h-full w-full z-30 flex items-center'>
-            <div onClick={closeEditATweet} className='absolute top-0 mt-3 cursor-pointer ml-3 mr-4 hover:bg-[#323333]/60 h-[40px] w-[40px] flex items-center justify-center rounded-full'>
+        <div className='absolute bg-black h-full w-full z-40 flex items-center'>
+            <div onClick={closeAddTweetHoveringTab} className='absolute top-0 mt-3 cursor-pointer ml-3 mr-4 hover:bg-[#323333]/60 h-[40px] w-[40px] flex items-center justify-center rounded-full'>
                 <IoMdArrowBack className='text-white text-2xl rounded-full' />
             </div>
             <div className='flex p-4 h-[280px] w-full border-b-[1px] border-t-[1px] border-gray-500'>
@@ -97,14 +91,14 @@ const EditTweetInputBox = ({editTweetInputBoxProps}) => {
                 </div>
 
                 <div className='ml-2 w-full h-full rounded-lg'>
-                    <form onSubmit={updateTweet} className='h-full w-full'>
+                    <form onSubmit={createTweet} className='h-full w-full'>
                         
                         <textarea
                             maxLength={280} 
                             required 
-                            name='tweetPost' 
-                            id='tweetEditPost' 
-                            value={editTweetContent}
+                            name='tweetPost2' 
+                            id='tweetPost2' 
+                            value={tweetContent}
                             onChange={handleTweetInput}
                             className='resize-none h-[170px] w-full pt-2 pb-3 pl-1 pr-1 rounded-lg bg-transparent text-xl text-white outline-none caret-white overflow-y-auto scrollbar'
                             placeholder='What is happening?!' 

@@ -10,10 +10,9 @@ import handleFollowOrUnfollow from '../../helpers/handleFollowOrUnfollow'
 import { useGetUserDetails } from '../../hooks/useGetUserDetails'
 
 import DisplayTweet from './DisplayTweet'
-import EditTweetInputBox from './EditTweetInputBox'
 import MiniAvatar from '../small components/MiniAvatar'
 
-import { EditTweetContext } from '../../pages/Home'
+import { EditTweetContext, PostTweetUsingHoveringTabContext } from '../../pages/Home'
 import { useGetTweets } from '../../hooks/useGetTweets'
 import { setWhichDivIsActive } from '../../redux/tweetSlice'
 
@@ -24,33 +23,27 @@ const Profile = () => {
     const navigate = useNavigate(); 
 
 	const {
-		editATweet, 
-        setEditATweet, 
-        editTweetContent, 
+		isEditATweetActive, 
+        setIsEditATweetActive, 
         setEditTweetContent, 
-        oldTweetContent, 
         setOldTweetContent, 
-        toBeEditedTweetId, 
         setToBeEditedTweetId 
 	} = useContext(EditTweetContext); 
 
     const {user_id} = useParams(); 
 
-	const editTweetInputBoxProps = {
-		closeEditATweet : () => setEditATweet(false),
-		editTweetContent,
-		setEditTweetContent, 
-		oldTweetContent,
-		toBeEditedTweetId 
-	} 
-
     const displayTweetProps = {
-		openEditATweet : () => setEditATweet(true), 
+		openEditATweet : () => setIsEditATweetActive(true), 
 		setEditTweetContent, 
 		setOldTweetContent, 
 		setToBeEditedTweetId 
 	} 
-
+    
+			
+	const {
+		isPostATweetHoveringTabOpen 
+	} = useContext(PostTweetUsingHoveringTabContext); 
+	
     useGetUserDetails(user_id); 
     useGetTweets(user_id); 
 
@@ -70,8 +63,7 @@ const Profile = () => {
     }
 
   	return (
-		<div className='relative scrollbar-none w-[600px] xl:min-w-[600px] min-[500px]:border-x-[1px] max-[500px]:mt-[55px] max-[500px]:mb-[56px] border-gray-500 flex flex-col overflow-y-auto'>
-        
+		<>
             <div className='sticky top-0 border-t-[1px] border-gray-500 z-10 bg-black flex items-center justify-start'>
                 <div onClick={navigateToHome} className='cursor-pointer ml-3 mr-4 hover:bg-[#323333]/60 h-[40px] w-[40px] flex items-center justify-center rounded-full'>
                     <IoMdArrowBack className='text-white text-2xl rounded-full' />
@@ -85,11 +77,6 @@ const Profile = () => {
                     </div> 
                 </div>
             </div>
-
-            {
-                editATweet && 
-				<EditTweetInputBox editTweetInputBoxProps={editTweetInputBoxProps} />
-            }
 
             <div className='relative'> 
                 <div className='relative'> 
@@ -173,16 +160,15 @@ const Profile = () => {
                     }
                 </div>
                 
-                
                 <div>
                     {
-                        !editATweet && allDisplayTweets?.map( (currTweet) => {
+                        !isPostATweetHoveringTabOpen && !isEditATweetActive && allDisplayTweets?.map( (currTweet) => {
                             return <DisplayTweet key={currTweet._id} currTweet={currTweet} displayTweetProps={displayTweetProps} /> 
                         })
                     }
                 </div>
             </div>
-    	</div>
+    	</>
   	)
 }
 
