@@ -17,7 +17,7 @@ const FollowUserSuggestion = ({currUser}) => {
     const doesLoggedInUserFollowsThisUser = loggedInUserDetails?.following?.includes(currUser?._id); 
 
     return (
-        <div onClick={ (e) => navigateToProfilePage(e, dispatch, navigate, currUser) } className='relative flex py-2 hover:bg-[#323333]/60 cursor-pointer'>
+        <div onClick={ (e) => navigateToProfilePage(e, dispatch, navigate, currUser._id) } className='relative flex py-2 hover:bg-[#323333]/60 cursor-pointer'>
             <div className='ml-3'>
                 <MiniAvatar 
                     userId={currUser?._id}

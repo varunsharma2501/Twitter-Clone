@@ -24,7 +24,6 @@ const Home = () => {
 	const [oldTweetContent, setOldTweetContent] = useState(''); 
 	const [toBeEditedTweetId, setToBeEditedTweetId] = useState(''); 
 
-
     const objectOfAllStatesAndTheirSetters = {
         editATweet, 
         setEditATweet, 

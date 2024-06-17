@@ -64,7 +64,7 @@ const LeftSideBar = () => {
                         </div>
                     </div>
                     <div className={row}>
-                        <div onClick={ (e) => navigateToProfilePage(e, dispatch, navigate, loggedInUserDetails) } className={containerOfIconAndLogo}>
+                        <div onClick={ (e) => navigateToProfilePage(e, dispatch, navigate, loggedInUserDetails._id) } className={containerOfIconAndLogo}>
                             <div>
                                 <HiOutlineUser className={iconCSS} /> 
                             </div>
@@ -93,7 +93,7 @@ const LeftSideBar = () => {
         
             </div>
             
-            <div onClick={ (e) => navigateToProfilePage(e, dispatch, navigate, loggedInUserDetails) }  className='flex xl:px-4 xl:py-2 xl:h-[65px] xl:w-[240px] rounded-full cursor-pointer select-none hover:bg-[#323333]/60 mx-auto xl:ml-4 mb-3'> 
+            <div onClick={ (e) => navigateToProfilePage(e, dispatch, navigate, loggedInUserDetails._id) }  className='flex xl:px-4 xl:py-2 xl:h-[65px] xl:w-[240px] rounded-full cursor-pointer select-none hover:bg-[#323333]/60 mx-auto xl:ml-4 mb-3'> 
                 <MiniAvatar 
                     userId={loggedInUserDetails?._id}
                     name={loggedInUserDetails?.name}

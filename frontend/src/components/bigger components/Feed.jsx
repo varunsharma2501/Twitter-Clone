@@ -14,7 +14,8 @@ const Feed = () => {
 	useGetTweets(); 
 
 	const allDisplayTweets = useSelector(store => store?.tweets?.allDisplayTweets); 
-
+	const whichDivIsActive = useSelector(store => store.tweets.whichDivIsActive); 
+	
 	const {
 		editATweet, 
         setEditATweet, 
@@ -26,9 +27,22 @@ const Feed = () => {
         setToBeEditedTweetId 
 	} = useContext(EditTweetContext); 
 
-	const whichDivIsActive = useSelector(store => store.tweets.whichDivIsActive); 
+	const editTweetInputBoxProps = {
+		closeEditATweet : () => setEditATweet(false),
+		editTweetContent,
+		setEditTweetContent, 
+		oldTweetContent,
+		toBeEditedTweetId 
+	}
 
-  	return (
+	const displayTweetProps = {
+		openEditATweet : () => setEditATweet(true), 
+		setEditTweetContent, 
+		setOldTweetContent, 
+		setToBeEditedTweetId 
+	}
+
+	return (
 		<div className='relative scrollbar-none w-[600px] xl:min-w-[600px] min-[500px]:border-x-[1px] max-[500px]:mt-[55px] max-[500px]:mb-[56px] border-gray-500 flex flex-col overflow-y-auto'>
 			<FeedNavbar /> 
 			{
@@ -36,11 +50,11 @@ const Feed = () => {
 			}
 			{
 				editATweet && 
-				<EditTweetInputBox linkBackButtonTo={`/home`}  closeEditATweet={ () => setEditATweet(false) } editTweetContent={editTweetContent} setEditTweetContent={setEditTweetContent} oldTweetContent={oldTweetContent} toBeEditedTweetId={toBeEditedTweetId} />
+				<EditTweetInputBox editTweetInputBoxProps={editTweetInputBoxProps} />
 			}
 			{
-				!editATweet && allDisplayTweets?.map( (currTweet) => {
-					return <DisplayTweet key={currTweet._id} currTweet={currTweet} openEditATweet={ () => setEditATweet(true) } setEditTweetContent={setEditTweetContent} setOldTweetContent={setOldTweetContent} setToBeEditedTweetId={setToBeEditedTweetId} /> 
+				allDisplayTweets?.map( (currTweet) => {
+					return <DisplayTweet key={currTweet._id} currTweet={currTweet} displayTweetProps={displayTweetProps} /> 
 				}) 
 			}
     	</div>

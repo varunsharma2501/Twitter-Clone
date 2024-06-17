@@ -17,7 +17,14 @@ import { decreaseTweetsCount } from '../../redux/userSlice';
 import MiniAvatar from '../small components/MiniAvatar'
 
 
-const DisplayTweet = ({currTweet, openEditATweet, setEditTweetContent, setOldTweetContent, setToBeEditedTweetId}) => {
+const DisplayTweet = ({currTweet, displayTweetProps}) => {
+
+    const {
+        openEditATweet, 
+        setEditTweetContent, 
+        setOldTweetContent, 
+        setToBeEditedTweetId
+    } = displayTweetProps; 
 
     const loggedInUserDetails = useSelector(store => store.user.loggedInUserDetails); 
     const dispatch = useDispatch();

@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import toast from 'react-hot-toast'
 
 import { FaRegImage } from 'react-icons/fa6' 
-import { Link } from 'react-router-dom'
 
 import { logoutCleanUp } from '../../helpers/logoutCleanUp'
 import MiniAvatar from '../small components/MiniAvatar' 
@@ -13,13 +12,20 @@ import { getTweetSliceRefresh } from '../../redux/tweetSlice'
 import { IoMdArrowBack } from 'react-icons/io'
 
 
-const EditTweetInputBox = ({linkBackButtonTo, closeEditATweet, editTweetContent, setEditTweetContent, oldTweetContent, toBeEditedTweetId}) => {
+const EditTweetInputBox = ({editTweetInputBoxProps}) => {
     
+    const {
+        closeEditATweet, 
+        editTweetContent, 
+        setEditTweetContent, 
+        oldTweetContent, 
+        toBeEditedTweetId
+    } = editTweetInputBoxProps; 
+
     const loggedInUserDetails = useSelector(state => state.user.loggedInUserDetails); 
     const dispatch = useDispatch(); 
 
     const [charCount, setCharCount] = useState(0); 
-
     const [errorTextForCharLimitExceeded, setErrortTextForCharLimitExceeded] = useState('No error, Limit Not Excedded'); 
 
     const [isPostTweetButtonDisabled, setIsPostTweetButtonDisabled] = useState(true);  
@@ -73,9 +79,9 @@ const EditTweetInputBox = ({linkBackButtonTo, closeEditATweet, editTweetContent,
 
     return (
         <div className='absolute bg-black h-full w-full z-30 flex items-center'>
-            <Link to={linkBackButtonTo} onClick={closeEditATweet} className='absolute top-0 mt-3 cursor-pointer ml-3 mr-4 hover:bg-[#323333]/60 h-[40px] w-[40px] flex items-center justify-center rounded-full'>
+            <div onClick={closeEditATweet} className='absolute top-0 mt-3 cursor-pointer ml-3 mr-4 hover:bg-[#323333]/60 h-[40px] w-[40px] flex items-center justify-center rounded-full'>
                 <IoMdArrowBack className='text-white text-2xl rounded-full' />
-            </Link>
+            </div>
             <div className='flex p-4 h-[280px] w-full border-b-[1px] border-t-[1px] border-gray-500'>
                 
                 <div className='hidden min-[500px]:block'>

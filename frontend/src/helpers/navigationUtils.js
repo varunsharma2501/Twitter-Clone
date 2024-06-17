@@ -9,7 +9,7 @@ export const navigateToHome = (e, dispatch, navigate) => {
     navigate('/home'); 
 }
 
-export const voluntaryLogout = (e, dispatch, navigate,) => {
+export const voluntaryLogout = (e, dispatch, navigate) => {
     e.preventDefault(); 
     e.stopPropagation(); 
     logoutCleanUp(dispatch); 
@@ -17,9 +17,9 @@ export const voluntaryLogout = (e, dispatch, navigate,) => {
     navigate('/'); 
 }
 
-export const navigateToProfilePage = (e, dispatch, navigate, currUser) => {
+export const navigateToProfilePage = (e, dispatch, navigate, currUserId) => {
     e.preventDefault(); 
     e.stopPropagation(); 
     dispatch(setWhichDivIsActive('profile-div-is-active')); 
-    navigate(`/home/profile/${currUser?._id}`); 
+    navigate(`/home/profile/${currUserId}`); 
 }
