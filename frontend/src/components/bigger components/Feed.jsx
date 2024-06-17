@@ -14,7 +14,7 @@ const Feed = () => {
 	useGetTweets(); 
 
 	const allDisplayTweets = useSelector(store => store?.tweets?.allDisplayTweets); 
-	const whichDivIsActive = useSelector(store => store.tweets.whichDivIsActive); 
+	const whichDivIsActive = useSelector(store => store?.tweets?.whichDivIsActive); 
 	
 	const {
 		editATweet, 

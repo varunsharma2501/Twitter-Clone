@@ -29,7 +29,7 @@ export const useGetAllOtherUsersDetails = () => {
         })
     }
 
-    const userSliceRefresh = useSelector(store => store.user.userSliceRefresh); 
+    const userSliceRefresh = useSelector(store => store?.user?.userSliceRefresh); 
 
     useEffect( () => {
         if(!localStorage.getItem('jwt')){ 

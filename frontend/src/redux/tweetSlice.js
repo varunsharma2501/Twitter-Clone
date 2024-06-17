@@ -27,7 +27,7 @@ export const tweetSlice = createSlice({
         },
         setLikeOrDislike : (state, action) => {
             const { tweetId, loggedInUserId } = action.payload; 
-            state.allDisplayTweets = state.allDisplayTweets.map( (currTweet) => {
+            state.allDisplayTweets = state.allDisplayTweets?.map( (currTweet) => {
                 if(currTweet._id === tweetId){
                     if(currTweet.likes.includes(loggedInUserId)){
                         const indexOfLoggedInUser = currTweet.likes.indexOf(loggedInUserId); 
@@ -42,7 +42,7 @@ export const tweetSlice = createSlice({
         },
         deleteTweet : (state, action) => {
             const { tweetId, loggedInUserId } = action.payload; 
-            state.allDisplayTweets = state.allDisplayTweets.filter( (currTweet) => {
+            state.allDisplayTweets = state.allDisplayTweets?.filter( (currTweet) => {
                 if(currTweet._id === tweetId){
                     if(currTweet.userId._id === loggedInUserId){
                         return false; 
@@ -53,7 +53,7 @@ export const tweetSlice = createSlice({
         },
         editTweetInRedux : (state, action) => {
             const {toBeEditedTweetId, editTweetContent} = action.payload; 
-            state.allDisplayTweets = state.allDisplayTweets.map( (currTweet) => {
+            state.allDisplayTweets = state.allDisplayTweets?.map( (currTweet) => {
                 if(currTweet._id === toBeEditedTweetId){
                     currTweet.description = editTweetContent 
                 }

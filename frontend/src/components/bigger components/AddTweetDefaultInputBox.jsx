@@ -14,7 +14,7 @@ import MiniAvatar from '../small components/MiniAvatar'
 
 const AddTweetDefaultInputBox = () => {
   
-    const loggedInUserDetails = useSelector(state => state.user.loggedInUserDetails); 
+    const loggedInUserDetails = useSelector(state => state?.user?.loggedInUserDetails); 
     const dispatch = useDispatch(); 
 
     const [tweetContent, setTweetContent] = useState(''); 
@@ -123,10 +123,13 @@ const AddTweetDefaultInputBox = () => {
                         {errorTextForCharLimitExceeded}
                     </h1>
 
-                    <div className='flex justify-between items-center'>
+                    <div className='flex justify-end items-center'>
+                    {/* <div className='flex justify-between items-center'> */}
+                        {/* 
                         <button className='h-[35px] w-[35px] flex items-center rounded-full hover:bg-[#323333]/60 justify-center bg-transparent cursor-pointer'>
-                           <FaRegImage className='text-xl text-[#1d9bf0]' />
-                        </button>
+                            <FaRegImage className='text-xl text-[#1d9bf0]' />
+                        </button> 
+                        */}
                         <div className='flex'>
                             <div className='text-white m-1 select-none min-w-[78px] flex items-center justify-center'>
                                 <span className={`${charCount === 280 ? 'text-red-500 text-lg' : 'tex-white'} m-1`}>

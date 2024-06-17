@@ -5,7 +5,7 @@ import { setWhichDivIsActive } from '../../redux/tweetSlice';
 const FeedNavbar = () => {
     
     const dispatch = useDispatch(); 
-    const whichDivIsActive = useSelector( store => store.tweets.whichDivIsActive); 
+    const whichDivIsActive = useSelector( store => store?.tweets?.whichDivIsActive); 
 
     const handleForYouDiv = () => {
         dispatch(setWhichDivIsActive('for-you-div-is-active')); 

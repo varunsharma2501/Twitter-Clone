@@ -22,7 +22,7 @@ const EditTweetInputBox = ({editTweetInputBoxProps}) => {
         toBeEditedTweetId
     } = editTweetInputBoxProps; 
 
-    const loggedInUserDetails = useSelector(state => state.user.loggedInUserDetails); 
+    const loggedInUserDetails = useSelector(state => state?.user?.loggedInUserDetails); 
     const dispatch = useDispatch(); 
 
     const [charCount, setCharCount] = useState(0); 

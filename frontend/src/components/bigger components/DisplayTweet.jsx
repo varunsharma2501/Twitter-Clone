@@ -26,7 +26,7 @@ const DisplayTweet = ({currTweet, displayTweetProps}) => {
         setToBeEditedTweetId
     } = displayTweetProps; 
 
-    const loggedInUserDetails = useSelector(store => store.user.loggedInUserDetails); 
+    const loggedInUserDetails = useSelector(store => store?.user?.loggedInUserDetails); 
     const dispatch = useDispatch();
 
     const liked = currTweet?.likes?.includes(loggedInUserDetails?._id); 
@@ -79,7 +79,7 @@ const DisplayTweet = ({currTweet, displayTweetProps}) => {
     const displayTime = getTweetCreationDisplayTime(currTweet); 
 
     const isLoggedInUserTweet = (loggedInUserDetails._id === currTweet?.userId._id); 
-    const [isBookmarkedByUser, setIsBookMarkedByUser] = useState(loggedInUserDetails?.bookmarks?.includes(currTweet?._id)); 
+    // const [isBookmarkedByUser, setIsBookMarkedByUser] = useState(loggedInUserDetails?.bookmarks?.includes(currTweet?._id)); 
 
     return (
         <div className='flex px-4 py-3 h-auto w-full border-b-[1px] border-gray-500'>
@@ -129,6 +129,7 @@ const DisplayTweet = ({currTweet, displayTweetProps}) => {
                             <CiEdit className='text-white text-lg rounded-full w-[22px] h-[24px] p-[2px]' />
                         </button>
                     </div>
+                    {/*
                     <div className='w-[40px] flex justify-center cursor-pointer'>
                         <button className='rounded-full h-[24px] w-[24px] pl-[0.5px] hover:bg-[#323333]/60'>
                             {   
@@ -141,6 +142,7 @@ const DisplayTweet = ({currTweet, displayTweetProps}) => {
                             }
                         </button>
                     </div>
+                    */}
                     <div className={`w-[40px] flex justify-center cursor-pointer ${!isLoggedInUserTweet && 'hidden'}`}>
                         <button onClick={() => deleteTweetHandler(currTweet._id)} className='hover:bg-[#323333]/60 rounded-full h-[24px] w-[24px] pl-[1px]'>
                             <MdDelete className='text-white text-lg mt-[0px] rounded-full w-[22px] h-[24px] px-[2px]' />

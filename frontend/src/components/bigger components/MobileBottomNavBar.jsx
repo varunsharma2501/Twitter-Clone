@@ -36,9 +36,11 @@ const MobileBottomNavBar = () => {
                 <GoHomeFill className={iconCSS} />
             </div>
 
+            {/* 
             <div className={containerOfIcon}>
                 <IoSearchOutline className={iconCSS} /> 
-            </div>
+            </div> 
+            */}
 
             <div className={containerOfIcon}>
                 <HiOutlineUser className={iconCSS} /> 

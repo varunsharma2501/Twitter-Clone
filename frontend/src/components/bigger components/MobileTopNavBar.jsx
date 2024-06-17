@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 
 const MobileTopNavBar = () => {
 
-    const loggedInUserDetails = useSelector(state => state.user.loggedInUserDetails); 
+    const loggedInUserDetails = useSelector(state => state?.user?.loggedInUserDetails); 
 
     return (
         <div className='min-[500px]:hidden flex absolute top-0 items-center h-[60px] w-full bg-black border-b-[1px] border-gray-500'>

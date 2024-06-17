@@ -15,7 +15,7 @@ import { navigateToHome, navigateToProfilePage, voluntaryLogout } from '../../he
 
 const LeftSideBar = () => {
 
-    const loggedInUserDetails = useSelector(store => store.user.loggedInUserDetails); 
+    const loggedInUserDetails = useSelector(store => store?.user?.loggedInUserDetails); 
 
     const dispatch = useDispatch(); 
     const navigate = useNavigate(); 
@@ -53,6 +53,7 @@ const LeftSideBar = () => {
                             </div>
                         </div>
                     </div>
+                    {/*
                     <div className={row}>
                         <div className={containerOfIconAndLogo}>
                             <div>
@@ -63,6 +64,7 @@ const LeftSideBar = () => {
                             </div>
                         </div>
                     </div>
+                    */}
                     <div className={row}>
                         <div onClick={ (e) => navigateToProfilePage(e, dispatch, navigate, loggedInUserDetails._id) } className={containerOfIconAndLogo}>
                             <div>
