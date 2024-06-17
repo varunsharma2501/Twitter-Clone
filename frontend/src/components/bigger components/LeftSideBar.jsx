@@ -21,9 +21,7 @@ const LeftSideBar = () => {
     const dispatch = useDispatch(); 
     const navigate = useNavigate(); 
 
-    const {
-		openAddTweetHoveringTab 
-	} = useContext(PostTweetUsingHoveringTabContext); 
+    const { openAddTweetHoveringTab } = useContext(PostTweetUsingHoveringTabContext); 
 
     const iconCSS = 'w-[28px] h-[28px] text-white '; 
     const iconLabelCSS = 'hidden xl:flex items-center text-white px-3'; 

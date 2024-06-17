@@ -98,7 +98,7 @@ const Home = () => {
                         <MobileTopNavBar />
                         <MobileBottomNavBar />
 
-                        <AddTweetButton CSS={'absolute bottom-[72px] right-[20px] min-[500px]:hidden h-[40px] w-[40px] bg-blue-500 rounded-full shadow-[0px_0px_5px_1px_rgba(247,247,247,1)] overflow-hidden flex items-center justify-center'} />
+                        <AddTweetButton CSS={'absolute bottom-[72px] right-[20px] min-[500px]:hidden h-[40px] w-[40px] bg-blue-500 rounded-full shadow-[0px_0px_5px_1px_rgba(247,247,247,1)] overflow-hidden flex items-center justify-center bg-green-500'} />
 
                     </PostTweetUsingHoveringTabContext.Provider>
 
