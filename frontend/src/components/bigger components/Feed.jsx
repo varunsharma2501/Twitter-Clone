@@ -53,8 +53,8 @@ const Feed = () => {
 				<EditTweetInputBox editTweetInputBoxProps={editTweetInputBoxProps} />
 			}
 			{
-				allDisplayTweets?.map( (currTweet) => {
-					return <DisplayTweet key={currTweet._id} currTweet={currTweet} displayTweetProps={displayTweetProps} /> 
+				!editATweet && allDisplayTweets?.map( (currTweet) => {
+					return <DisplayTweet key={currTweet?._id} currTweet={currTweet} displayTweetProps={displayTweetProps} /> 
 				}) 
 			}
     	</div>

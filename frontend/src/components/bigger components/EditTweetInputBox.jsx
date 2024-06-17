@@ -7,7 +7,7 @@ import { FaRegImage } from 'react-icons/fa6'
 
 import { logoutCleanUp } from '../../helpers/logoutCleanUp'
 import MiniAvatar from '../small components/MiniAvatar' 
-import { getTweetSliceRefresh } from '../../redux/tweetSlice'
+import { editTweetInRedux } from '../../redux/tweetSlice'
 
 import { IoMdArrowBack } from 'react-icons/io'
 
@@ -61,12 +61,12 @@ const EditTweetInputBox = ({editTweetInputBoxProps}) => {
         }
 
         try{
+            dispatch(editTweetInRedux({toBeEditedTweetId, editTweetContent})); 
+            closeEditATweet();
             const res = await axiosTokenInstance().patch(`${import.meta.env.VITE_BACKEND_URL}/api/tweet/edit-logged-in-user-tweet/${toBeEditedTweetId}`, {
                 new_description : editTweetContent
             }); 
             toast.success(res?.data?.message); 
-            dispatch(getTweetSliceRefresh()); 
-            closeEditATweet();
         }
         catch(err){
             console.log(err); 

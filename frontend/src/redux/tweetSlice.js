@@ -50,10 +50,19 @@ export const tweetSlice = createSlice({
                 }
                 return true;
             })
+        },
+        editTweetInRedux : (state, action) => {
+            const {toBeEditedTweetId, editTweetContent} = action.payload; 
+            state.allDisplayTweets = state.allDisplayTweets.map( (currTweet) => {
+                if(currTweet._id === toBeEditedTweetId){
+                    currTweet.description = editTweetContent 
+                }
+                return currTweet;
+            })
         }
     }
 })
 
-export const { setAllDisplayTweets, resetAllDisplayTweets, getTweetSliceRefresh, setWhichDivIsActive, resetWhichDivIsActive, setLikeOrDislike, deleteTweet } = tweetSlice.actions 
+export const { setAllDisplayTweets, resetAllDisplayTweets, getTweetSliceRefresh, setWhichDivIsActive, resetWhichDivIsActive, setLikeOrDislike, deleteTweet, editTweetInRedux } = tweetSlice.actions 
 
 export default tweetSlice.reducer 

@@ -5,7 +5,7 @@ import { axiosTokenInstance } from '../axios/axiosTokenIntsance'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import { resetAllDisplayTweets, setAllDisplayTweets } from '../redux/tweetSlice'
+import { setAllDisplayTweets } from '../redux/tweetSlice'
 import { logoutCleanUp } from '../helpers/logoutCleanUp'
 
 

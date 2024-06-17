@@ -176,7 +176,7 @@ const Profile = () => {
                 
                 <div>
                     {
-                        allDisplayTweets?.map( (currTweet) => {
+                        !editATweet && allDisplayTweets?.map( (currTweet) => {
                             return <DisplayTweet key={currTweet._id} currTweet={currTweet} displayTweetProps={displayTweetProps} /> 
                         })
                     }
