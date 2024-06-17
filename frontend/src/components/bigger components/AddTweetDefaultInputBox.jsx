@@ -11,23 +11,27 @@ import { getTweetSliceRefresh } from '../../redux/tweetSlice'
 import { increaseTweetsCount } from '../../redux/userSlice'
 
 import MiniAvatar from '../small components/MiniAvatar' 
+import LoadingSpinner from '../small components/LoadingSpinner' 
 import { navigateToProfilePage } from '../../helpers/navigationUtils' 
+import validateInputFields from '../../helpers/validateInputFields'
 
 
 const AddTweetDefaultInputBox = () => {
   
     const loggedInUserDetails = useSelector(state => state?.user?.loggedInUserDetails); 
     const dispatch = useDispatch(); 
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
 
     const [tweetContent, setTweetContent] = useState(''); 
     const [charCount, setCharCount] = useState(0); 
 
-    const [errorTextForCharLimitExceeded, setErrortTextForCharLimitExceeded] = useState('No error, Limit Not Excedded'); 
+    const [tweetErrorText, setTweetErrorText] = useState('Display tweet error text'); 
+    const [isTweetErrorTextInvisible, setIsTweetErrorTextInvisible] = useState(true); 
 
-    const [isPostTweetButtonDisabled, setIsPostTweetButtonDisabled] = useState(true);  
+    const [isPostTweetButtonDisabled, setIsPostTweetButtonDisabled] = useState(true); 
 
     const handleTweetInput = (e) => {
+
         const tweet = e.target.value; 
         setCharCount(tweet.length);
         
@@ -37,13 +41,13 @@ const AddTweetDefaultInputBox = () => {
         else{
             setIsPostTweetButtonDisabled(false); 
         }
+        
+        console.log(tweet);
+        validateInputFields('tweet', tweet, {
+            setTweetErrorText, 
+            setIsTweetErrorTextInvisible 
+        }); 
 
-        if(tweet.length === 280){
-            setErrortTextForCharLimitExceeded('Character limit exceeded'); 
-        }
-        else{
-            setErrortTextForCharLimitExceeded('Limit not exceeded'); 
-        }
         setTweetContent(tweet); 
     }
 
@@ -66,10 +70,14 @@ const AddTweetDefaultInputBox = () => {
         }; 
     }, [tweetContent]); 
 
+    const [tweetCreationLoading, setTweetCreationLoading] = useState(false); 
 
     const createTweet = async (e) => {
         e.preventDefault();
         e.stopPropagation(); 
+
+        setTweetCreationLoading(true); 
+
         try{
             const res = await axiosTokenInstance().post(`${import.meta.env.VITE_BACKEND_URL}/api/tweet/create`, {
                 description : tweetContent 
@@ -77,12 +85,14 @@ const AddTweetDefaultInputBox = () => {
             setTweetContent(''); 
             toast.success(res?.data?.message); 
             setCharCount(0); 
-            dispatch(increaseTweetsCount());
-            dispatch(getTweetSliceRefresh());
+            setTweetCreationLoading(false); 
+            dispatch(increaseTweetsCount()); 
+            dispatch(getTweetSliceRefresh()); 
         }
         catch(err){
             toast.error(err?.response?.data?.message); 
             console.log(err); 
+            setTweetCreationLoading(false); 
             if(err?.response?.data?.logout){
                 logoutCleanUp(dispatch); 
                 navigate('/'); 
@@ -122,8 +132,8 @@ const AddTweetDefaultInputBox = () => {
                         <div className='pt-[1px] w-[100%] rounded-full bg-gray-500'></div>
                     </div>
 
-                    <h1 className={`m-1 select-none text-red-500 text-sm w-full ${charCount === 280 ? 'flex' : 'hidden'} text-center`}>
-                        {errorTextForCharLimitExceeded}
+                    <h1 className={`${isTweetErrorTextInvisible ? 'hidden' : 'flex'} m-1 select-none text-red-500 text-sm w-full text-center`}>
+                        {tweetErrorText}
                     </h1>
 
                     <div className='flex justify-end items-center'>
@@ -142,11 +152,20 @@ const AddTweetDefaultInputBox = () => {
                                     / 280
                                 </span>
                             </div>
-                            <button disabled={isPostTweetButtonDisabled} type='submit' className={'h-[32px] min-w-[60px] m-[6px] rounded-full ' + `${isPostTweetButtonDisabled ? 'bg-[#323333]/60' : 'bg-[#1d9bf0] cursor-pointer hover:bg-blue-500' }`}> 
-                                <p className='text-white px-2'>
-                                    Post 
-                                </p>
-                            </button>
+                            {
+                                !tweetCreationLoading && 
+                                    <button disabled={isPostTweetButtonDisabled || !isTweetErrorTextInvisible || tweetCreationLoading} type='submit' className={'h-[32px] min-w-[60px] m-[6px] rounded-full flex items-center justify-center ' + `${ (isPostTweetButtonDisabled || !isTweetErrorTextInvisible || tweetCreationLoading) ? 'bg-[#323333]/60' : 'bg-[#1d9bf0] cursor-pointer hover:bg-blue-500' }`}> 
+                                        <p className='text-white px-2'>
+                                            Post 
+                                        </p>
+                                    </button>
+                            }
+                            {   
+                                tweetCreationLoading &&     
+                                    <div className='h-[32px] min-w-[60px] m-[6px] flex justify-center items-center'>
+                                        <LoadingSpinner />
+                                    </div>
+                            }
                         </div>
                     </div>
                 </form>

@@ -7,6 +7,9 @@ import { FaRegImage } from 'react-icons/fa6'
 
 import { logoutCleanUp } from '../../helpers/logoutCleanUp'
 import MiniAvatar from '../small components/MiniAvatar' 
+import LoadingSpinner from '../small components/LoadingSpinner' 
+
+import validateInputFields from '../../helpers/validateInputFields'
 import { editTweetInRedux } from '../../redux/tweetSlice'
 
 import { IoMdArrowBack } from 'react-icons/io'
@@ -28,9 +31,9 @@ const EditTweetInputBox = ({editTweetInputBoxProps}) => {
     const navigate = useNavigate(); 
 
     const [charCount, setCharCount] = useState(0); 
-    const [errorTextForCharLimitExceeded, setErrortTextForCharLimitExceeded] = useState('No error, Limit Not Excedded'); 
-
-    const [isPostTweetButtonDisabled, setIsPostTweetButtonDisabled] = useState(true);  
+    const [tweetErrorText, setTweetErrorText] = useState('Display tweet error text'); 
+    const [isTweetErrorTextInvisible, setIsTweetErrorTextInvisible] = useState(true); 
+    const [isPostTweetButtonDisabled, setIsPostTweetButtonDisabled] = useState(true); 
 
     const handleTweetInput = (e) => {
         const tweet = e.target.value; 
@@ -43,28 +46,31 @@ const EditTweetInputBox = ({editTweetInputBoxProps}) => {
             setIsPostTweetButtonDisabled(false); 
         }
 
-        if(tweet.length === 280){
-            setErrortTextForCharLimitExceeded('Character limit exceeded'); 
-        }
-        else{
-            setErrortTextForCharLimitExceeded('Limit not exceeded'); 
-        }
+        validateInputFields('tweet', tweet, {
+            setTweetErrorText, 
+            setIsTweetErrorTextInvisible 
+        }); 
+
         setEditTweetContent(tweet); 
     }
 
+    const [tweetUpdationLoading, setTweetUpdationLoading] = useState(false); 
 
     const updateTweet = async (e) => {
         e.preventDefault();
         e.stopPropagation(); 
-
+    
         if(editTweetContent === oldTweetContent){
             toast.error('You have to add something new to input field for editing the tweet, current data is same as existing tweet.')
             return;
         }
 
+        setTweetUpdationLoading(true); 
+            
         try{
             dispatch(editTweetInRedux({toBeEditedTweetId, editTweetContent})); 
             closeEditATweet();
+            setTweetUpdationLoading(false); 
             const res = await axiosTokenInstance().patch(`${import.meta.env.VITE_BACKEND_URL}/api/tweet/edit-logged-in-user-tweet/${toBeEditedTweetId}`, {
                 new_description : editTweetContent
             }); 
@@ -72,6 +78,7 @@ const EditTweetInputBox = ({editTweetInputBoxProps}) => {
         }
         catch(err){
             console.log(err); 
+            setTweetUpdationLoading(false); 
             if(err?.response?.data?.logout){
                 logoutCleanUp(dispatch); 
                 navigate('/'); 
@@ -115,8 +122,8 @@ const EditTweetInputBox = ({editTweetInputBoxProps}) => {
                             <div className='pt-[1px] w-[100%] rounded-full bg-gray-500'></div>
                         </div>
 
-                        <h1 className={`m-1 select-none text-red-500 text-sm w-full ${charCount === 280 ? 'flex' : 'hidden'} text-center`}>
-                            {errorTextForCharLimitExceeded}
+                        <h1 className={`${isTweetErrorTextInvisible ? 'hidden' : 'flex'} m-1 select-none text-red-500 text-sm w-full text-center`}>
+                            {tweetErrorText}
                         </h1>
 
                         {/* <div className='flex justify-between items-center'> */}
@@ -133,11 +140,20 @@ const EditTweetInputBox = ({editTweetInputBoxProps}) => {
                                         / 280
                                     </span>
                                 </div>
-                                <button disabled={isPostTweetButtonDisabled} type='submit' className={'h-[32px] min-w-[60px] m-[6px] rounded-full ' + `${isPostTweetButtonDisabled ? 'bg-[#323333]/60' : 'bg-[#1d9bf0] cursor-pointer hover:bg-blue-500' }`}> 
-                                    <p className='text-white px-2'>
-                                        Post 
-                                    </p>
-                                </button>
+                                {
+                                    !tweetUpdationLoading && 
+                                        <button disabled={isPostTweetButtonDisabled || !isTweetErrorTextInvisible || tweetUpdationLoading} type='submit' className={'h-[32px] min-w-[60px] m-[6px] rounded-full flex items-center justify-center ' + `${ (isPostTweetButtonDisabled || !isTweetErrorTextInvisible || tweetUpdationLoading) ? 'bg-[#323333]/60' : 'bg-[#1d9bf0] cursor-pointer hover:bg-blue-500' }`}> 
+                                            <p className='text-white px-2'>
+                                                Post 
+                                            </p>
+                                        </button>
+                                }
+                                {   
+                                    tweetUpdationLoading &&     
+                                        <div className='h-[32px] min-w-[60px] m-[6px] flex justify-center items-center'>
+                                            <LoadingSpinner />
+                                        </div>
+                                }
                             </div>
                         </div>
                     </form>

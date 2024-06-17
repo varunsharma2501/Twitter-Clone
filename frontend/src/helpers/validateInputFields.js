@@ -14,7 +14,9 @@ const validateInputFields = (name, value, setters) => {
         setIsOtpErrorTextInvisible,
         setOtpErrorText,
         setIsUsernameErrorTextInvisible,
-        setUsernameErrorText
+        setUsernameErrorText, 
+        setTweetErrorText,
+        setIsTweetErrorTextInvisible 
     } = setters; 
 
     const trimmedValue = value.trim();
@@ -293,6 +295,51 @@ const validateInputFields = (name, value, setters) => {
         setIsUsernameErrorTextInvisible(true); 
         setUsernameErrorText('Display Username Error Text'); 
         return;    
+    }
+    else if(name === 'tweet'){
+        if(value === ''){
+            setIsTweetErrorTextInvisible(true); 
+            setTweetErrorText('Display tweet error text'); 
+            return; 
+        }
+        if(trimmedValue === ''){
+            setIsTweetErrorTextInvisible(false); 
+            setTweetErrorText('Tweet content cannot be just filled with whitespaces'); 
+            return; 
+        }
+        if(value[0] === ' '){
+            setIsTweetErrorTextInvisible(false); 
+            setTweetErrorText('Leading whitespaces are not allowed in tweet content'); 
+            return; 
+        } 
+        if(value[value.length-1] === ' '){
+            setIsTweetErrorTextInvisible(false); 
+            setTweetErrorText('Trailing whitespaces are not allowed in tweet content'); 
+            return; 
+        }
+        
+        const gaaliyan = [
+            'chutiya',
+            'chutiye',
+            'lodu',
+            'gandu',
+            'gaandu',
+            'bkl',
+            'bhen ka loda',
+            'madarchod',
+            'bhenchod',
+            'behenchod'
+        ]
+       for(let i=0; i < gaaliyan.length; i++){
+            if(value.toLowerCase().includes(gaaliyan[i])){
+                setIsTweetErrorTextInvisible(false); 
+                setTweetErrorText(`Tu ${gaaliyan[i]} hai saale, terko gaali dene ke liye mera he twitter clone project mila hai kya. Bhag yahan se bhen ke loda`); 
+                return; 
+            }
+        }
+        
+        setIsTweetErrorTextInvisible(true); 
+        setTweetErrorText('Display tweet error text'); 
     }
 } 
 
