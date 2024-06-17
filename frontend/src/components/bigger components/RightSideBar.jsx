@@ -1,15 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 // import SearchUser from './SearchUser'
 import FollowUserSuggestion from '../small components/FollowUserSuggestion'
 import { useGetAllOtherUsersDetails } from '../../hooks/useGetAllOtherUsersDetails';
 import { useSelector } from 'react-redux';
+import { GlobalProfileAndDisplayTweetLoadingContext } from '../../pages/Home';
+import LoadingSpinner from '../small components/LoadingSpinner';
 
 
 const RightSideBar = () => {
     
     const allOtherUsersDetails = useSelector(store => store?.user?.allOtherUsersDetails); 
-    useGetAllOtherUsersDetails(); 
+
+    const { allOtherUserDetailsLoading, setAllOtherUserDetailsLoading } = useContext(GlobalProfileAndDisplayTweetLoadingContext); 
+    
+    useGetAllOtherUsersDetails(setAllOtherUserDetailsLoading); 
 
     return (
         <div className='hidden lg:flex flex-col items-center w-[390px] min-w-[290px] max-w-[390px]'> 
@@ -18,9 +23,15 @@ const RightSideBar = () => {
                 <div className='sticky top-0 w-[100%] text-white h-[70px] rounded-t-lg pl-5 pt-2 flex items-center justify-start text-lg font-bold z-10 select-none bg-black border-b-[1px] border-gray-500'>
                     Who to follow 
                 </div>
-                <div className='min-h-[300px] w-full flex flex-col scrollbar overflow-y-auto'>
+                <div className='relative min-h-[300px] w-full flex flex-col scrollbar overflow-y-auto'>
+                    <div className='absolute w-full h-auto mt-[10px] flex items-center justify-center'>
+                        {
+                            allOtherUserDetailsLoading && 
+                            <LoadingSpinner />
+                        }
+                    </div>
                     {
-                        allOtherUsersDetails.length === 0 && 
+                        !allOtherUserDetailsLoading  && allOtherUsersDetails.length === 0 && 
                         <div className='h-full w-full flex justify-center flex-col items-center gap-3'>
                             <p className='h-auto w-full font-semibold text-red-500 flex justify-center items-center text-xl'>
                                 No user to display!! 
@@ -31,7 +42,7 @@ const RightSideBar = () => {
                         </div>
                     }
                     {
-                        allOtherUsersDetails.length !== 0 && allOtherUsersDetails.map( (currUser) => {
+                        !allOtherUserDetailsLoading && allOtherUsersDetails.length !== 0 && allOtherUsersDetails.map( (currUser) => {
                             return(
                                 <FollowUserSuggestion key={currUser._id} currUser={currUser} />
                             )

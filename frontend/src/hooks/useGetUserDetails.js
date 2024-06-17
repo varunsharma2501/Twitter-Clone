@@ -9,7 +9,7 @@ import { resetUserDetails, setUserDetails } from '../redux/userSlice'
 import { logoutCleanUp } from '../helpers/logoutCleanUp'
 
 
-export const useGetUserDetails = (user_id) => {
+export const useGetUserDetails = (setIsUserProfilePageDetialsLoading, user_id = undefined) => {
 
     const navigate = useNavigate(); 
     const dispatch = useDispatch(); 
@@ -18,10 +18,12 @@ export const useGetUserDetails = (user_id) => {
         axiosTokenInstance().get(`${import.meta.env.VITE_BACKEND_URL}/api/user/user-details/${user_id}`)
         .then( (response) => {
             dispatch(setUserDetails(response?.data?.data)); 
+            setIsUserProfilePageDetialsLoading(false); 
         }) 
         .catch( (err) => {
             toast.error(err?.response?.data?.message); 
             console.log(err); 
+            setIsUserProfilePageDetialsLoading(false); 
             if(err?.response?.data?.logout){
                 logoutCleanUp(dispatch); 
                 navigate('/'); 
@@ -36,6 +38,7 @@ export const useGetUserDetails = (user_id) => {
             navigate('/'); 
         }
         else{
+            setIsUserProfilePageDetialsLoading(true); 
             fetchUserDetails(); 
         }
     }, [user_id]) 

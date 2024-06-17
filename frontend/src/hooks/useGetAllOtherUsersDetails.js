@@ -9,7 +9,7 @@ import { setAllOtherUsersDetails } from '../redux/userSlice'
 import { logoutCleanUp } from '../helpers/logoutCleanUp'
 
 
-export const useGetAllOtherUsersDetails = () => {
+export const useGetAllOtherUsersDetails = (setAllOtherUsersDetailsLoading) => {
      
     const navigate = useNavigate(); 
     const dispatch = useDispatch(); 
@@ -18,10 +18,12 @@ export const useGetAllOtherUsersDetails = () => {
         axiosTokenInstance().get(`${import.meta.env.VITE_BACKEND_URL}/api/user/all-other-user-details`)
         .then( (response) => {
             dispatch(setAllOtherUsersDetails(response?.data?.data)); 
+            setAllOtherUsersDetailsLoading(false);
         }) 
         .catch( (err) => {
             toast.error(err?.response?.data?.message); 
             console.log(err); 
+            setAllOtherUsersDetailsLoading(false);
             if(err?.response?.data?.logout){
                 logoutCleanUp(dispatch); 
                 navigate('/'); 
@@ -38,6 +40,7 @@ export const useGetAllOtherUsersDetails = () => {
             navigate('/'); 
         }
         else{
+            setAllOtherUsersDetailsLoading(true); 
             fetchAllOtherUsersDetails(); 
         }
     }, [userSliceRefresh])

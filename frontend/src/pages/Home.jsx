@@ -12,6 +12,8 @@ import AddTweetHoveringInputBox from '../components/bigger components/AddTweetHo
 import { Outlet } from 'react-router-dom'
 import { useGetLoggedInUserDetails } from '../hooks/useGetLoggedInUserDetails'
 
+
+export const GlobalProfileAndDisplayTweetLoadingContext = createContext(null); 
 export const EditTweetContext = createContext(null); 
 export const PostTweetUsingHoveringTabContext = createContext(null); 
 
@@ -49,42 +51,58 @@ const Home = () => {
 		openAddTweetHoveringTab : () => setIsAddTweetHoveringTabOpen(true) 
     }
 
+    const [isUserProfilePageDetailsLoading, setIsUserProfilePageDetailsLoading] = useState(false); 
+    const [areDisplayTweetsLoading, setAreDisplayTweetLoading] = useState(false); 
+    const [allOtherUserDetailsLoading, setAllOtherUserDetailsLoading] = useState(false); 
+
+    const globalObjectOfProfileAndDisplayTweetLoading = {
+        isUserProfilePageDetailsLoading,
+        setIsUserProfilePageDetailsLoading, 
+        areDisplayTweetsLoading, 
+        setAreDisplayTweetLoading, 
+        allOtherUserDetailsLoading,
+        setAllOtherUserDetailsLoading 
+    }
+
     return (
         <div className='w-full h-screen flex justify-center bg-black'> 
             <div className='relative flex justify-center w-[100%]'> 
                 
-                <PostTweetUsingHoveringTabContext.Provider value={objectOfAllStatesAndTheirSettersForPostingATweetUsingHoveringTab}>
+                <GlobalProfileAndDisplayTweetLoadingContext.Provider value={globalObjectOfProfileAndDisplayTweetLoading} >
+
+                    <PostTweetUsingHoveringTabContext.Provider value={objectOfAllStatesAndTheirSettersForPostingATweetUsingHoveringTab}>
+                        
+                        <LeftSideBar /> 
+
+                        <EditTweetContext.Provider value={objectOfAllStatesAndTheirSettersForEditingATweet}>
+                            <div className='relative scrollbar-none w-[600px] xl:min-w-[600px] min-[500px]:border-x-[1px] max-[500px]:mt-[55px] max-[500px]:mb-[56px] border-gray-500 flex flex-col overflow-y-auto' >
+    
+                                <Outlet /> 
+
+                                {
+                                    isEditATweetActive && 
+                                    <EditTweetInputBox editTweetInputBoxProps={editTweetInputBoxProps} /> 
+                                }
+
+                                {
+                                    isAddTweetHoveringTabOpen && 
+                                    <AddTweetHoveringInputBox closeAddTweetHoveringTab={ () => setIsAddTweetHoveringTabOpen(false) }  /> 
+                                }
+
+                            </div>
+                        </EditTweetContext.Provider>
+
                     
-                    <LeftSideBar /> 
+                        <RightSideBar /> 
 
-                    <EditTweetContext.Provider value={objectOfAllStatesAndTheirSettersForEditingATweet}>
-                        <div className='relative scrollbar-none w-[600px] xl:min-w-[600px] min-[500px]:border-x-[1px] max-[500px]:mt-[55px] max-[500px]:mb-[56px] border-gray-500 flex flex-col overflow-y-auto' >
-   
-                            <Outlet /> 
+                        <MobileTopNavBar />
+                        <MobileBottomNavBar />
 
-                            {
-                                isEditATweetActive && 
-                                <EditTweetInputBox editTweetInputBoxProps={editTweetInputBoxProps} /> 
-                            }
+                        <AddTweetButton CSS={'absolute bottom-[72px] right-[20px] min-[500px]:hidden h-[40px] w-[40px] bg-blue-500 rounded-full shadow-[0px_0px_5px_1px_rgba(247,247,247,1)] overflow-hidden flex items-center justify-center'} />
 
-                            {
-                                isAddTweetHoveringTabOpen && 
-                                <AddTweetHoveringInputBox closeAddTweetHoveringTab={ () => setIsAddTweetHoveringTabOpen(false) }  /> 
-                            }
+                    </PostTweetUsingHoveringTabContext.Provider>
 
-                        </div>
-                    </EditTweetContext.Provider>
-
-                
-                    <RightSideBar /> 
-
-                    <MobileTopNavBar />
-                    <MobileBottomNavBar />
-
-                    <AddTweetButton CSS={'absolute bottom-[72px] right-[20px] min-[500px]:hidden h-[40px] w-[40px] bg-blue-500 rounded-full shadow-[0px_0px_5px_1px_rgba(247,247,247,1)] overflow-hidden flex items-center justify-center'} />
-
-                </PostTweetUsingHoveringTabContext.Provider>
-                
+                </GlobalProfileAndDisplayTweetLoadingContext.Provider>        
             </div>
         </div>
     )

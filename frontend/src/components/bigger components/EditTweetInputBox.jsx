@@ -91,7 +91,7 @@ const EditTweetInputBox = ({editTweetInputBoxProps}) => {
             <div onClick={closeEditATweet} className='absolute top-0 mt-3 cursor-pointer ml-3 mr-4 hover:bg-[#323333]/60 h-[40px] w-[40px] flex items-center justify-center rounded-full'>
                 <IoMdArrowBack className='text-white text-2xl rounded-full' />
             </div>
-            <div className='flex p-4 h-[280px] w-full border-b-[1px] border-t-[1px] border-gray-500'>
+            <div className='flex p-4 h-[300px] w-full border-b-[1px] border-t-[1px] border-gray-500'>
                 
                 <div className='hidden min-[500px]:block'>
                     <MiniAvatar 

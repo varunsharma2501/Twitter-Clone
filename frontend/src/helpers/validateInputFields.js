@@ -326,9 +326,14 @@ const validateInputFields = (name, value, setters) => {
             'gaandu',
             'bkl',
             'bhen ka loda',
+            'bhen ke loda',
             'madarchod',
             'bhenchod',
-            'behenchod'
+            'behenchod',
+            'teri maa ki chut',
+            'dalle',
+            'taton ka saudagar', 
+            'taton ke saudagar' 
         ]
        for(let i=0; i < gaaliyan.length; i++){
             if(value.toLowerCase().includes(gaaliyan[i])){

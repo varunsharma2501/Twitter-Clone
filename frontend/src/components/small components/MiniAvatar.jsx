@@ -45,7 +45,7 @@ const MiniAvatar = ({userId, name, secureImageURL, height, width, haveBorder = f
                         />
                     </div>
                 ) : name ? (
-                        <div style={{ height : `${height}px`, width : `${width}px` }} className={`relative ml-1 flex justify-center items-center rounded-full cursor-pointer select-none text-md font-serif ${randomBgColour[randomNumber]}`}>
+                        <div style={{ height : `${height}px`, width : `${width}px`, fontSize : `${width-50}px` }} className={`relative ml-1 flex justify-center items-center rounded-full cursor-pointer select-none text-md font-serif ${randomBgColour[randomNumber]}`}>
                             {miniAvatarName}
                         </div>
                     ) : (
