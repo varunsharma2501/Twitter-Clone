@@ -70,7 +70,7 @@ export const useGetTweets = (setAreDisplayTweetLoading, user_id = undefined) => 
 
     useEffect( () => {
         if(!localStorage.getItem('jwt')){ 
-            toast.error("Security Logout"); 
+            toast.error("Unauthenticated Access Attempt \n Access Denied"); 
             logoutCleanUp(dispatch); 
             navigate('/'); 
         }

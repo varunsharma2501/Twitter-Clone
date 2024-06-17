@@ -35,7 +35,7 @@ export const useGetAllOtherUsersDetails = (setAllOtherUsersDetailsLoading) => {
 
     useEffect( () => {
         if(!localStorage.getItem('jwt')){ 
-            toast.error("Security Logout"); 
+            toast.error("Unauthenticated Access Attempt \n Access Denied"); 
             logoutCleanUp(dispatch); 
             navigate('/'); 
         }

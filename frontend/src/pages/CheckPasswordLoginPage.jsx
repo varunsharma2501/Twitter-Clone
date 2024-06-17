@@ -15,10 +15,23 @@ import LoadingSpinner from '../components/small components/LoadingSpinner'
 const CheckPasswordLoginPage = () => {
 
     const navigate = useNavigate(); 
-
     const location = useLocation(); 
-    const {name, profile_pic, _id} = location.state; 
-    const splitName = name.split(' '); 
+
+    useEffect( () => {
+        if(!location.state){
+            navigate('/'); 
+        }
+    }, [])
+
+    let name, profile_pic, _id; 
+    
+    if(location.state){
+        name = location.state.name;
+        profile_pic = location.state.profile_pic;
+        _id = location.state._id;
+    }
+
+    const splitName = name?.split(' '); 
 
     const [password, setPassword] = useState(''); 
 
@@ -121,7 +134,7 @@ const CheckPasswordLoginPage = () => {
                     <div className='h-full w-full flex flex-col items-center'>
                         <div className='w-full h-auto flex justify-center items-center'>
                             <h1 className='mt-6 mb-9 h-[60px] w-[500px] text-3xl sm:text-4xl font-semibold text-white px-5'>
-                                For logging in, please enter your password <span className='text-[#1d9bf0]'> {splitName[0]} </span> 
+                                For logging in, please enter your password <span className='text-[#1d9bf0]'> { splitName ? splitName[0] : ''} </span> 
                             </h1>
                         </div>
                         <div className='w-full h-auto flex justify-center items-center'>

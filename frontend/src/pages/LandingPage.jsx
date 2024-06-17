@@ -1,10 +1,27 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios' 
 
 import TwitterLogo from '../assets/logo.png'
 
 
 const LandingPage = () => {
+
+    const navigate = useNavigate(); 
+
+    useEffect( () => {
+
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/awaken-the-server`)
+        .then()
+        .catch( (err) => {
+            console.log(err); 
+        })
+
+        if(localStorage.getItem('jwt')){
+            navigate('/home'); 
+        }
+    }, []) 
+
     return (
         <section className='relative h-screen w-screen bg-black flex flex-col max-[945px]:justify-center max-[945px]:items-center min-[945px]:flex-row'> 
             <div className='h-[50px] w-[50px] mb-4 min-[945px]:h-screen min-[945px]:w-[50%] flex justify-center items-center'>

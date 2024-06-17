@@ -2,14 +2,15 @@ import express from 'express'
 import dotenv from 'dotenv' 
 import cors from 'cors'
 
-import cloudinary from 'cloudinary'; 
+import cloudinary from 'cloudinary' 
 
-import connectToMongoDB from './db/connectToMongoDB.js';
+import connectToMongoDB from './db/connectToMongoDB.js'
 
-import authRoutes from './routes/authRoutes.js'; 
-import cloudinaryRoutes from './routes/cloudinaryRoutes.js'; 
-import userRoutes from './routes/userRoutes.js'; 
-import tweetRoutes from './routes/tweetRoutes.js'; 
+import awakenTheServerRoute from './routes/awakenTheServerRoute.js'
+import authRoutes from './routes/authRoutes.js'
+import cloudinaryRoutes from './routes/cloudinaryRoutes.js' 
+import userRoutes from './routes/userRoutes.js' 
+import tweetRoutes from './routes/tweetRoutes.js' 
 
 
 dotenv.config(); 
@@ -31,6 +32,7 @@ app.use(cors({
 }))
 
 
+app.use('/', awakenTheServerRoute); 
 app.use('/api/auth', authRoutes); 
 app.use('/api/cloudinary', cloudinaryRoutes); 
 app.use('/api/user', userRoutes); 

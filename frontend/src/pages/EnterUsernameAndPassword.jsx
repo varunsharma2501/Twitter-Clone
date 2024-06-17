@@ -12,9 +12,20 @@ import LoadingSpinner from '../components/small components/LoadingSpinner'
 const EnterUsernameAndPassword = () => {
     
     const navigate = useNavigate(); 
-
     const location = useLocation(); 
-    const {name, email} = location.state; 
+
+    useEffect( () => {
+        if(!location.state){
+            navigate('/')
+        }
+    }, [])
+
+    let name, email; 
+    
+    if(location.state){
+        name = location.state.name; 
+        email = location.state.email; 
+    }
 
     const [username, setUsername] = useState(''); 
     const [password, setPassword] = useState(''); 

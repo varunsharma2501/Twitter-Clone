@@ -16,10 +16,24 @@ import uploadProfilePicToCloudinary from '../cloudinary/uploadProfilePicToCloudi
 const UploadProfilePicAndCreateAccount = () => {
 
     const navigate = useNavigate(); 
-
     const location = useLocation(); 
-    const {name, email, username, password} = location.state; 
-    const splittedName = name.split(' ');
+
+    useEffect( () => { 
+        if(!location.state){ 
+            navigate('/'); 
+        }
+    }, []) 
+
+    let name, email, username, password;
+    
+    if(location.state){
+        name = location.state.name;
+        email = location.state.email;
+        username = location.state.username;
+        password = location.state.password;
+    } 
+
+    const splittedName = name?.split(' ');
 
     const [data, setData] = useState({ 
         name, 
@@ -212,7 +226,7 @@ const UploadProfilePicAndCreateAccount = () => {
                 <div className='h-full w-full flex flex-col items-center'>
                         <div className='w-full h-auto flex justify-center items-center'>
                             <h1 className='mt-8 mb-8 h-[60px] w-[500px] text-3xl sm:text-4xl font-semibold text-white px-5'>
-                                Upload Profile Pic if you want one <span className='text-[#1d9bf0]'> {splittedName[0]} </span>
+                                Upload Profile Pic if you want one <span className='text-[#1d9bf0]'> { splittedName ? splittedName[0] : ''} </span>
                             </h1> 
                         </div>
                         <div className='w-full h-auto flex justify-center items-center'>

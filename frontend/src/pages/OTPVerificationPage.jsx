@@ -12,7 +12,21 @@ const OTPVerificationPage = () => {
     const navigate = useNavigate(); 
 
     const location = useLocation(); 
-    const {name, email, otp} = location.state; 
+    
+    useEffect( () => {
+        if(!location.state){
+            navigate('/'); 
+        }
+    }, [])
+
+
+    let name, email, otp;
+    
+    if(location.state){
+        name = location.state.name; 
+        email = location.state.email; 
+        otp = location.state.otp; 
+    } 
 
     const [inputOtp, setInputOtp] = useState(''); 
 
