@@ -47,7 +47,6 @@ export const useGetTweets = (user_id) => {
     const fetchAllTweetsOfUser = () => {
         axiosTokenInstance().get(`${import.meta.env.VITE_BACKEND_URL}/api/tweet/all-tweets-of-user/${user_id}`)
         .then( (response) => {
-            console.log(response?.data?.data); 
             dispatch(setAllDisplayTweets(response?.data?.data)); 
         }) 
         .catch( (err) => {

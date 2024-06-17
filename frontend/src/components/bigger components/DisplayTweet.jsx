@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import toast from 'react-hot-toast'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+// import toast from 'react-hot-toast'
 
 import { CiHeart, CiEdit, CiBookmark } from 'react-icons/ci'
 import { FcLike } from 'react-icons/fc'
 import { MdDelete } from 'react-icons/md';
-import { IoBookmark } from 'react-icons/io5'
+// import { IoBookmark } from 'react-icons/io5'
 
 import { axiosTokenInstance } from '../../axios/axiosTokenIntsance'
 import { logoutCleanUp } from '../../helpers/logoutCleanUp'
@@ -12,9 +13,10 @@ import { getTweetCreationDisplayTime } from '../../helpers/getTweetCreationDispl
 
 import { useDispatch, useSelector } from 'react-redux'
 import { setLikeOrDislike, deleteTweet } from '../../redux/tweetSlice'
-import { decreaseTweetsCount } from '../../redux/userSlice';
+import { decreaseTweetsCount } from '../../redux/userSlice'
 
 import MiniAvatar from '../small components/MiniAvatar'
+import { navigateToProfilePage } from '../../helpers/navigationUtils' 
 
 
 const DisplayTweet = ({currTweet, displayTweetProps}) => {
@@ -28,6 +30,7 @@ const DisplayTweet = ({currTweet, displayTweetProps}) => {
 
     const loggedInUserDetails = useSelector(store => store?.user?.loggedInUserDetails); 
     const dispatch = useDispatch();
+    const navigate = useNavigate(); 
 
     const liked = currTweet?.likes?.includes(loggedInUserDetails?._id); 
     const likeCount = currTweet?.likes?.length; 
@@ -83,7 +86,7 @@ const DisplayTweet = ({currTweet, displayTweetProps}) => {
 
     return (
         <div className='flex px-4 py-3 h-auto w-full border-b-[1px] border-gray-500'>
-            <div>
+            <div onClick={ (e) => navigateToProfilePage(e, dispatch, navigate, currTweet.userId._id) } className='cursor-pointer h-[45px] w-[55px] rounded-full'>
                 <MiniAvatar 
                     userId={currTweet?.userId?._id}
                     name={currTweet?.userId?.name}
@@ -94,8 +97,8 @@ const DisplayTweet = ({currTweet, displayTweetProps}) => {
             </div>
             <div className='ml-2 flex flex-col w-full h-auto rounded-lg overflow-hidden'>
                 <div> 
-                    <span className='text-white font-semibold py-2'> { currTweet?.userId?.name } </span>
-                    <span className='text-gray-500 font-regular text-sm'> { `@${currTweet?.userId?.username}` } </span>
+                    <span onClick={ (e) => navigateToProfilePage(e, dispatch, navigate, currTweet.userId._id) } className='cursor-pointer text-white font-semibold py-2'> { currTweet?.userId?.name } </span>
+                    <span onClick={ (e) => navigateToProfilePage(e, dispatch, navigate, currTweet.userId._id) } className='cursor-pointer text-gray-500 font-regular text-sm'> { `@${currTweet?.userId?.username}` } </span>
                     <span className='text-gray-500'>  &#183; </span>
                     <span className='text-gray-500 text-sm'> {displayTime} </span>
                 </div>

@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { axiosTokenInstance } from '../../axios/axiosTokenIntsance'
 import { useSelector, useDispatch } from 'react-redux' 
+import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 
-import { FaRegImage } from 'react-icons/fa6' 
+// import { FaRegImage } from 'react-icons/fa6' 
 
 import { logoutCleanUp } from '../../helpers/logoutCleanUp'
 import { getTweetSliceRefresh } from '../../redux/tweetSlice'
 import { increaseTweetsCount } from '../../redux/userSlice'
 
 import MiniAvatar from '../small components/MiniAvatar' 
+import { navigateToProfilePage } from '../../helpers/navigationUtils' 
 
 
 const AddTweetDefaultInputBox = () => {
   
     const loggedInUserDetails = useSelector(state => state?.user?.loggedInUserDetails); 
     const dispatch = useDispatch(); 
+    const navigate = useNavigate();
 
     const [tweetContent, setTweetContent] = useState(''); 
     const [charCount, setCharCount] = useState(0); 
@@ -90,7 +93,7 @@ const AddTweetDefaultInputBox = () => {
     return (
         <div className='flex p-4 h-auto w-full border-b-[1px] border-gray-500'>
             
-            <div className='hidden min-[500px]:block'>
+            <div  onClick={ (e) => navigateToProfilePage(e, dispatch, navigate, loggedInUserDetails?._id) } className='cursor-pointer hidden min-[500px]:block'>
                 <MiniAvatar 
                     userId={loggedInUserDetails?._id}
                     name={loggedInUserDetails?.name}
